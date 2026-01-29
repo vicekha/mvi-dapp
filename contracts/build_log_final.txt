@@ -1,0 +1,116 @@
+Compiling 77 files with Solc 0.8.33
+Solc 0.8.33 finished in 1.68s
+Error: Compiler run failed:
+Warning (2424): Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.
+   --> lib/forge-std/src/StdStorage.sol:225:13:
+    |
+225 |             assembly {
+    |             ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning (2424): Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.
+   --> lib/forge-std/src/StdStorage.sol:288:9:
+    |
+288 |         assembly {
+    |         ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning (2424): Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.
+   --> lib/forge-std/src/StdStorage.sol:371:13:
+    |
+371 |             assembly {
+    |             ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning (2424): Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.
+  --> lib/forge-std/src/console.sol:11:9:
+   |
+11 |         assembly {
+   |         ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning (2424): Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.
+  --> lib/forge-std/src/console2.sol:28:9:
+   |
+28 |         assembly {
+   |         ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning (2424): Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.
+   --> lib/forge-std/src/StdChains.sol:179:21:
+    |
+179 |                     assembly {
+    |                     ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning (2424): Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.
+   --> lib/forge-std/src/StdCheats.sol:493:9:
+    |
+493 |         assembly {
+    |         ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning (2424): Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.
+   --> lib/forge-std/src/StdCheats.sol:503:9:
+    |
+503 |         assembly {
+    |         ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning (2424): Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.
+   --> lib/forge-std/src/StdCheats.sol:514:9:
+    |
+514 |         assembly {
+    |         ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning (2424): Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.
+   --> lib/forge-std/src/StdCheats.sol:524:9:
+    |
+524 |         assembly {
+    |         ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning (2424): Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.
+   --> lib/forge-std/src/StdUtils.sol:209:9:
+    |
+209 |         assembly {
+    |         ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning (2424): Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.
+   --> lib/openzeppelin-contracts/contracts/utils/Address.sol:236:13:
+    |
+236 |             assembly {
+    |             ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning (2424): Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.
+  --> lib/openzeppelin-contracts/contracts/utils/Strings.sol:25:13:
+   |
+25 |             assembly {
+   |             ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning (2424): Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.
+  --> lib/openzeppelin-contracts/contracts/utils/Strings.sol:31:17:
+   |
+31 |                 assembly {
+   |                 ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning (2424): Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.
+   --> lib/openzeppelin-contracts/contracts/token/ERC721/ERC721.sol:413:21:
+    |
+413 |                     assembly {
+    |                     ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning (9207): 'transfer' is deprecated and scheduled for removal. Use 'call{value: <amount>}("")' instead.
+   --> src/WalletSwapMain.sol:123:13:
+    |
+123 |             payable(orderA.maker).transfer(amountBtoA);
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Warning (9207): 'transfer' is deprecated and scheduled for removal. Use 'call{value: <amount>}("")' instead.
+   --> src/WalletSwapMain.sol:134:13:
+    |
+134 |             payable(orderB.maker).transfer(amountAtoB);
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Warning (9207): 'transfer' is deprecated and scheduled for removal. Use 'call{value: <amount>}("")' instead.
+   --> src/WalletSwapMain.sol:138:17:
+    |
+138 |                 payable(orderA.maker).transfer(orderA.amountIn - amountAtoB);
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Error (7407): Type int_const 1332...(71 digits omitted)...7419 is not implicitly convertible to expected type bytes32.
+  --> src/SwapMatcherRSC.sol:17:49:
+   |
+17 |     bytes32 constant ORDER_AUTO_MATCHED_TOPIC = 0xb826a56a562d221f7194a99444941d79c3e40f036f47e243e05b5205742088eeb;
+   |                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
