@@ -311,26 +311,32 @@ contract WalletSwapMain is Ownable, ReentrancyGuard {
         emit OrderExecuted(orderId, msg.sender, amountToFill, block.timestamp);
     }
 
-    // DISABLED: RSC callback function commented out for instant-matching-only mode
-    function executeInterChainOrder(address rvmId, bytes32 orderId, address beneficiary) external nonReentrant {
+    // RSC callback function for cross-chain order execution (with partial fill support)
+    function executeInterChainOrder(address rvmId, bytes32 orderId, address beneficiary, uint256 amount) external nonReentrant {
         require(msg.sender == callbackProxy || msg.sender == authorizedReactiveVM, "Unauthorized Proxy");
         require(rvmId == authorizedReactiveVM || authorizedReactiveVM == address(0), "Unauthorized RVM");
         EulerLagrangeOrderProcessor.Order memory order = orderProcessor.getOrder(orderId);
-        require(order.status == EulerLagrangeOrderProcessor.OrderStatus.ACTIVE, "Not Active");
+        require(order.status == EulerLagrangeOrderProcessor.OrderStatus.ACTIVE || order.status == EulerLagrangeOrderProcessor.OrderStatus.PARTIALLY_FILLED, "Not Active");
         require(block.timestamp <= order.expiration, "Expired");
         require(beneficiary != address(0), "Invalid beneficiary");
+        require(amount > 0 && amount <= order.amountIn - order.filledAmount, "Invalid amount");
         
         if (order.tokenIn == address(0)) {
-            (bool s,) = beneficiary.call{value: order.amountIn}("");
+            (bool s,) = beneficiary.call{value: amount}("");
             require(s, "ETH match failed");
         } else if (uint256(order.typeIn) == uint256(AssetType.ERC721)) {
+            // NFTs cannot be partially filled, transfer entire tokenId
+            require(amount == order.amountIn, "NFT must be full fill");
             IERC721(order.tokenIn).transferFrom(order.maker, beneficiary, order.amountIn);
         } else {
-             bool s = IERC20(order.tokenIn).transferFrom(order.maker, beneficiary, order.amountIn);
+             bool s = IERC20(order.tokenIn).transferFrom(order.maker, beneficiary, amount);
              require(s, "ERC20 match failed");
         }
-        orderProcessor.updateOrderStatus(orderId, EulerLagrangeOrderProcessor.OrderStatus.FILLED);
-        emit OrderExecuted(orderId, beneficiary, order.amountIn, block.timestamp);
+        
+        // Calculate equivalent amountOut for this partial fill
+        uint256 fillAmountOut = (amount * order.amountOut) / order.amountIn;
+        orderProcessor.updateOrderFill(orderId, fillAmountOut);
+        emit OrderExecuted(orderId, beneficiary, amount, block.timestamp);
     }
 
 
