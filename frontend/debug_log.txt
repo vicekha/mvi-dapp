@@ -1,0 +1,45 @@
+
+Log #0:
+  Address: 0x12d3f50694E8b5a0549f3f8b7bBa78011feAFfd7
+  Topic[0]: 0x1e1e59ba994a6c1733c7b48707becd3c9ed68e7c24edb9d0e52aa049690f8033
+  ❌ WARNING: Emitter mismatch! Expected: 0xf21243cFcE9Ce244e50455a2849013DfCd929797
+  ❌ WARNING: Topic[0] mismatch!
+     Found:    0x1e1e59ba994a6c1733c7b48707becd3c9ed68e7c24edb9d0e52aa049690f8033
+     Expected: 0x54d85ef8201aba816135bce3c50a9e9853f0f63619b192e668d028a9fdaaa7ce
+
+Log #1:
+  Address: 0x70d5F8aA0cEE015E5b98F11a74Bdb2CdA87B9c21
+  Topic[0]: 0x79c83391cfccac95f733ad7950aee12248ec67f64a653a4a9fce9d0e2d2aab31
+  ❌ WARNING: Emitter mismatch! Expected: 0xf21243cFcE9Ce244e50455a2849013DfCd929797
+  ❌ WARNING: Topic[0] mismatch!
+     Found:    0x79c83391cfccac95f733ad7950aee12248ec67f64a653a4a9fce9d0e2d2aab31
+     Expected: 0x54d85ef8201aba816135bce3c50a9e9853f0f63619b192e668d028a9fdaaa7ce
+
+Log #2:
+  Address: 0x6aF5019042bb8B9c659216C7C5550a9670fBD94f
+  Topic[0]: 0x9bf2168d383c9f4e4f2477bcc00eb29f933d24976d3b7208d85a5941d93bd842
+  ❌ WARNING: Emitter mismatch! Expected: 0xf21243cFcE9Ce244e50455a2849013DfCd929797
+  ❌ WARNING: Topic[0] mismatch!
+     Found:    0x9bf2168d383c9f4e4f2477bcc00eb29f933d24976d3b7208d85a5941d93bd842
+     Expected: 0x54d85ef8201aba816135bce3c50a9e9853f0f63619b192e668d028a9fdaaa7ce
+
+Log #3:
+  Address: 0xf21243cFcE9Ce244e50455a2849013DfCd929797
+  Topic[0]: 0x54d85ef8201aba816135bce3c50a9e9853f0f63619b192e668d028a9fdaaa7ce
+  ✅ INFO: Emitter matches Expected OrderProcessor.
+  ✅ INFO: Topic[0] matches V13 Hash.
+  Parsed Event: OrderCreated
+    OrderId: 0x2d17b69b2ef7252d38f14d714e01d6f6bcc17798f20fdfab373053cab17485e3
+    Maker: 0xB133a194893434107925682789F16662FB9DB062
+    TokenIn: 0xe25d9F39F776e6D6EF0689282a9DDfDD1Ed00059
+    TokenOut: 0x0000000000000000000000000000000000000000
+    AmountIn: 0.000000000000000003
+    AmountOut: 1.0
+
+Log #4:
+  Address: 0x6eb88ac084a0643BC20acad7C09170445D3ce535
+  Topic[0]: 0x79ee711636171d2a8f8339542b01d1a4d8dc089f49693cd7d3fac6305419b544
+  ❌ WARNING: Emitter mismatch! Expected: 0xf21243cFcE9Ce244e50455a2849013DfCd929797
+  ❌ WARNING: Topic[0] mismatch!
+     Found:    0x79ee711636171d2a8f8339542b01d1a4d8dc089f49693cd7d3fac6305419b544
+     Expected: 0x54d85ef8201aba816135bce3c50a9e9853f0f63619b192e668d028a9fdaaa7ce

@@ -1,0 +1,37 @@
+{
+  "name": "mvi-dapp-frontend",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "deploy": "npm run build && wrangler pages deploy dist --project-name=mvi-autoswap --branch master"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.8.8",
+    "@radix-ui/react-dialog": "^1.1.15",
+    "@web3modal/ethers": "^5.1.11",
+    "@web3modal/siwe": "^5.1.11",
+    "clsx": "^2.1.1",
+    "cmdk": "^1.1.1",
+    "ethers": "^6.16.0",
+    "graphql": "^16.12.0",
+    "lucide-react": "^0.562.0",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "recharts": "^3.7.0",
+    "sonner": "^2.0.7",
+    "tailwind-merge": "^3.4.0",
+    "zustand": "^5.0.9"
+  },
+  "devDependencies": {
+    "@types/node": "^25.0.3",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.2",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.0"
+  }
+}

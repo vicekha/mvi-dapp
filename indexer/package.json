@@ -1,0 +1,19 @@
+{
+    "name": "mvi-indexer",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "ponder dev",
+        "start": "ponder start",
+        "codegen": "ponder codegen"
+    },
+    "dependencies": {
+        "ponder": "latest",
+        "viem": "latest",
+        "graphql": "^16.8.1"
+    },
+    "devDependencies": {
+        "@types/node": "^20.0.0",
+        "typescript": "^5.0.0"
+    }
+}

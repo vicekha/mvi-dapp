@@ -1,0 +1,376 @@
+{
+  "contract": "VirtualLiquidityPool",
+  "transaction": {
+    "from": "0xb133a194893434107925682789f16662fb9db062",
+    "to": null,
+    "gasPrice": "0x2e90edd000",
+    "gas": "0x4c4b40",
+    "input": "0x6080806040523460905760008054336001600160a01b0319821681178355916001600160a01b03909116907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e09080a3600180556706f05b59d3b20000600455337f9031106ecd02b36b036c6c5f92d4e475e623632a9429f8d85c9dfc7ce85a1841600080a2610aa390816100968239f35b600080fdfe6080604052600436101561001257600080fd5b60003560e01c80630d8802c314610593578063172c526d146105425780633788a63a1461052957806350da5ecf14610469578063715018a6146104105780638da5cb5b146103e7578063afbe96e6146103b3578063d0d89e8214610352578063dad0be6114610334578063e4a7672614610277578063ed082fca1461020b578063f2fde38b146101445763fc673af6146100ab57600080fd5b3461013f576100ee60407f9bf2168d383c9f4e4f2477bcc00eb29f933d24976d3b7208d85a5941d93bd8426100df366105e9565b94916100e9610a15565b61082d565b610127858260018060a09896981b038716968760005260026020528560002060018060a01b038316600052602052828660002055610903565b81519485524260208601526001600160a01b031693a3005b600080fd5b3461013f57602036600319011261013f5761015d6105bd565b610165610a15565b6001600160a01b031680156101b757600080546001600160a01b03198116831782556001600160a01b0316907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e09080a3005b60405162461bcd60e51b815260206004820152602660248201527f4f776e61626c653a206e6577206f776e657220697320746865207a65726f206160448201526564647265737360d01b6064820152608490fd5b3461013f57602036600319011261013f57600435610227610a15565b801561023257600455005b60405162461bcd60e51b815260206004820152601760248201527f4c616d626461206d75737420626520706f7369746976650000000000000000006044820152606490fd5b3461013f576103186102b87f9bf2168d383c9f4e4f2477bcc00eb29f933d24976d3b7208d85a5941d93bd84260406102ae366105e9565b94916100e961084b565b9485916102ee60018060a01b038216968760005260026020528560002060018060a01b0386166000526020528560002054610655565b9687918760005260026020528560002060018060a01b038316600052602052828660002055610903565b81519485524260208601526001600160a01b031693a360018055005b3461013f57600036600319011261013f576020600454604051908152f35b3461013f57610360366105e9565b9160018060a01b0316600052600360205260406000209060018060a01b03166000526020526040600020805482101561013f5760409161039f91610623565b506001815491015482519182526020820152f35b3461013f57604036600319011261013f5760206103df6103d16105bd565b6103d96105d3565b9061076c565b604051908152f35b3461013f57600036600319011261013f576000546040516001600160a01b039091168152602090f35b3461013f57600036600319011261013f57610429610a15565b600080546001600160a01b0319811682556001600160a01b03167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e08280a3005b3461013f5761048461047a366105e9565b92916100e961084b565b9160018060a01b03821691826000526002602052604060002060018060a01b0385166000526020526040600020548083116104eb576103186040926102ee7f9bf2168d383c9f4e4f2477bcc00eb29f933d24976d3b7208d85a5941d93bd84295889461075f565b60405162461bcd60e51b8152602060048201526016602482015275496e73756666696369656e74206c697175696469747960501b6044820152606490fd5b3461013f5760206103df61053c366105e9565b91610678565b3461013f57604036600319011261013f5761055b6105bd565b6105636105d3565b6001600160a01b039182166000908152600260209081526040808320949093168252928352819020549051908152f35b3461013f57604036600319011261013f576105636105af6105bd565b6105b76105d3565b9061082d565b600435906001600160a01b038216820361013f57565b602435906001600160a01b038216820361013f57565b606090600319011261013f576004356001600160a01b038116810361013f57906024356001600160a01b038116810361013f579060443590565b805482101561063f5760005260206000209060011b0190600090565b634e487b7160e01b600052603260045260246000fd5b9190820180921161066257565b634e487b7160e01b600052601160045260246000fd5b906106829161082d565b6001600160a01b0380831660009081526002602090815260408083209385168352929052205491908215610756576106b99161076c565b600081121561075157600160ff1b8114610662576000035b600090806106ff57505080915b8083116106f7575b508082116106f2575090565b905090565b9150386106e6565b6004549081840291848304810361073d579061071a91610655565b918215610729575004916106de565b634e487b7160e01b81526012600452602490fd5b634e487b7160e01b84526011600452602484fd5b6106d1565b50505050600090565b9190820391821161066257565b6040916107789161082d565b6001600160a01b0391821660009081526003602090815284822092909316815291522080549060028210610826576000198201828111610662576107bc9082610623565b50916001198101908111610662576107d391610623565b506107e7600183015460018301549061075f565b91821561081e57549054906000828203921281831281169183139015161761066257600160ff1b8114600019831416610662570590565b505050600090565b5050600090565b9091906001600160a01b038084169082161015610848579190565b90565b60026001541461085c576002600155565b60405162461bcd60e51b815260206004820152601f60248201527f5265656e7472616e637947756172643a207265656e7472616e742063616c6c006044820152606490fd5b604051906040820182811067ffffffffffffffff8211176108c157604052565b634e487b7160e01b600052604160045260246000fd5b91906108ed576020816001925184550151910155565b634e487b7160e01b600052600060045260246000fd5b6001600160a01b0390811660009081526003602090815260408083209390941682529190915220805490929190600a81106109d8575060005b6009811061098e575061094d6108a1565b90815242602082015260009280546009101561097a57601260208560009361097896975220016108d7565b565b634e487b7160e01b84526032600452602484fd5b60018101808211610662576109a39085610623565b50906109af8186610623565b6108ed578260019382036109c6575b50500161093c565b805482558301549083015538806109be565b91926109e26108a1565b918252426020830152680100000000000000008310156108c15782610a0f91600161097895018155610623565b906108d7565b6000546001600160a01b03163303610a2957565b606460405162461bcd60e51b815260206004820152602060248201527f4f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e65726044820152fdfea264697066735822122006cea29f569bb6a155c6b509c1ee0d61370c944eac04be62849e6501b6baee1764736f6c63430008210033",
+    "nonce": "0x157",
+    "chainId": "0x512577"
+  },
+  "abi": [
+    {
+      "type": "constructor",
+      "inputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "addLiquidity",
+      "inputs": [
+        {
+          "name": "token0",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "token1",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "amount",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "calculateOptimalFill",
+      "inputs": [
+        {
+          "name": "token0",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "token1",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "orderSize",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "getAvailableLiquidity",
+      "inputs": [
+        {
+          "name": "token0",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "token1",
+          "type": "address",
+          "internalType": "address"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "getLiquidityChangeRate",
+      "inputs": [
+        {
+          "name": "token0",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "token1",
+          "type": "address",
+          "internalType": "address"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "int256",
+          "internalType": "int256"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "lambda",
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "liquidityHistory",
+      "inputs": [
+        {
+          "name": "",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "liquidity",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "timestamp",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "owner",
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "",
+          "type": "address",
+          "internalType": "address"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "reduceLiquidity",
+      "inputs": [
+        {
+          "name": "token0",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "token1",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "amount",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "renounceOwnership",
+      "inputs": [],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "setLambda",
+      "inputs": [
+        {
+          "name": "_lambda",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "transferOwnership",
+      "inputs": [
+        {
+          "name": "newOwner",
+          "type": "address",
+          "internalType": "address"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "updateVirtualLiquidity",
+      "inputs": [
+        {
+          "name": "token0",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "token1",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "amount",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "virtualLiquidity",
+      "inputs": [
+        {
+          "name": "",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "",
+          "type": "address",
+          "internalType": "address"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "event",
+      "name": "LiquidityChanged",
+      "inputs": [
+        {
+          "name": "token0",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "name": "token1",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "name": "newLiquidity",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        },
+        {
+          "name": "timestamp",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "LiquidityPoolInitialized",
+      "inputs": [
+        {
+          "name": "owner",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "OptimalFillCalculated",
+      "inputs": [
+        {
+          "name": "token0",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "name": "token1",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "name": "amount",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        },
+        {
+          "name": "optimalFill",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "OwnershipTransferred",
+      "inputs": [
+        {
+          "name": "previousOwner",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "name": "newOwner",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        }
+      ],
+      "anonymous": false
+    }
+  ]
+}

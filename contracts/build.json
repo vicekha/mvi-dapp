@@ -1,0 +1,208 @@
+{
+  "errors": [
+    {
+      "sourceLocation": {
+        "file": "lib/forge-std/src/StdStorage.sol",
+        "start": 8742,
+        "end": 8826
+      },
+      "type": "Warning",
+      "component": "general",
+      "severity": "warning",
+      "errorCode": "2424",
+      "message": "Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.",
+      "formattedMessage": "Warning: Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.\n   --> lib/forge-std/src/StdStorage.sol:225:13:\n    |\n225 |             assembly {\n    |             ^ (Relevant source part starts here and spans across multiple lines).\n\n"
+    },
+    {
+      "sourceLocation": {
+        "file": "lib/forge-std/src/StdStorage.sol",
+        "start": 10879,
+        "end": 10922
+      },
+      "type": "Warning",
+      "component": "general",
+      "severity": "warning",
+      "errorCode": "2424",
+      "message": "Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.",
+      "formattedMessage": "Warning: Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.\n   --> lib/forge-std/src/StdStorage.sol:288:9:\n    |\n288 |         assembly {\n    |         ^ (Relevant source part starts here and spans across multiple lines).\n\n"
+    },
+    {
+      "sourceLocation": {
+        "file": "lib/forge-std/src/StdStorage.sol",
+        "start": 13664,
+        "end": 13748
+      },
+      "type": "Warning",
+      "component": "general",
+      "severity": "warning",
+      "errorCode": "2424",
+      "message": "Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.",
+      "formattedMessage": "Warning: Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.\n   --> lib/forge-std/src/StdStorage.sol:371:13:\n    |\n371 |             assembly {\n    |             ^ (Relevant source part starts here and spans across multiple lines).\n\n"
+    },
+    {
+      "sourceLocation": {
+        "file": "lib/forge-std/src/console.sol",
+        "start": 392,
+        "end": 551
+      },
+      "type": "Warning",
+      "component": "general",
+      "severity": "warning",
+      "errorCode": "2424",
+      "message": "Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.",
+      "formattedMessage": "Warning: Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.\n  --> lib/forge-std/src/console.sol:11:9:\n   |\n11 |         assembly {\n   |         ^ (Relevant source part starts here and spans across multiple lines).\n\n"
+    },
+    {
+      "sourceLocation": {
+        "file": "lib/forge-std/src/console2.sol",
+        "start": 1222,
+        "end": 1381
+      },
+      "type": "Warning",
+      "component": "general",
+      "severity": "warning",
+      "errorCode": "2424",
+      "message": "Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.",
+      "formattedMessage": "Warning: Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.\n  --> lib/forge-std/src/console2.sol:28:9:\n   |\n28 |         assembly {\n   |         ^ (Relevant source part starts here and spans across multiple lines).\n\n"
+    },
+    {
+      "sourceLocation": {
+        "file": "lib/forge-std/src/StdChains.sol",
+        "start": 7995,
+        "end": 8084
+      },
+      "type": "Warning",
+      "component": "general",
+      "severity": "warning",
+      "errorCode": "2424",
+      "message": "Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.",
+      "formattedMessage": "Warning: Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.\n   --> lib/forge-std/src/StdChains.sol:179:21:\n    |\n179 |                     assembly {\n    |                     ^ (Relevant source part starts here and spans across multiple lines).\n\n"
+    },
+    {
+      "sourceLocation": {
+        "file": "lib/forge-std/src/StdCheats.sol",
+        "start": 18625,
+        "end": 18713
+      },
+      "type": "Warning",
+      "component": "general",
+      "severity": "warning",
+      "errorCode": "2424",
+      "message": "Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.",
+      "formattedMessage": "Warning: Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.\n   --> lib/forge-std/src/StdCheats.sol:493:9:\n    |\n493 |         assembly {\n    |         ^ (Relevant source part starts here and spans across multiple lines).\n\n"
+    },
+    {
+      "sourceLocation": {
+        "file": "lib/forge-std/src/StdCheats.sol",
+        "start": 19004,
+        "end": 19092
+      },
+      "type": "Warning",
+      "component": "general",
+      "severity": "warning",
+      "errorCode": "2424",
+      "message": "Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.",
+      "formattedMessage": "Warning: Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.\n   --> lib/forge-std/src/StdCheats.sol:503:9:\n    |\n503 |         assembly {\n    |         ^ (Relevant source part starts here and spans across multiple lines).\n\n"
+    },
+    {
+      "sourceLocation": {
+        "file": "lib/forge-std/src/StdCheats.sol",
+        "start": 19489,
+        "end": 19579
+      },
+      "type": "Warning",
+      "component": "general",
+      "severity": "warning",
+      "errorCode": "2424",
+      "message": "Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.",
+      "formattedMessage": "Warning: Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.\n   --> lib/forge-std/src/StdCheats.sol:514:9:\n    |\n514 |         assembly {\n    |         ^ (Relevant source part starts here and spans across multiple lines).\n\n"
+    },
+    {
+      "sourceLocation": {
+        "file": "lib/forge-std/src/StdCheats.sol",
+        "start": 19891,
+        "end": 19981
+      },
+      "type": "Warning",
+      "component": "general",
+      "severity": "warning",
+      "errorCode": "2424",
+      "message": "Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.",
+      "formattedMessage": "Warning: Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.\n   --> lib/forge-std/src/StdCheats.sol:524:9:\n    |\n524 |         assembly {\n    |         ^ (Relevant source part starts here and spans across multiple lines).\n\n"
+    },
+    {
+      "sourceLocation": {
+        "file": "lib/forge-std/src/StdUtils.sol",
+        "start": 10003,
+        "end": 10162
+      },
+      "type": "Warning",
+      "component": "general",
+      "severity": "warning",
+      "errorCode": "2424",
+      "message": "Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.",
+      "formattedMessage": "Warning: Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.\n   --> lib/forge-std/src/StdUtils.sol:209:9:\n    |\n209 |         assembly {\n    |         ^ (Relevant source part starts here and spans across multiple lines).\n\n"
+    },
+    {
+      "sourceLocation": {
+        "file": "lib/openzeppelin-contracts/contracts/utils/Address.sol",
+        "start": 9152,
+        "end": 9294
+      },
+      "type": "Warning",
+      "component": "general",
+      "severity": "warning",
+      "errorCode": "2424",
+      "message": "Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.",
+      "formattedMessage": "Warning: Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.\n   --> lib/openzeppelin-contracts/contracts/utils/Address.sol:236:13:\n    |\n236 |             assembly {\n    |             ^ (Relevant source part starts here and spans across multiple lines).\n\n"
+    },
+    {
+      "sourceLocation": {
+        "file": "script/AuthorizeLasna.s.sol",
+        "start": 300,
+        "end": 342
+      },
+      "type": "SyntaxError",
+      "component": "general",
+      "severity": "error",
+      "errorCode": "9429",
+      "message": "This looks like an address but has an invalid checksum. Correct checksummed address: \"0x555346d562F55de7963375dB522580653F0d3A5f\". If this is not used as an address, please prepend '00'. For more information please see https://docs.soliditylang.org/en/develop/types.html#address-literals",
+      "formattedMessage": "SyntaxError: This looks like an address but has an invalid checksum. Correct checksummed address: \"0x555346d562F55de7963375dB522580653F0d3A5f\". If this is not used as an address, please prepend '00'. For more information please see https://docs.soliditylang.org/en/develop/types.html#address-literals\n  --> script/AuthorizeLasna.s.sol:11:37:\n   |\n11 |         address walletSwapAddress = 0x555346d562f55de7963375db522580653f0d3a5f;\n   |                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n"
+    },
+    {
+      "sourceLocation": {
+        "file": "script/AuthorizeLasna.s.sol",
+        "start": 373,
+        "end": 415
+      },
+      "type": "SyntaxError",
+      "component": "general",
+      "severity": "error",
+      "errorCode": "9429",
+      "message": "This looks like an address but has an invalid checksum. Correct checksummed address: \"0x241D8e0613B7De328A4BDcDFcCF323D5D27b03bC\". If this is not used as an address, please prepend '00'. For more information please see https://docs.soliditylang.org/en/develop/types.html#address-literals",
+      "formattedMessage": "SyntaxError: This looks like an address but has an invalid checksum. Correct checksummed address: \"0x241D8e0613B7De328A4BDcDFcCF323D5D27b03bC\". If this is not used as an address, please prepend '00'. For more information please see https://docs.soliditylang.org/en/develop/types.html#address-literals\n  --> script/AuthorizeLasna.s.sol:12:30:\n   |\n12 |         address rscAddress = 0x241d8e0613b7de328a4bdcdfccf323d5d27b03bc;\n   |                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n"
+    },
+    {
+      "sourceLocation": {
+        "file": "script/AuthorizeSepolia.s.sol",
+        "start": 375,
+        "end": 417
+      },
+      "type": "SyntaxError",
+      "component": "general",
+      "severity": "error",
+      "errorCode": "9429",
+      "message": "This looks like an address but has an invalid checksum. Correct checksummed address: \"0x241D8e0613B7De328A4BDcDFcCF323D5D27b03bC\". If this is not used as an address, please prepend '00'. For more information please see https://docs.soliditylang.org/en/develop/types.html#address-literals",
+      "formattedMessage": "SyntaxError: This looks like an address but has an invalid checksum. Correct checksummed address: \"0x241D8e0613B7De328A4BDcDFcCF323D5D27b03bC\". If this is not used as an address, please prepend '00'. For more information please see https://docs.soliditylang.org/en/develop/types.html#address-literals\n  --> script/AuthorizeSepolia.s.sol:12:30:\n   |\n12 |         address rscAddress = 0x241d8e0613b7de328a4bdcdfccf323d5d27b03bc;\n   |                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n"
+    }
+  ],
+  "sources": {},
+  "contracts": {},
+  "build_infos": [
+    {
+      "id": "f9e77e2b7892f6dd",
+      "source_id_to_path": {},
+      "language": "Solidity"
+    }
+  ]
+}

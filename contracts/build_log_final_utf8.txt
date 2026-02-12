@@ -1,0 +1,2685 @@
+﻿Compiling 11 files with Solc 0.8.33
+Solc 0.8.33 finished in 45.53s
+Compiler run successful with warnings:
+Warning (2424): Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.
+   --> lib/forge-std/src/StdStorage.sol:225:13:
+    |
+225 |             assembly {
+    |             ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning (2424): Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.
+   --> lib/forge-std/src/StdStorage.sol:288:9:
+    |
+288 |         assembly {
+    |         ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning (2424): Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.
+   --> lib/forge-std/src/StdStorage.sol:371:13:
+    |
+371 |             assembly {
+    |             ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning (2424): Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.
+  --> lib/forge-std/src/console.sol:11:9:
+   |
+11 |         assembly {
+   |         ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning (2424): Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.
+  --> lib/forge-std/src/console2.sol:28:9:
+   |
+28 |         assembly {
+   |         ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning (2424): Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.
+   --> lib/forge-std/src/StdChains.sol:179:21:
+    |
+179 |                     assembly {
+    |                     ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning (2424): Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.
+   --> lib/forge-std/src/StdCheats.sol:493:9:
+    |
+493 |         assembly {
+    |         ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning (2424): Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.
+   --> lib/forge-std/src/StdCheats.sol:503:9:
+    |
+503 |         assembly {
+    |         ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning (2424): Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.
+   --> lib/forge-std/src/StdCheats.sol:514:9:
+    |
+514 |         assembly {
+    |         ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning (2424): Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.
+   --> lib/forge-std/src/StdCheats.sol:524:9:
+    |
+524 |         assembly {
+    |         ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning (2424): Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.
+   --> lib/forge-std/src/StdUtils.sol:209:9:
+    |
+209 |         assembly {
+    |         ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning (2424): Natspec memory-safe-assembly special comment for inline assembly is deprecated and scheduled for removal. Use the memory-safe block annotation instead.
+   --> lib/openzeppelin-contracts/contracts/utils/Address.sol:236:13:
+    |
+236 |             assembly {
+    |             ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning (5667): Unused function parameter. Remove or comment out the variable name to silence this warning.
+  --> src/SwapMatcherRSC.sol:62:9:
+   |
+62 |         address _service,
+   |         ^^^^^^^^^^^^^^^^
+
+Warning (2072): Unused local variable.
+  --> test/PartialFillTest.t.sol:84:9:
+   |
+84 |         uint256 initMakerBalA = tokenA.balanceOf(maker); // Shou ...
+   |         ^^^^^^^^^^^^^^^^^^^^^
+
+forge : note[unaliased-pla
+in-import]: use named 
+imports '{A, B}' or alias 
+'import ".." as X'
+At line:1 char:1
++ forge build > 
+build_log_final.txt 2>&1
++ ~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~
+    + CategoryInfo        
+      : NotSpecified: (n  
+  ote[unaliased-...port   
+  ".." as X':String) [    
+], RemoteException
+    + FullyQualifiedError 
+   Id : NativeCommandErr  
+  or
+ 
+ --> src\AlphaDevs.sol:4:8
+  |
+4 | import "@openzeppelin/
+contracts/token/ERC721/ERC
+721.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> 
+test\FeeTest.t.sol:4:8
+  |
+4 | import 
+"forge-std/Test.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> 
+test\FeeTest.t.sol:5:8
+  |
+5 | import "../src/TrustWa
+lletFeeDistributor.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> 
+test\FeeTest.t.sol:6:8
+  |
+6 | import 
+"../src/MockToken.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> src\AlphaDevs.sol:5:8
+  |
+5 | import "@openzeppelin/
+contracts/token/ERC721/ext
+ensions/ERC721Enumerable.s
+ol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> src\AlphaDevs.sol:6:8
+  |
+6 | import "@openzeppelin/
+contracts/access/Ownable.s
+ol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> 
+src\AlphaDevs.sol:14:20
+   |
+14 |     string private 
+_baseTokenURI;
+   |                    
+^^^^^^^^^^^^^ help: 
+consider using: 
+`_baseTokenUri`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> src\demos\BasicDemoRe
+activeContract.sol:4:8
+  |
+4 | import "reactive-lib/i
+nterfaces/IReactive.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> src\demos\BasicDemoRe
+activeContract.sol:5:8
+  |
+5 | import "reactive-lib/a
+bstract-base/AbstractReact
+ive.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> src\demos\BasicDemoRe
+activeContract.sol:6:8
+  |
+6 | import "reactive-lib/i
+nterfaces/ISystemContract.
+sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> src\ReactiveCallback.
+sol:4:8
+  |
+4 | import "reactive-lib/a
+bstract-base/AbstractReact
+ive.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> script\DeployLasnaRSC
+.s.sol:4:8
+  |
+4 | import 
+"forge-std/Script.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> script\DeployLasnaRSC
+.s.sol:5:8
+  |
+5 | import "../src/SwapMat
+cherRSC.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> script\DeployLasnaRS
+C.s.sol:12:17
+   |
+12 |         uint256 
+sepoliaCID = 11155111;
+   |                 
+^^^^^^^^^^ help: consider 
+using: `sepoliaCid`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> script\DeployLasnaRS
+C.s.sol:13:17
+   |
+13 |         uint256 
+amoyCID = 80002;
+   |                 
+^^^^^^^ help: consider 
+using: `amoyCid`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> 
+test\HashTest.t.sol:4:8
+  |
+4 | import 
+"forge-std/Test.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> src\demos\SimpleCallb
+ackRSC.sol:4:8
+  |
+4 | import "reactive-lib/a
+bstract-base/AbstractReact
+ive.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\WalletSwapMain.s
+ol:24:20
+   |
+24 |     address public 
+authorizedReactiveVM;
+   |                    
+^^^^^^^^^^^^^^^^^^^^ 
+help: consider using: 
+`authorizedReactiveVm`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\demos\BasicDemoR
+eactiveContract.sol:29:17
+   |
+29 |         uint256 
+_topic_0,
+   |                 
+^^^^^^^^ help: consider 
+using: `_topic0`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\ReactiveCallback
+.sol:70:17
+   |
+70 |         uint256 
+chain_id = log.chain_id;
+   |                 
+^^^^^^^^ help: consider 
+using: `chainId`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\ReactiveCallback
+.sol:72:17
+   |
+72 |         uint256 
+topic_0 = log.topic_0;
+   |                 
+^^^^^^^ help: consider 
+using: `topic0`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\ReactiveCallback
+.sol:73:17
+   |
+73 |         uint256 
+topic_1 = log.topic_1;
+   |                 
+^^^^^^^ help: consider 
+using: `topic1`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\ReactiveCallback
+.sol:74:17
+   |
+74 |         uint256 
+topic_2 = log.topic_2;
+   |                 
+^^^^^^^ help: consider 
+using: `topic2`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\ReactiveCallback
+.sol:75:17
+   |
+75 |         uint256 
+topic_3 = log.topic_3;
+   |                 
+^^^^^^^ help: consider 
+using: `topic3`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+warning[unsafe-typecast]: 
+typecasts that can 
+truncate values should be 
+checked
+  --> src\ReactiveCallback
+.sol:87:37
+   |
+87 |             address 
+maker = 
+address(uint160(topic_2));
+   |                      
+               
+^^^^^^^^^^^^^^^^
+   |
+   = note: consider 
+disabling this lint if 
+you're certain the cast 
+is safe
+           
+           // casting to 
+'uint160' is safe because 
+[explain why]
+           // forge-lint: 
+disable-next-line(unsafe-t
+ypecast)
+           
+           
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#unsafe-typeca
+st
+
+note[mixed-case-function]:
+ function names should 
+use mixedCase
+  --> 
+src\AlphaDevs.sol:39:14
+   |
+39 |     function 
+_baseURI() internal view 
+override returns (string 
+memory) {
+   |              
+^^^^^^^^ help: consider 
+using: `_baseUri`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-fu
+nction
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> script\DeployLasnaRSC
+v2.s.sol:4:8
+  |
+4 | import 
+"forge-std/Script.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> script\DeployLasnaRSC
+v2.s.sol:5:8
+  |
+5 | import "../src/SwapMat
+cherRSCv2.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> script\DeployFeeDistr
+ibutorOnly.s.sol:4:8
+  |
+4 | import 
+"forge-std/Script.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> test\PartialFillTest.
+t.sol:4:8
+  |
+4 | import 
+"forge-std/Test.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[mixed-case-function]:
+ function names should 
+use mixedCase
+   --> src\WalletSwapMain.
+sol:399:14
+    |
+399 |     function setAuth
+orizedReactiveVM(address 
+_rvm) external onlyOwner {
+    |              
+^^^^^^^^^^^^^^^^^^^^^^^ 
+help: consider using: 
+`setAuthorizedReactiveVm`
+    |
+    = help: https://book.g
+etfoundry.sh/reference/for
+ge/forge-lint#mixed-case-f
+unction
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\demos\Standalone
+RSC.sol:18:17
+   |
+18 |         uint256 
+chain_id,
+   |                 
+^^^^^^^^ help: consider 
+using: `chainId`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\demos\Standalone
+RSC.sol:20:17
+   |
+20 |         uint256 
+topic_0,
+   |                 
+^^^^^^^ help: consider 
+using: `topic0`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\demos\Standalone
+RSC.sol:21:17
+   |
+21 |         uint256 
+topic_1,
+   |                 
+^^^^^^^ help: consider 
+using: `topic1`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\demos\Standalone
+RSC.sol:22:17
+   |
+22 |         uint256 
+topic_2,
+   |                 
+^^^^^^^ help: consider 
+using: `topic2`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\demos\Standalone
+RSC.sol:23:17
+   |
+23 |         uint256 
+topic_3
+   |                 
+^^^^^^^ help: consider 
+using: `topic3`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[asm-keccak256]: use 
+of inefficient hashing 
+mechanism; consider using 
+inline assembly
+   --> src\EulerLagrangeOr
+derProcessor.sol:192:27
+    |
+192 |           bytes32 
+orderId = keccak256(
+    |  ___________________
+________^
+193 | |             
+abi.encodePacked(
+194 | |                 
+maker,
+195 | |                 
+tokenIn,
+...   |
+206 | |         );
+    | |_________^
+    |
+    = help: https://book.g
+etfoundry.sh/reference/for
+ge/forge-lint#asm-keccak25
+6
+
+note[asm-keccak256]: use 
+of inefficient hashing 
+mechanism; consider using 
+inline assembly
+   --> src\ReactiveHyperla
+neBridge.sol:162:13
+    |
+162 |             keccak25
+6(abi.encodePacked(token, 
+amount, msg.sender, 
+recipient, 
+block.timestamp, 
+block.number));
+    |             ^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^
+    |
+    = help: https://book.g
+etfoundry.sh/reference/for
+ge/forge-lint#asm-keccak25
+6
+
+note[asm-keccak256]: use 
+of inefficient hashing 
+mechanism; consider using 
+inline assembly
+   --> src\ReactiveHyperla
+neBridge.sol:234:13
+    |
+234 |             keccak25
+6(abi.encodePacked(nft, 
+tokenId, msg.sender, 
+recipient, 
+block.timestamp, 
+block.number, "NFT"));
+    |             ^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
+    |
+    = help: https://book.g
+etfoundry.sh/reference/for
+ge/forge-lint#asm-keccak25
+6
+
+warning[unsafe-typecast]: 
+typecasts that can 
+truncate values should be 
+checked
+  --> src\ReactiveCallback
+.sol:88:39
+   |
+88 |             address 
+tokenIn = 
+address(uint160(topic_3));
+   |                      
+                 
+^^^^^^^^^^^^^^^^
+   |
+   = note: consider 
+disabling this lint if 
+you're certain the cast 
+is safe
+           
+           // casting to 
+'uint160' is safe because 
+[explain why]
+           // forge-lint: 
+disable-next-line(unsafe-t
+ypecast)
+           
+           
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#unsafe-typeca
+st
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> script\DeployLasnaRS
+Cv2.s.sol:11:17
+   |
+11 |         uint256 
+sepoliaCID = 11155111;
+   |                 
+^^^^^^^^^^ help: consider 
+using: `sepoliaCid`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\demos\Standalone
+RSC.sol:27:17
+   |
+27 |         uint256 
+chain_id,
+   |                 
+^^^^^^^^ help: consider 
+using: `chainId`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> test\PartialFillTest.
+t.sol:5:8
+  |
+5 | import "../src/WalletS
+wapMain.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> test\PartialFillTest.
+t.sol:6:8
+  |
+6 | import "../src/EulerLa
+grangeOrderProcessor.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> script\DeployLasnaRS
+Cv2.s.sol:12:17
+   |
+12 |         uint256 
+lasnaCID = 5318007;
+   |                 
+^^^^^^^^ help: consider 
+using: `lasnaCid`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\demos\Standalone
+RSC.sol:29:17
+   |
+29 |         uint256 
+topic_0,
+   |                 
+^^^^^^^ help: consider 
+using: `topic0`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\demos\Standalone
+RSC.sol:30:17
+   |
+30 |         uint256 
+topic_1,
+   |                 
+^^^^^^^ help: consider 
+using: `topic1`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> script\DeployLasnaRSC
+v3.s.sol:4:8
+  |
+4 | import 
+"forge-std/Script.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> test\PartialFillTest.
+t.sol:7:8
+  |
+7 | import "../src/Virtual
+LiquidityPool.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> script\AuthorizeSepol
+ia.s.sol:4:8
+  |
+4 | import 
+"forge-std/Script.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> script\AuthorizeSepol
+ia.s.sol:5:8
+  |
+5 | import "../src/WalletS
+wapMain.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> script\DeployFeeDistr
+ibutorOnly.s.sol:5:8
+  |
+5 | import "../src/TrustWa
+lletFeeDistributor.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> script\DeployLasnaRSC
+v3.s.sol:5:8
+  |
+5 | import "../src/SwapMat
+cherRSCv3.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\demos\Standalone
+RSC.sol:31:17
+   |
+31 |         uint256 
+topic_2,
+   |                 
+^^^^^^^ help: consider 
+using: `topic2`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[asm-keccak256]: use 
+of inefficient hashing 
+mechanism; consider using 
+inline assembly
+   --> src\ReactiveHyperla
+neBridge.sol:435:34
+    |
+435 |               
+bytes32 transferId = 
+keccak256(
+    |  ___________________
+_______________^
+436 | |                 
+abi.encodePacked(
+437 | |                   
+  asset,
+438 | |                   
+  isNft ? tokenId : 
+amount,
+...   |
+445 | |             );
+    | |_____________^
+    |
+    = help: https://book.g
+etfoundry.sh/reference/for
+ge/forge-lint#asm-keccak25
+6
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> test\CrossChainSettle
+mentTest.t.sol:4:8
+  |
+4 | import 
+"forge-std/Test.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> test\CrossChainSettle
+mentTest.t.sol:5:8
+  |
+5 | import "../src/WalletS
+wapMain.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> test\CrossChainSettle
+mentTest.t.sol:6:8
+  |
+6 | import "../src/Virtual
+LiquidityPool.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> test\CrossChainSettle
+mentTest.t.sol:7:8
+  |
+7 | import "../src/AssetVe
+rifier.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> test\CrossChainSettle
+mentTest.t.sol:8:8
+  |
+8 | import "../src/TrustWa
+lletFeeDistributor.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> test\CrossChainSettle
+mentTest.t.sol:9:8
+  |
+9 | import "../src/EulerLa
+grangeOrderProcessor.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> script\DeployAlphaDev
+s.s.sol:4:8
+  |
+4 | import 
+"forge-std/Script.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> script\DeployAlphaDev
+s.s.sol:5:8
+  |
+5 | import 
+"../src/AlphaDevs.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> test\PartialFillTest.
+t.sol:8:8
+  |
+8 | import "../src/TrustWa
+lletFeeDistributor.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[asm-keccak256]: use 
+of inefficient hashing 
+mechanism; consider using 
+inline assembly
+ --> src\HashCalculator.so
+l:6:16
+  |
+6 |         return keccak2
+56("OrderInitiated(bytes32
+,address,address,address,u
+int8,uint8,uint256,uint256
+,uint256,uint256)");
+  |                ^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#asm-keccak256
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> src\SwapMatcherRSCv3.
+sol:4:8
+  |
+4 | import "reactive-lib/i
+nterfaces/IReactive.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> src\SwapMatcherRSCv3.
+sol:5:8
+  |
+5 | import "reactive-lib/a
+bstract-base/AbstractReact
+ive.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> src\SwapMatcherRSCv3.
+sol:6:8
+  |
+6 | import "reactive-lib/i
+nterfaces/ISystemContract.
+sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> 
+src\SwapMatcherRSC.sol:4:8
+  |
+4 | import "../lib/reactiv
+e-lib/src/abstract-base/Ab
+stractReactive.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> 
+src\SwapMatcherRSC.sol:5:8
+  |
+5 | import "../lib/reactiv
+e-lib/src/interfaces/ISyst
+emContract.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> 
+src\SwapMatcherRSC.sol:6:8
+  |
+6 | import "../lib/reactiv
+e-lib/src/interfaces/IReac
+tive.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\demos\Standalone
+RSC.sol:32:17
+   |
+32 |         uint256 
+topic_3
+   |                 
+^^^^^^^ help: consider 
+using: `topic3`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> script\DeployLasna.s.
+sol:4:8
+  |
+4 | import 
+"forge-std/Script.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> script\DeployLasna.s.
+sol:5:8
+  |
+5 | import "../src/Virtual
+LiquidityPool.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> script\DeployLasnaCor
+e.s.sol:4:8
+  |
+4 | import 
+"forge-std/Script.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> script\DeployLasnaCor
+e.s.sol:5:8
+  |
+5 | import "../src/Virtual
+LiquidityPool.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> script\DeployLasnaCor
+e.s.sol:6:8
+  |
+6 | import "../src/AssetVe
+rifier.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> script\DeployLasnaCor
+e.s.sol:7:8
+  |
+7 | import "../src/TrustWa
+lletFeeDistributor.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> script\DeployLasnaCor
+e.s.sol:8:8
+  |
+8 | import "../src/EulerLa
+grangeOrderProcessor.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> 
+script\DeployRSC.s.sol:4:8
+  |
+4 | import 
+"forge-std/Script.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> script\DeployLasnaRS
+Cv3.s.sol:14:17
+   |
+14 |         uint256 
+sepoliaCID = 11155111;
+   |                 
+^^^^^^^^^^ help: consider 
+using: `sepoliaCid`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> script\DeployLasnaRS
+Cv3.s.sol:15:17
+   |
+15 |         uint256 
+lasnaCID = 5318007;
+   |                 
+^^^^^^^^ help: consider 
+using: `lasnaCid`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> script\DeployLasnaCor
+eOnly.s.sol:4:8
+  |
+4 | import 
+"forge-std/Script.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> script\DeployLasnaCor
+eOnly.s.sol:5:8
+  |
+5 | import "../src/Virtual
+LiquidityPool.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> 
+script\DeployRSC.s.sol:5:8
+  |
+5 | import "../src/SwapMat
+cherRSC.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> script\DeployLasna.s.
+sol:6:8
+  |
+6 | import "../src/AssetVe
+rifier.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> script\DeployLasna.s.
+sol:7:8
+  |
+7 | import "../src/TrustWa
+lletFeeDistributor.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> script\DeployLasna.s.
+sol:8:8
+  |
+8 | import "../src/EulerLa
+grangeOrderProcessor.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\demos\Standalone
+RSC.sol:41:17
+   |
+41 |         uint256 
+chain_id;
+   |                 
+^^^^^^^^ help: consider 
+using: `chainId`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> script\DeployLasnaCor
+eOnly.s.sol:6:8
+  |
+6 | import "../src/AssetVe
+rifier.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> test\PartialFillTest.
+t.sol:9:8
+  |
+9 | import "../src/AssetVe
+rifier.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+  --> test\PartialFillTest
+.t.sol:10:8
+   |
+10 | import 
+"../src/MockToken.sol";
+   |        
+^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#unaliased-pla
+in-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> script\DeployLasnaCor
+eOnly.s.sol:7:8
+  |
+7 | import "../src/TrustWa
+lletFeeDistributor.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> script\DeployLasnaCor
+e.s.sol:9:8
+  |
+9 | import "../src/WalletS
+wapMain.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> script\DeployLasna.s.
+sol:9:8
+  |
+9 | import "../src/WalletS
+wapMain.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\demos\Standalone
+RSC.sol:43:17
+   |
+43 |         uint256 
+topic_0;
+   |                 
+^^^^^^^ help: consider 
+using: `topic0`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> script\SubscribeReact
+ive.s.sol:4:8
+  |
+4 | import 
+"forge-std/Script.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> script\SubscribeReact
+ive.s.sol:5:8
+  |
+5 | import "../src/SwapMat
+cherRSCv3.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\SwapMatcherRSCv2
+.sol:13:17
+   |
+13 |         uint256 
+chain_id;
+   |                 
+^^^^^^^^ help: consider 
+using: `chainId`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\SwapMatcherRSCv2
+.sol:15:17
+   |
+15 |         uint256 
+topic_0;
+   |                 
+^^^^^^^ help: consider 
+using: `topic0`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> script\DeployFullStac
+k.s.sol:4:8
+  |
+4 | import 
+"forge-std/Script.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> script\DeployFullStac
+k.s.sol:5:8
+  |
+5 | import "../src/Virtual
+LiquidityPool.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> script\DeployLasnaCor
+eOnly.s.sol:8:8
+  |
+8 | import "../src/EulerLa
+grangeOrderProcessor.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> script\DeployLasnaCor
+eOnly.s.sol:9:8
+  |
+9 | import "../src/WalletS
+wapMain.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> script\DeployFullStac
+k.s.sol:6:8
+  |
+6 | import "../src/AssetVe
+rifier.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> script\DeployFullStac
+k.s.sol:7:8
+  |
+7 | import "../src/TrustWa
+lletFeeDistributor.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\demos\Standalone
+RSC.sol:44:17
+   |
+44 |         uint256 
+topic_1;
+   |                 
+^^^^^^^ help: consider 
+using: `topic1`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\SwapMatcherRSCv2
+.sol:16:17
+   |
+16 |         uint256 
+topic_1;
+   |                 
+^^^^^^^ help: consider 
+using: `topic1`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\SwapMatcherRSCv2
+.sol:17:17
+   |
+17 |         uint256 
+topic_2;
+   |                 
+^^^^^^^ help: consider 
+using: `topic2`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\SwapMatcherRSCv2
+.sol:18:17
+   |
+18 |         uint256 
+topic_3;
+   |                 
+^^^^^^^ help: consider 
+using: `topic3`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\SwapMatcherRSCv2
+.sol:20:17
+   |
+20 |         uint256 
+block_number;
+   |                 
+^^^^^^^^^^^^ help: 
+consider using: 
+`blockNumber`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\SwapMatcherRSCv2
+.sol:21:17
+   |
+21 |         uint256 
+op_code;
+   |                 
+^^^^^^^ help: consider 
+using: `opCode`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\SwapMatcherRSCv2
+.sol:22:17
+   |
+22 |         uint256 
+block_hash;
+   |                 
+^^^^^^^^^^ help: consider 
+using: `blockHash`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\SwapMatcherRSCv2
+.sol:23:17
+   |
+23 |         uint256 
+tx_hash;
+   |                 
+^^^^^^^ help: consider 
+using: `txHash`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\SwapMatcherRSCv2
+.sol:24:17
+   |
+24 |         uint256 
+log_index;
+   |                 
+^^^^^^^^^ help: consider 
+using: `logIndex`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+  --> script\DeployLasna.s
+.sol:10:8
+   |
+10 | import "../src/SwapMa
+tcherRSC.sol";
+   |        ^^^^^^^^^^^^^^
+^^^^^^^^^^^^^
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#unaliased-pla
+in-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> 
+script\GetHash.s.sol:4:8
+  |
+4 | import 
+"forge-std/Script.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\SwapMatcherRSCv2
+.sol:33:17
+   |
+33 |         uint256 
+chain_id,
+   |                 
+^^^^^^^^ help: consider 
+using: `chainId`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\SwapMatcherRSCv2
+.sol:35:17
+   |
+35 |         uint256 
+topic_0,
+   |                 
+^^^^^^^ help: consider 
+using: `topic0`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\demos\Standalone
+RSC.sol:45:17
+   |
+45 |         uint256 
+topic_2;
+   |                 
+^^^^^^^ help: consider 
+using: `topic2`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\demos\Standalone
+RSC.sol:46:17
+   |
+46 |         uint256 
+topic_3;
+   |                 
+^^^^^^^ help: consider 
+using: `topic3`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> script\DeployFullStac
+k.s.sol:8:8
+  |
+8 | import "../src/EulerLa
+grangeOrderProcessor.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[unaliased-plain-impor
+t]: use named imports 
+'{A, B}' or alias 'import 
+".." as X'
+ --> script\DeployFullStac
+k.s.sol:9:8
+  |
+9 | import "../src/WalletS
+wapMain.sol";
+  |        ^^^^^^^^^^^^^^^
+^^^^^^^^^^^^
+  |
+  = help: https://book.get
+foundry.sh/reference/forge
+/forge-lint#unaliased-plai
+n-import
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\SwapMatcherRSCv2
+.sol:36:17
+   |
+36 |         uint256 
+topic_1,
+   |                 
+^^^^^^^ help: consider 
+using: `topic1`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\SwapMatcherRSCv2
+.sol:37:17
+   |
+37 |         uint256 
+topic_2,
+   |                 
+^^^^^^^ help: consider 
+using: `topic2`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\SwapMatcherRSCv2
+.sol:38:17
+   |
+38 |         uint256 
+topic_3
+   |                 
+^^^^^^^ help: consider 
+using: `topic3`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\SwapMatcherRSCv2
+.sol:42:17
+   |
+42 |         uint256 
+chain_id,
+   |                 
+^^^^^^^^ help: consider 
+using: `chainId`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\SwapMatcherRSCv2
+.sol:44:17
+   |
+44 |         uint256 
+topic_0,
+   |                 
+^^^^^^^ help: consider 
+using: `topic0`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\SwapMatcherRSCv2
+.sol:45:17
+   |
+45 |         uint256 
+topic_1,
+   |                 
+^^^^^^^ help: consider 
+using: `topic1`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\SwapMatcherRSCv2
+.sol:46:17
+   |
+46 |         uint256 
+topic_2,
+   |                 
+^^^^^^^ help: consider 
+using: `topic2`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\SwapMatcherRSCv2
+.sol:47:17
+   |
+47 |         uint256 
+topic_3
+   |                 
+^^^^^^^ help: consider 
+using: `topic3`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\demos\Standalone
+RSC.sol:48:17
+   |
+48 |         uint256 
+block_number;
+   |                 
+^^^^^^^^^^^^ help: 
+consider using: 
+`blockNumber`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\demos\Standalone
+RSC.sol:49:17
+   |
+49 |         uint256 
+op_code;
+   |                 
+^^^^^^^ help: consider 
+using: `opCode`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\demos\Standalone
+RSC.sol:50:17
+   |
+50 |         uint256 
+block_hash;
+   |                 
+^^^^^^^^^^ help: consider 
+using: `blockHash`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\demos\Standalone
+RSC.sol:51:17
+   |
+51 |         uint256 
+tx_hash;
+   |                 
+^^^^^^^ help: consider 
+using: `txHash`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\demos\Standalone
+RSC.sol:52:17
+   |
+52 |         uint256 
+log_index;
+   |                 
+^^^^^^^^^ help: consider 
+using: `logIndex`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\demos\Standalone
+RSC.sol:55:36
+   |
+55 |     event 
+Callback(uint256 indexed 
+chain_id, address indexed 
+_contract, uint64 indexed 
+gas_limit, bytes payload);
+   |                      
+              ^^^^^^^^ 
+help: consider using: 
+`chainId`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\demos\Standalone
+RSC.sol:55:88
+   |
+55 |     event 
+Callback(uint256 indexed 
+chain_id, address indexed 
+_contract, uint64 indexed 
+gas_limit, bytes payload);
+   |                      
+                          
+                          
+              ^^^^^^^^^ 
+help: consider using: 
+`gasLimit`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[mixed-case-variable]:
+ mutable variables should 
+use mixedCase
+  --> src\demos\Standalone
+RSC.sol:65:38
+   |
+65 |     mapping(address 
+=> bool) private 
+authorized_senders;
+   |                      
+                
+^^^^^^^^^^^^^^^^^^ help: 
+consider using: 
+`authorizedSenders`
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#mixed-case-va
+riable
+
+note[unwrapped-modifier-lo
+gic]: wrap modifier logic 
+to reduce code size
+  --> src\demos\Standalone
+RSC.sol:71:5
+   |
+71 | /     modifier 
+onlyAuthorizedSender() {
+72 | |         require(aut
+horized_senders[msg.sender
+], "Not authorized");
+73 | |         _;
+74 | |     }
+   | |_____^
+   |
+help: wrap modifier logic 
+to reduce code size
+   |
+71 ~     modifier 
+onlyAuthorizedSender() {
+72 +         
+_onlyAuthorizedSender();
+73 +         _;
+74 +     }
+75 + 
+76 +     function 
+_onlyAuthorizedSender() 
+internal {
+77 +         require(autho
+rized_senders[msg.sender],
+ "Not authorized");
+78 +     }
+   |
+   = help: https://book.ge
+tfoundry.sh/reference/forg
+e/forge-lint#unwrapped-mod
+ifier-logic
+
+note[unwrapped-modifier-lo
+gic]: wrap modifier logic 
+to reduce code size
+   --> src\demos\Standalon
+eRSC.sol:102:5
+    |
+102 | /     modifier 
+rnOnly() {
+103 | |         
+require(!vm, "Reactive 
+Network only");
+104 | |         _;
+105 | |     }
+    | |_____^
+    |
+help: wrap modifier logic 
+to reduce code size
+    |
+102 ~     modifier 
+rnOnly() {
+103 +         _rnOnly();
+104 +         _;
+105 +     }
+106 + 
+107 +     function 
+_rnOnly() internal {
+108 +         
+require(!vm, "Reactive 
+Network only");
+109 +     }
+    |
+    = help: https://book.g
+etfoundry.sh/reference/for
+ge/forge-lint#unwrapped-mo
+difier-logic
+
+note[unwrapped-modifier-lo
+gic]: wrap modifier logic 
+to reduce code size
+   --> src\demos\Standalon
+eRSC.sol:107:5
+    |
+107 | /     modifier 
+vmOnly() {
+108 | |         
+require(vm, "VM only");
+109 | |         _;
+110 | |     }
+    | |_____^
+    |
+help: wrap modifier logic 
+to reduce code size
+    |
+107 ~     modifier 
+vmOnly() {
+108 +         _vmOnly();
+109 +         _;
+110 +     }
+111 + 
+112 +     function 
+_vmOnly() internal {
+113 +         require(vm, 
+"VM only");
+114 +     }
+    |
+    = help: https://book.g
+etfoundry.sh/reference/for
+ge/forge-lint#unwrapped-mo
+difier-logic
+

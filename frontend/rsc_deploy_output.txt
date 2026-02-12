@@ -1,0 +1,24 @@
+﻿
+=== Deploying SwapMatcherRSC (Base Sepolia + Lasna) to Lasna ===
+Deployer: 0xB133a194893434107925682789F16662FB9DB062
+Base Sepolia WalletSwapMain: 0x45FC261c74016d576d551Ea2f18daBEED0f7d079
+Lasna WalletSwapMain: 0x54c774b1B44Adde9C159dBA8e1fbBAeE18235283
+Balance: 14.083970687999999999 ETH
+
+Deploying SwapMatcherRSC...
+SwapMatcherRSC deployed to: 0x887c19ba5BD1966a38486DaFE79C15d788354E7b
+
+Calling coverDebt...
+coverDebt successful!
+
+=== Now configure Base Sepolia WalletSwapMain ===
+Run the following commands or use a script to set:
+  authorizedReactiveVM: 0x887c19ba5BD1966a38486DaFE79C15d788354E7b
+  callbackProxy: 0x33bB7E0A66922261A86934DB9398782CF36e897C
+
+=== DEPLOYMENT COMPLETE ===
+
+RSC Address: 0x887c19ba5BD1966a38486DaFE79C15d788354E7b
+
+Update contracts.ts with:
+SWAP_MATCHER_RSC: '0x887c19ba5BD1966a38486DaFE79C15d788354E7b'
