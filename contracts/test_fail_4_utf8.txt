@@ -1,0 +1,374 @@
+﻿No files changed, compilation skipped
+forge : Warning: Replayed 
+invariant failure from "C:
+/Users/Dream/Downloads/mvi
+-dapp-complete/contracts/c
+ache/invariant/failures/Or
+derProcessorInvariants/inv
+ariant_liquidity_consisten
+cy" file. 
+At line:1 char:1
++ forge test 
+--match-contract 
+OrderProcessorInvariants 
+-vvv > test_fail ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo        
+      : NotSpeci    fied: 
+(Warning: R    
+eplay...istency"     
+file. :String) []    , 
+RemoteException
+    + FullyQualifiedE    
+rrorId : NativeCo    
+mmandError
+ 
+Run `forge clean` or 
+remove file to ignore 
+failure and to continue 
+invariant test campaign.
+
+Ran 2 tests for test/OrderProcessorInvariants.t.sol:OrderProcessorInvariants
+[PASS] invariant_index_consistency() (runs: 256, calls: 128000, reverts: 670)
+
+Γò¡-----------------------+-------------+-------+---------+----------Γò«
+| Contract              | Selector    | Calls | Reverts | Discards |
++==================================================================+
+| OrderProcessorHandler | cancelOrder | 25675 | 169     | 0        |
+|-----------------------+-------------+-------+---------+----------|
+| OrderProcessorHandler | createOrder | 25697 | 240     | 0        |
+|-----------------------+-------------+-------+---------+----------|
+| OrderProcessorHandler | matchOrders | 25549 | 0       | 0        |
+|-----------------------+-------------+-------+---------+----------|
+| OrderProcessorHandler | setupMakers | 25578 | 261     | 0        |
+|-----------------------+-------------+-------+---------+----------|
+| OrderProcessorHandler | warpTime    | 25501 | 0       | 0        |
+Γò░-----------------------+-------------+-------+---------+----------Γò»
+
+[FAIL: invariant_liquidity_consistency replay failure]
+	[Sequence] (original: 5, shrunk: 5)
+		sender=0x0000000000000000000000000000000000001B63 addr=[test/OrderProcessorHandler.sol:OrderProcessorHandler]0xA4AD4f68d0b91CFD19687c881e50f3A00242828c calldata=createOrder(uint256,bool,uint256,uint256,uint256) args=[41871604799558342786444078225716118860916783623903991162448285869138682176242 [4.187e76], false, 86400 [8.64e4], 5000, 7108]
+		sender=0xCE6f645430e124e5f6043F5dA050017422f83C18 addr=[test/OrderProcessorHandler.sol:OrderProcessorHandler]0xA4AD4f68d0b91CFD19687c881e50f3A00242828c calldata=createOrder(uint256,bool,uint256,uint256,uint256) args=[75276140696391174450305814049576319106646922510300487059720162673006384432788 [7.527e76], false, 500000000000000 [5e14], 0, 1000000 [1e6]]
+		sender=0x0000000000000000000000000000000000000905 addr=[test/OrderProcessorHandler.sol:OrderProcessorHandler]0xA4AD4f68d0b91CFD19687c881e50f3A00242828c calldata=cancelOrder(uint256) args=[177116229732075176406884468275056147989293522939026 [1.771e50]]
+		sender=0x00000000000000000000065a4D8Aa9bbBd244e10 addr=[test/OrderProcessorHandler.sol:OrderProcessorHandler]0xA4AD4f68d0b91CFD19687c881e50f3A00242828c calldata=createOrder(uint256,bool,uint256,uint256,uint256) args=[4756001100357413460885664506247506071831187334 [4.756e45], true, 8840336151771769582026134037150383694044531 [8.84e42], 314215440427417 [3.142e14], 604245917278405046762812487454984074548270108849583 [6.042e50]]
+		sender=0x0000000000000000000032Ba29bBB0b826b0b4B7 addr=[test/OrderProcessorHandler.sol:OrderProcessorHandler]0xA4AD4f68d0b91CFD19687c881e50f3A00242828c calldata=createOrder(uint256,bool,uint256,uint256,uint256) args=[4101763974363771597918482774693559906049447719534662239037127506 [4.101e63], true, 559019844439464250401004270415233056241066574242050761 [5.59e53], 255250341516108892466888580129675933460156548 [2.552e44], 4544973754286162767 [4.544e18]]
+ invariant_liquidity_consistency() (runs: 1, calls: 1, reverts: 1)
+Traces:
+  [1140513] OrderProcessorHandler::createOrder(41871604799558342786444078225716118860916783623903991162448285869138682176242 [4.187e76], false, 86400 [8.64e4], 5000, 7108)
+    Γö£ΓöÇ [0] VM::startPrank(0x0000000000000000000000000000000000000067)
+    Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γö£ΓöÇ [1026139] WalletSwapMain::createOrder{value: 1000000000000000000}(MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 0, 0, 9999999999999086401 [9.999e18], 99999999999999005001 [9.999e19], 9999999999999086401 [9.999e18], 99999999999999005001 [9.999e19], 100, 7108, true, 0)
+    Γöé   Γö£ΓöÇ [5386] TrustWalletFeeDistributor::calculateFee(MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], 0, 9999999999999086401 [9.999e18], 9999999999999086401 [9.999e18]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 4999999999999543 [4.999e15]
+    Γöé   Γö£ΓöÇ [25088] TrustWalletFeeDistributor::depositGasForDebt{value: 2000000000000000}(0x0000000000000000000000000000000000000000000000000000000000000000)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γö£ΓöÇ [31896] MockToken::transferFrom(0x0000000000000000000000000000000000000067, WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], 4999999999999543 [4.999e15])
+    Γöé   Γöé   Γö£ΓöÇ emit Transfer(from: 0x0000000000000000000000000000000000000067, to: WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], value: 4999999999999543 [4.999e15])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] true
+    Γöé   Γö£ΓöÇ [4477] MockToken::approve(TrustWalletFeeDistributor: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], 0)
+    Γöé   Γöé   Γö£ΓöÇ emit Approval(owner: WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], spender: TrustWalletFeeDistributor: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], value: 0)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] true
+    Γöé   Γö£ΓöÇ [861] MockToken::allowance(WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], TrustWalletFeeDistributor: [0x2e234DAe75C793f67A35089C9d99245E1C58470b]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0
+    Γöé   Γö£ΓöÇ [22277] MockToken::approve(TrustWalletFeeDistributor: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], 4999999999999543 [4.999e15])
+    Γöé   Γöé   Γö£ΓöÇ emit Approval(owner: WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], spender: TrustWalletFeeDistributor: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], value: 4999999999999543 [4.999e15])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] true
+    Γöé   Γö£ΓöÇ [169769] TrustWalletFeeDistributor::distributeFee(MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], 0, 9999999999999086401 [9.999e18], 9999999999999086401 [9.999e18], WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], 0x38a1b2090ee511e9e9afc58e206efc43cf1ff7d20b2c88c56071b7e3fbabb1a3)
+    Γöé   Γöé   Γö£ΓöÇ [27263] MockToken::transferFrom(WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], Identity: [0x0000000000000000000000000000000000000004], 4999999999999543 [4.999e15])
+    Γöé   Γöé   Γöé   Γö£ΓöÇ emit Approval(owner: WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], spender: TrustWalletFeeDistributor: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], value: 0)
+    Γöé   Γöé   Γöé   Γö£ΓöÇ emit Transfer(from: WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], to: Identity: [0x0000000000000000000000000000000000000004], value: 4999999999999543 [4.999e15])
+    Γöé   Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] true
+    Γöé   Γöé   Γö£ΓöÇ emit FeeDistributed(token: MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], recipient: Identity: [0x0000000000000000000000000000000000000004], amount: 4999999999999543 [4.999e15], orderId: 0x38a1b2090ee511e9e9afc58e206efc43cf1ff7d20b2c88c56071b7e3fbabb1a3, timestamp: 1)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 4999999999999543 [4.999e15]
+    Γöé   Γö£ΓöÇ [716371] EulerLagrangeOrderProcessor::createOrder(0x0000000000000000000000000000000000000067, MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 0, 0, 9999999999999086401 [9.999e18], 99999999999999005001 [9.999e19], 9999999999999086401 [9.999e18], 99999999999999005001 [9.999e19], 100, 7109, true, 0)
+    Γöé   Γöé   Γö£ΓöÇ [166860] AssetVerifier::verifyToken(MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], 0x0000000000000000000000000000000000000067, 9999999999999086401 [9.999e18])
+    Γöé   Γöé   Γöé   Γö£ΓöÇ [563] MockToken::balanceOf(0x0000000000000000000000000000000000000067) [staticcall]
+    Γöé   Γöé   Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 999995000000000000457 [9.999e20]
+    Γöé   Γöé   Γöé   Γö£ΓöÇ emit VerificationStarted(verificationId: 0x12b3326853d7f1f69ead65b2b6ac289daaac7e83023a01f3716c199386f6706d, token: MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], owner: 0x0000000000000000000000000000000000000067, amount: 9999999999999086401 [9.999e18], isNft: false)
+    Γöé   Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0x12b3326853d7f1f69ead65b2b6ac289daaac7e83023a01f3716c199386f6706d
+    Γöé   Γöé   Γö£ΓöÇ [124277] VirtualLiquidityPool::addLiquidity(MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 9999999999999086401 [9.999e18])
+    Γöé   Γöé   Γöé   Γö£ΓöÇ emit LiquidityChanged(token0: MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], token1: MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], newLiquidity: 9999999999999086401 [9.999e18], timestamp: 1)
+    Γöé   Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γöé   Γö£ΓöÇ emit OrderCreated(orderId: 0x34603888b787b78024e13f9d32527a6ece30be497af9196789275d1cd65c5002, maker: 0x0000000000000000000000000000000000000067, tokenIn: MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], tokenOut: MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], typeIn: 0, typeOut: 0, amountIn: 9999999999999086401 [9.999e18], amountOut: 99999999999999005001 [9.999e19], minutesValueIn: 9999999999999086401 [9.999e18], targetChainId: 0, timestamp: 1)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0x34603888b787b78024e13f9d32527a6ece30be497af9196789275d1cd65c5002
+    Γöé   Γö£ΓöÇ emit OrderInitiated(orderId: 0x34603888b787b78024e13f9d32527a6ece30be497af9196789275d1cd65c5002, maker: 0x0000000000000000000000000000000000000067, tokenIn: MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], tokenOut: MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], typeIn: 0, typeOut: 0, amountIn: 9999999999999086401 [9.999e18], amountOut: 99999999999999005001 [9.999e19], targetChainId: 0, timestamp: 1)
+    Γöé   Γö£ΓöÇ emit MatchAttempted(orderId: 0x34603888b787b78024e13f9d32527a6ece30be497af9196789275d1cd65c5002, tokenIn: MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], tokenOut: MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598])
+    Γöé   Γö£ΓöÇ [5696] EulerLagrangeOrderProcessor::getOrder(0x34603888b787b78024e13f9d32527a6ece30be497af9196789275d1cd65c5002) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0x0000000000000000000000000000000000000067, tokenIn: 0x1d1499e622D69689cdf9004d05Ec547d650Ff211, tokenOut: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, typeIn: 0, typeOut: 0, amountIn: 9999999999999086401 [9.999e18], amountOut: 99999999999999005001 [9.999e19], minutesValueIn: 9999999999999086401 [9.999e18], minutesValueOut: 99999999999999005001 [9.999e19], slippageTolerance: 100, filledAmount: 0, timestamp: 1, expiration: 7109, status: 0, rebookEnabled: true, rebookAttempts: 0, verificationId: 0x12b3326853d7f1f69ead65b2b6ac289daaac7e83023a01f3716c199386f6706d, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ [2701] EulerLagrangeOrderProcessor::findMatchingOrder(MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 9999999999999086401 [9.999e18], 99999999999999005001 [9.999e19]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0x0000000000000000000000000000000000000000000000000000000000000000
+    Γöé   ΓööΓöÇ ΓåÉ [Return] 0x34603888b787b78024e13f9d32527a6ece30be497af9196789275d1cd65c5002
+    Γö£ΓöÇ [0] VM::stopPrank()
+    Γöé   ΓööΓöÇ ΓåÉ [Return]
+    ΓööΓöÇ ΓåÉ [Return]
+
+  [920887] OrderProcessorHandler::createOrder(75276140696391174450305814049576319106646922510300487059720162673006384432788 [7.527e76], false, 500000000000000 [5e14], 0, 1000000 [1e6])
+    Γö£ΓöÇ [0] VM::startPrank(0x0000000000000000000000000000000000000068)
+    Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γö£ΓöÇ [857939] WalletSwapMain::createOrder{value: 1000000000000000000}(MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 0, 0, 500000000000000 [5e14], 1000000 [1e6], 500000000000000 [5e14], 1000000 [1e6], 100, 50249 [5.024e4], true, 0)
+    Γöé   Γö£ΓöÇ [5386] TrustWalletFeeDistributor::calculateFee(MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], 0, 500000000000000 [5e14], 500000000000000 [5e14]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 250000000000 [2.5e11]
+    Γöé   Γö£ΓöÇ [7988] TrustWalletFeeDistributor::depositGasForDebt{value: 2000000000000000}(0x0000000000000000000000000000000000000000000000000000000000000000)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γö£ΓöÇ [31896] MockToken::transferFrom(0x0000000000000000000000000000000000000068, WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], 250000000000 [2.5e11])
+    Γöé   Γöé   Γö£ΓöÇ emit Transfer(from: 0x0000000000000000000000000000000000000068, to: WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], value: 250000000000 [2.5e11])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] true
+    Γöé   Γö£ΓöÇ [4477] MockToken::approve(TrustWalletFeeDistributor: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], 0)
+    Γöé   Γöé   Γö£ΓöÇ emit Approval(owner: WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], spender: TrustWalletFeeDistributor: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], value: 0)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] true
+    Γöé   Γö£ΓöÇ [861] MockToken::allowance(WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], TrustWalletFeeDistributor: [0x2e234DAe75C793f67A35089C9d99245E1C58470b]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0
+    Γöé   Γö£ΓöÇ [22277] MockToken::approve(TrustWalletFeeDistributor: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], 250000000000 [2.5e11])
+    Γöé   Γöé   Γö£ΓöÇ emit Approval(owner: WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], spender: TrustWalletFeeDistributor: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], value: 250000000000 [2.5e11])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] true
+    Γöé   Γö£ΓöÇ [135569] TrustWalletFeeDistributor::distributeFee(MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], 0, 500000000000000 [5e14], 500000000000000 [5e14], WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], 0x767bdb90a5e2b7165fff18d18921510cc6705e94dc45ef0643376de92c9a24fd)
+    Γöé   Γöé   Γö£ΓöÇ [10163] MockToken::transferFrom(WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], Identity: [0x0000000000000000000000000000000000000004], 250000000000 [2.5e11])
+    Γöé   Γöé   Γöé   Γö£ΓöÇ emit Approval(owner: WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], spender: TrustWalletFeeDistributor: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], value: 0)
+    Γöé   Γöé   Γöé   Γö£ΓöÇ emit Transfer(from: WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], to: Identity: [0x0000000000000000000000000000000000000004], value: 250000000000 [2.5e11])
+    Γöé   Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] true
+    Γöé   Γöé   Γö£ΓöÇ emit FeeDistributed(token: MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], recipient: Identity: [0x0000000000000000000000000000000000000004], amount: 250000000000 [2.5e11], orderId: 0x767bdb90a5e2b7165fff18d18921510cc6705e94dc45ef0643376de92c9a24fd, timestamp: 1)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 250000000000 [2.5e11]
+    Γöé   Γö£ΓöÇ [599471] EulerLagrangeOrderProcessor::createOrder(0x0000000000000000000000000000000000000068, MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 0, 0, 500000000000000 [5e14], 1000000 [1e6], 500000000000000 [5e14], 1000000 [1e6], 100, 50250 [5.025e4], true, 0)
+    Γöé   Γöé   Γö£ΓöÇ [169660] AssetVerifier::verifyToken(MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], 0x0000000000000000000000000000000000000068, 500000000000000 [5e14])
+    Γöé   Γöé   Γöé   Γö£ΓöÇ [563] MockToken::balanceOf(0x0000000000000000000000000000000000000068) [staticcall]
+    Γöé   Γöé   Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 999999999750000000000 [9.999e20]
+    Γöé   Γöé   Γöé   Γö£ΓöÇ emit VerificationStarted(verificationId: 0xd377caf415a12181f8739473d6b1c621194145f580e70de1da0601d5923310be, token: MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], owner: 0x0000000000000000000000000000000000000068, amount: 500000000000000 [5e14], isNft: false)
+    Γöé   Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0xd377caf415a12181f8739473d6b1c621194145f580e70de1da0601d5923310be
+    Γöé   Γöé   Γö£ΓöÇ [72977] VirtualLiquidityPool::addLiquidity(MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 500000000000000 [5e14])
+    Γöé   Γöé   Γöé   Γö£ΓöÇ emit LiquidityChanged(token0: MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], token1: MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], newLiquidity: 10000499999999086401 [1e19], timestamp: 1)
+    Γöé   Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γöé   Γö£ΓöÇ emit OrderCreated(orderId: 0xd549c6883a4519163b7816fab60a93bad04d40f89712805a18bd5848129d406b, maker: 0x0000000000000000000000000000000000000068, tokenIn: MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], tokenOut: MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], typeIn: 0, typeOut: 0, amountIn: 500000000000000 [5e14], amountOut: 1000000 [1e6], minutesValueIn: 500000000000000 [5e14], targetChainId: 0, timestamp: 1)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0xd549c6883a4519163b7816fab60a93bad04d40f89712805a18bd5848129d406b
+    Γöé   Γö£ΓöÇ emit OrderInitiated(orderId: 0xd549c6883a4519163b7816fab60a93bad04d40f89712805a18bd5848129d406b, maker: 0x0000000000000000000000000000000000000068, tokenIn: MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], tokenOut: MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], typeIn: 0, typeOut: 0, amountIn: 500000000000000 [5e14], amountOut: 1000000 [1e6], targetChainId: 0, timestamp: 1)
+    Γöé   Γö£ΓöÇ emit MatchAttempted(orderId: 0xd549c6883a4519163b7816fab60a93bad04d40f89712805a18bd5848129d406b, tokenIn: MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], tokenOut: MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598])
+    Γöé   Γö£ΓöÇ [5696] EulerLagrangeOrderProcessor::getOrder(0xd549c6883a4519163b7816fab60a93bad04d40f89712805a18bd5848129d406b) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0x0000000000000000000000000000000000000068, tokenIn: 0x1d1499e622D69689cdf9004d05Ec547d650Ff211, tokenOut: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, typeIn: 0, typeOut: 0, amountIn: 500000000000000 [5e14], amountOut: 1000000 [1e6], minutesValueIn: 500000000000000 [5e14], minutesValueOut: 1000000 [1e6], slippageTolerance: 100, filledAmount: 0, timestamp: 1, expiration: 50250 [5.025e4], status: 0, rebookEnabled: true, rebookAttempts: 0, verificationId: 0xd377caf415a12181f8739473d6b1c621194145f580e70de1da0601d5923310be, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ [2701] EulerLagrangeOrderProcessor::findMatchingOrder(MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 500000000000000 [5e14], 1000000 [1e6]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0x0000000000000000000000000000000000000000000000000000000000000000
+    Γöé   ΓööΓöÇ ΓåÉ [Return] 0xd549c6883a4519163b7816fab60a93bad04d40f89712805a18bd5848129d406b
+    Γö£ΓöÇ [0] VM::stopPrank()
+    Γöé   ΓööΓöÇ ΓåÉ [Return]
+    ΓööΓöÇ ΓåÉ [Return]
+
+  [153910] OrderProcessorHandler::cancelOrder(177116229732075176406884468275056147989293522939026 [1.771e50])
+    Γö£ΓöÇ [31696] EulerLagrangeOrderProcessor::getOrder(0x34603888b787b78024e13f9d32527a6ece30be497af9196789275d1cd65c5002) [staticcall]
+    Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0x0000000000000000000000000000000000000067, tokenIn: 0x1d1499e622D69689cdf9004d05Ec547d650Ff211, tokenOut: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, typeIn: 0, typeOut: 0, amountIn: 9999999999999086401 [9.999e18], amountOut: 99999999999999005001 [9.999e19], minutesValueIn: 9999999999999086401 [9.999e18], minutesValueOut: 99999999999999005001 [9.999e19], slippageTolerance: 100, filledAmount: 0, timestamp: 1, expiration: 7109, status: 0, rebookEnabled: true, rebookAttempts: 0, verificationId: 0x12b3326853d7f1f69ead65b2b6ac289daaac7e83023a01f3716c199386f6706d, targetChainId: 0 })
+    Γö£ΓöÇ [0] VM::prank(0x0000000000000000000000000000000000000067)
+    Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γö£ΓöÇ [90247] EulerLagrangeOrderProcessor::cancelOrder(0x34603888b787b78024e13f9d32527a6ece30be497af9196789275d1cd65c5002)
+    Γöé   Γö£ΓöÇ [72856] VirtualLiquidityPool::reduceLiquidity(MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 9999999999999086401 [9.999e18])
+    Γöé   Γöé   Γö£ΓöÇ emit LiquidityChanged(token0: MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], token1: MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], newLiquidity: 500000000000000 [5e14], timestamp: 1)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γö£ΓöÇ emit OrderCancelled(orderId: 0x34603888b787b78024e13f9d32527a6ece30be497af9196789275d1cd65c5002, reason: "User cancelled", timestamp: 1)
+    Γöé   ΓööΓöÇ ΓåÉ [Return]
+    ΓööΓöÇ ΓåÉ [Return]
+
+  [1244994] OrderProcessorHandler::createOrder(4756001100357413460885664506247506071831187334 [4.756e45], true, 8840336151771769582026134037150383694044531 [8.84e42], 314215440427417 [3.142e14], 604245917278405046762812487454984074548270108849583 [6.042e50])
+    Γö£ΓöÇ [0] VM::startPrank(0x0000000000000000000000000000000000000069)
+    Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γö£ΓöÇ [1164800] WalletSwapMain::createOrder{value: 1000000000000000000}(MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], 0, 0, 7687334594059568804 [7.687e18], 314215440427417 [3.142e14], 7687334594059568804 [7.687e18], 314215440427417 [3.142e14], 100, 5009, true, 0)
+    Γöé   Γö£ΓöÇ [5386] TrustWalletFeeDistributor::calculateFee(MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 0, 7687334594059568804 [7.687e18], 7687334594059568804 [7.687e18]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 3843667297029784 [3.843e15]
+    Γöé   Γö£ΓöÇ [7988] TrustWalletFeeDistributor::depositGasForDebt{value: 2000000000000000}(0x0000000000000000000000000000000000000000000000000000000000000000)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γö£ΓöÇ [31896] MockToken::transferFrom(0x0000000000000000000000000000000000000069, WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], 3843667297029784 [3.843e15])
+    Γöé   Γöé   Γö£ΓöÇ emit Transfer(from: 0x0000000000000000000000000000000000000069, to: WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], value: 3843667297029784 [3.843e15])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] true
+    Γöé   Γö£ΓöÇ [4477] MockToken::approve(TrustWalletFeeDistributor: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], 0)
+    Γöé   Γöé   Γö£ΓöÇ emit Approval(owner: WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], spender: TrustWalletFeeDistributor: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], value: 0)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] true
+    Γöé   Γö£ΓöÇ [861] MockToken::allowance(WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], TrustWalletFeeDistributor: [0x2e234DAe75C793f67A35089C9d99245E1C58470b]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0
+    Γöé   Γö£ΓöÇ [22277] MockToken::approve(TrustWalletFeeDistributor: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], 3843667297029784 [3.843e15])
+    Γöé   Γöé   Γö£ΓöÇ emit Approval(owner: WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], spender: TrustWalletFeeDistributor: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], value: 3843667297029784 [3.843e15])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] true
+    Γöé   Γö£ΓöÇ [152669] TrustWalletFeeDistributor::distributeFee(MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 0, 7687334594059568804 [7.687e18], 7687334594059568804 [7.687e18], WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], 0x35d42b22abc990147460707586af25d978d45f1afa38989c63abb5cd7d4ebf90)
+    Γöé   Γöé   Γö£ΓöÇ [27263] MockToken::transferFrom(WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], Identity: [0x0000000000000000000000000000000000000004], 3843667297029784 [3.843e15])
+    Γöé   Γöé   Γöé   Γö£ΓöÇ emit Approval(owner: WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], spender: TrustWalletFeeDistributor: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], value: 0)
+    Γöé   Γöé   Γöé   Γö£ΓöÇ emit Transfer(from: WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], to: Identity: [0x0000000000000000000000000000000000000004], value: 3843667297029784 [3.843e15])
+    Γöé   Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] true
+    Γöé   Γöé   Γö£ΓöÇ emit FeeDistributed(token: MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], recipient: Identity: [0x0000000000000000000000000000000000000004], amount: 3843667297029784 [3.843e15], orderId: 0x35d42b22abc990147460707586af25d978d45f1afa38989c63abb5cd7d4ebf90, timestamp: 1)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 3843667297029784 [3.843e15]
+    Γöé   Γö£ΓöÇ [633669] EulerLagrangeOrderProcessor::createOrder(0x0000000000000000000000000000000000000069, MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], 0, 0, 7687334594059568804 [7.687e18], 314215440427417 [3.142e14], 7687334594059568804 [7.687e18], 314215440427417 [3.142e14], 100, 5010, true, 0)
+    Γöé   Γöé   Γö£ΓöÇ [169660] AssetVerifier::verifyToken(MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 0x0000000000000000000000000000000000000069, 7687334594059568804 [7.687e18])
+    Γöé   Γöé   Γöé   Γö£ΓöÇ [563] MockToken::balanceOf(0x0000000000000000000000000000000000000069) [staticcall]
+    Γöé   Γöé   Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 999996156332702970216 [9.999e20]
+    Γöé   Γöé   Γöé   Γö£ΓöÇ emit VerificationStarted(verificationId: 0xf40c04e375349b4452d0233174ce80427ecbe4d103e0570817a8a53e0a5230d5, token: MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], owner: 0x0000000000000000000000000000000000000069, amount: 7687334594059568804 [7.687e18], isNft: false)
+    Γöé   Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0xf40c04e375349b4452d0233174ce80427ecbe4d103e0570817a8a53e0a5230d5
+    Γöé   Γöé   Γö£ΓöÇ [72975] VirtualLiquidityPool::addLiquidity(MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], 7687334594059568804 [7.687e18])
+    Γöé   Γöé   Γöé   Γö£ΓöÇ emit LiquidityChanged(token0: MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], token1: MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], newLiquidity: 7687834594059568804 [7.687e18], timestamp: 1)
+    Γöé   Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γöé   Γö£ΓöÇ emit OrderCreated(orderId: 0x7e12e2e361f0d14990dd12a8d9dceff49629f66c65ea965d06bb695abbb9578d, maker: 0x0000000000000000000000000000000000000069, tokenIn: MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], tokenOut: MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], typeIn: 0, typeOut: 0, amountIn: 7687334594059568804 [7.687e18], amountOut: 314215440427417 [3.142e14], minutesValueIn: 7687334594059568804 [7.687e18], targetChainId: 0, timestamp: 1)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0x7e12e2e361f0d14990dd12a8d9dceff49629f66c65ea965d06bb695abbb9578d
+    Γöé   Γö£ΓöÇ emit OrderInitiated(orderId: 0x7e12e2e361f0d14990dd12a8d9dceff49629f66c65ea965d06bb695abbb9578d, maker: 0x0000000000000000000000000000000000000069, tokenIn: MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], tokenOut: MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], typeIn: 0, typeOut: 0, amountIn: 7687334594059568804 [7.687e18], amountOut: 314215440427417 [3.142e14], targetChainId: 0, timestamp: 1)
+    Γöé   Γö£ΓöÇ emit MatchAttempted(orderId: 0x7e12e2e361f0d14990dd12a8d9dceff49629f66c65ea965d06bb695abbb9578d, tokenIn: MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], tokenOut: MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211])
+    Γöé   Γö£ΓöÇ [5696] EulerLagrangeOrderProcessor::getOrder(0x7e12e2e361f0d14990dd12a8d9dceff49629f66c65ea965d06bb695abbb9578d) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0x0000000000000000000000000000000000000069, tokenIn: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, tokenOut: 0x1d1499e622D69689cdf9004d05Ec547d650Ff211, typeIn: 0, typeOut: 0, amountIn: 7687334594059568804 [7.687e18], amountOut: 314215440427417 [3.142e14], minutesValueIn: 7687334594059568804 [7.687e18], minutesValueOut: 314215440427417 [3.142e14], slippageTolerance: 100, filledAmount: 0, timestamp: 1, expiration: 5010, status: 0, rebookEnabled: true, rebookAttempts: 0, verificationId: 0xf40c04e375349b4452d0233174ce80427ecbe4d103e0570817a8a53e0a5230d5, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ [25216] EulerLagrangeOrderProcessor::findMatchingOrder(MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], 7687334594059568804 [7.687e18], 314215440427417 [3.142e14]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0xd549c6883a4519163b7816fab60a93bad04d40f89712805a18bd5848129d406b
+    Γöé   Γö£ΓöÇ [17696] EulerLagrangeOrderProcessor::getOrder(0xd549c6883a4519163b7816fab60a93bad04d40f89712805a18bd5848129d406b) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0x0000000000000000000000000000000000000068, tokenIn: 0x1d1499e622D69689cdf9004d05Ec547d650Ff211, tokenOut: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, typeIn: 0, typeOut: 0, amountIn: 500000000000000 [5e14], amountOut: 1000000 [1e6], minutesValueIn: 500000000000000 [5e14], minutesValueOut: 1000000 [1e6], slippageTolerance: 100, filledAmount: 0, timestamp: 1, expiration: 50250 [5.025e4], status: 0, rebookEnabled: true, rebookAttempts: 0, verificationId: 0xd377caf415a12181f8739473d6b1c621194145f580e70de1da0601d5923310be, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ [2563] MockToken::balanceOf(0x0000000000000000000000000000000000000068) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 999999999750000000000 [9.999e20]
+    Γöé   Γö£ΓöÇ [2861] MockToken::allowance(0x0000000000000000000000000000000000000068, WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 115792089237316195423570985008687907853269984665640564039457584007913129639935 [1.157e77]
+    Γöé   Γö£ΓöÇ emit MatchCalculated(orderIdA: 0x7e12e2e361f0d14990dd12a8d9dceff49629f66c65ea965d06bb695abbb9578d, orderIdB: 0xd549c6883a4519163b7816fab60a93bad04d40f89712805a18bd5848129d406b, amountAtoB: 628430 [6.284e5], amountBtoA: 314215440427417 [3.142e14])
+    Γöé   Γö£ΓöÇ [10796] MockToken::transferFrom(0x0000000000000000000000000000000000000068, 0x0000000000000000000000000000000000000069, 314215440427417 [3.142e14])
+    Γöé   Γöé   Γö£ΓöÇ emit Transfer(from: 0x0000000000000000000000000000000000000068, to: 0x0000000000000000000000000000000000000069, value: 314215440427417 [3.142e14])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] true
+    Γöé   Γö£ΓöÇ [7996] MockToken::transferFrom(0x0000000000000000000000000000000000000069, 0x0000000000000000000000000000000000000068, 628430 [6.284e5])
+    Γöé   Γöé   Γö£ΓöÇ emit Transfer(from: 0x0000000000000000000000000000000000000069, to: 0x0000000000000000000000000000000000000068, value: 628430 [6.284e5])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] true
+    Γöé   Γö£ΓöÇ [80392] EulerLagrangeOrderProcessor::updateOrderStatus(0x7e12e2e361f0d14990dd12a8d9dceff49629f66c65ea965d06bb695abbb9578d, 1)
+    Γöé   Γöé   Γö£ΓöÇ emit OrderFilled(orderId: 0x7e12e2e361f0d14990dd12a8d9dceff49629f66c65ea965d06bb695abbb9578d, filledAmount: 314215440427417 [3.142e14], remainingAmount: 0, timestamp: 1)
+    Γöé   Γöé   Γö£ΓöÇ [52454] VirtualLiquidityPool::reduceLiquidity(MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], 7687334594059568804 [7.687e18])
+    Γöé   Γöé   Γöé   Γö£ΓöÇ emit LiquidityChanged(token0: MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], token1: MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], newLiquidity: 500000000000000 [5e14], timestamp: 1)
+    Γöé   Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ [3492] EulerLagrangeOrderProcessor::removeFromPairIndex(0x7e12e2e361f0d14990dd12a8d9dceff49629f66c65ea965d06bb695abbb9578d)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ [83161] EulerLagrangeOrderProcessor::updateOrderFill(0xd549c6883a4519163b7816fab60a93bad04d40f89712805a18bd5848129d406b, 628430 [6.284e5])
+    Γöé   Γöé   Γö£ΓöÇ emit OrderPartiallyFilled(orderId: 0xd549c6883a4519163b7816fab60a93bad04d40f89712805a18bd5848129d406b, filledAmount: 628430 [6.284e5], remainingAmount: 371570 [3.715e5], timestamp: 1)
+    Γöé   Γöé   Γö£ΓöÇ [55256] VirtualLiquidityPool::reduceLiquidity(MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 314215000000000 [3.142e14])
+    Γöé   Γöé   Γöé   Γö£ΓöÇ emit LiquidityChanged(token0: MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], token1: MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], newLiquidity: 185785000000000 [1.857e14], timestamp: 1)
+    Γöé   Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ emit OrderExecuted(orderId: 0x7e12e2e361f0d14990dd12a8d9dceff49629f66c65ea965d06bb695abbb9578d, taker: 0x0000000000000000000000000000000000000068, amountOut: 314215440427417 [3.142e14], timestamp: 1)
+    Γöé   Γö£ΓöÇ emit OrderExecuted(orderId: 0xd549c6883a4519163b7816fab60a93bad04d40f89712805a18bd5848129d406b, taker: 0x0000000000000000000000000000000000000069, amountOut: 628430 [6.284e5], timestamp: 1)
+    Γöé   Γö£ΓöÇ emit OrderAutoMatched(orderIdA: 0x7e12e2e361f0d14990dd12a8d9dceff49629f66c65ea965d06bb695abbb9578d, orderIdB: 0xd549c6883a4519163b7816fab60a93bad04d40f89712805a18bd5848129d406b, timestamp: 1)
+    Γöé   Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0x7e12e2e361f0d14990dd12a8d9dceff49629f66c65ea965d06bb695abbb9578d) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0x0000000000000000000000000000000000000069, tokenIn: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, tokenOut: 0x1d1499e622D69689cdf9004d05Ec547d650Ff211, typeIn: 0, typeOut: 0, amountIn: 7687334594059568804 [7.687e18], amountOut: 314215440427417 [3.142e14], minutesValueIn: 7687334594059568804 [7.687e18], minutesValueOut: 314215440427417 [3.142e14], slippageTolerance: 100, filledAmount: 314215440427417 [3.142e14], timestamp: 1, expiration: 5010, status: 1, rebookEnabled: true, rebookAttempts: 0, verificationId: 0xf40c04e375349b4452d0233174ce80427ecbe4d103e0570817a8a53e0a5230d5, targetChainId: 0 })
+    Γöé   ΓööΓöÇ ΓåÉ [Return] 0x7e12e2e361f0d14990dd12a8d9dceff49629f66c65ea965d06bb695abbb9578d
+    Γö£ΓöÇ [0] VM::stopPrank()
+    Γöé   ΓööΓöÇ ΓåÉ [Return]
+    ΓööΓöÇ ΓåÉ [Return]
+
+  [1182441] OrderProcessorHandler::createOrder(4101763974363771597918482774693559906049447719534662239037127506 [4.101e63], true, 559019844439464250401004270415233056241066574242050761 [5.59e53], 255250341516108892466888580129675933460156548 [2.552e44], 4544973754286162767 [4.544e18])
+    Γö£ΓöÇ [0] VM::startPrank(0x0000000000000000000000000000000000000066)
+    Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γö£ΓöÇ [1119104] WalletSwapMain::createOrder{value: 1000000000000000000}(MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], 0, 0, 5631910601842399362 [5.631e18], 37828964496522479036 [3.782e19], 5631910601842399362 [5.631e18], 37828964496522479036 [3.782e19], 100, 42086 [4.208e4], true, 0)
+    Γöé   Γö£ΓöÇ [5386] TrustWalletFeeDistributor::calculateFee(MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 0, 5631910601842399362 [5.631e18], 5631910601842399362 [5.631e18]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 2815955300921199 [2.815e15]
+    Γöé   Γö£ΓöÇ [7988] TrustWalletFeeDistributor::depositGasForDebt{value: 2000000000000000}(0x0000000000000000000000000000000000000000000000000000000000000000)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γö£ΓöÇ [31896] MockToken::transferFrom(0x0000000000000000000000000000000000000066, WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], 2815955300921199 [2.815e15])
+    Γöé   Γöé   Γö£ΓöÇ emit Transfer(from: 0x0000000000000000000000000000000000000066, to: WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], value: 2815955300921199 [2.815e15])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] true
+    Γöé   Γö£ΓöÇ [4477] MockToken::approve(TrustWalletFeeDistributor: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], 0)
+    Γöé   Γöé   Γö£ΓöÇ emit Approval(owner: WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], spender: TrustWalletFeeDistributor: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], value: 0)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] true
+    Γöé   Γö£ΓöÇ [861] MockToken::allowance(WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], TrustWalletFeeDistributor: [0x2e234DAe75C793f67A35089C9d99245E1C58470b]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0
+    Γöé   Γö£ΓöÇ [22277] MockToken::approve(TrustWalletFeeDistributor: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], 2815955300921199 [2.815e15])
+    Γöé   Γöé   Γö£ΓöÇ emit Approval(owner: WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], spender: TrustWalletFeeDistributor: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], value: 2815955300921199 [2.815e15])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] true
+    Γöé   Γö£ΓöÇ [135569] TrustWalletFeeDistributor::distributeFee(MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 0, 5631910601842399362 [5.631e18], 5631910601842399362 [5.631e18], WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], 0x70fabad4a1100187c01f4972e7201d7a9174dc9eceaf5ba5a205538cecff2fac)
+    Γöé   Γöé   Γö£ΓöÇ [10163] MockToken::transferFrom(WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], Identity: [0x0000000000000000000000000000000000000004], 2815955300921199 [2.815e15])
+    Γöé   Γöé   Γöé   Γö£ΓöÇ emit Approval(owner: WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], spender: TrustWalletFeeDistributor: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], value: 0)
+    Γöé   Γöé   Γöé   Γö£ΓöÇ emit Transfer(from: WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], to: Identity: [0x0000000000000000000000000000000000000004], value: 2815955300921199 [2.815e15])
+    Γöé   Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] true
+    Γöé   Γöé   Γö£ΓöÇ emit FeeDistributed(token: MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], recipient: Identity: [0x0000000000000000000000000000000000000004], amount: 2815955300921199 [2.815e15], orderId: 0x70fabad4a1100187c01f4972e7201d7a9174dc9eceaf5ba5a205538cecff2fac, timestamp: 1)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 2815955300921199 [2.815e15]
+    Γöé   Γö£ΓöÇ [616569] EulerLagrangeOrderProcessor::createOrder(0x0000000000000000000000000000000000000066, MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], 0, 0, 5631910601842399362 [5.631e18], 37828964496522479036 [3.782e19], 5631910601842399362 [5.631e18], 37828964496522479036 [3.782e19], 100, 42087 [4.208e4], true, 0)
+    Γöé   Γöé   Γö£ΓöÇ [169660] AssetVerifier::verifyToken(MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 0x0000000000000000000000000000000000000066, 5631910601842399362 [5.631e18])
+    Γöé   Γöé   Γöé   Γö£ΓöÇ [563] MockToken::balanceOf(0x0000000000000000000000000000000000000066) [staticcall]
+    Γöé   Γöé   Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 999997184044699078801 [9.999e20]
+    Γöé   Γöé   Γöé   Γö£ΓöÇ emit VerificationStarted(verificationId: 0x9ca76083d72435d4774e0b603de4a506f45631df88af5ce431c1c0d357fd08c4, token: MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], owner: 0x0000000000000000000000000000000000000066, amount: 5631910601842399362 [5.631e18], isNft: false)
+    Γöé   Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0x9ca76083d72435d4774e0b603de4a506f45631df88af5ce431c1c0d357fd08c4
+    Γöé   Γöé   Γö£ΓöÇ [72975] VirtualLiquidityPool::addLiquidity(MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], 5631910601842399362 [5.631e18])
+    Γöé   Γöé   Γöé   Γö£ΓöÇ emit LiquidityChanged(token0: MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], token1: MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], newLiquidity: 5632096386842399362 [5.632e18], timestamp: 1)
+    Γöé   Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γöé   Γö£ΓöÇ emit OrderCreated(orderId: 0x14d3ddf91ef76b2fbef58848939af8c60bd7e4a12e7ed4ae9c641e330f654098, maker: 0x0000000000000000000000000000000000000066, tokenIn: MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], tokenOut: MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], typeIn: 0, typeOut: 0, amountIn: 5631910601842399362 [5.631e18], amountOut: 37828964496522479036 [3.782e19], minutesValueIn: 5631910601842399362 [5.631e18], targetChainId: 0, timestamp: 1)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0x14d3ddf91ef76b2fbef58848939af8c60bd7e4a12e7ed4ae9c641e330f654098
+    Γöé   Γö£ΓöÇ emit OrderInitiated(orderId: 0x14d3ddf91ef76b2fbef58848939af8c60bd7e4a12e7ed4ae9c641e330f654098, maker: 0x0000000000000000000000000000000000000066, tokenIn: MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], tokenOut: MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], typeIn: 0, typeOut: 0, amountIn: 5631910601842399362 [5.631e18], amountOut: 37828964496522479036 [3.782e19], targetChainId: 0, timestamp: 1)
+    Γöé   Γö£ΓöÇ emit MatchAttempted(orderId: 0x14d3ddf91ef76b2fbef58848939af8c60bd7e4a12e7ed4ae9c641e330f654098, tokenIn: MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], tokenOut: MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211])
+    Γöé   Γö£ΓöÇ [5696] EulerLagrangeOrderProcessor::getOrder(0x14d3ddf91ef76b2fbef58848939af8c60bd7e4a12e7ed4ae9c641e330f654098) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0x0000000000000000000000000000000000000066, tokenIn: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, tokenOut: 0x1d1499e622D69689cdf9004d05Ec547d650Ff211, typeIn: 0, typeOut: 0, amountIn: 5631910601842399362 [5.631e18], amountOut: 37828964496522479036 [3.782e19], minutesValueIn: 5631910601842399362 [5.631e18], minutesValueOut: 37828964496522479036 [3.782e19], slippageTolerance: 100, filledAmount: 0, timestamp: 1, expiration: 42087 [4.208e4], status: 0, rebookEnabled: true, rebookAttempts: 0, verificationId: 0x9ca76083d72435d4774e0b603de4a506f45631df88af5ce431c1c0d357fd08c4, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ [25434] EulerLagrangeOrderProcessor::findMatchingOrder(MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], 5631910601842399362 [5.631e18], 37828964496522479036 [3.782e19]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0xd549c6883a4519163b7816fab60a93bad04d40f89712805a18bd5848129d406b
+    Γöé   Γö£ΓöÇ [17696] EulerLagrangeOrderProcessor::getOrder(0xd549c6883a4519163b7816fab60a93bad04d40f89712805a18bd5848129d406b) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0x0000000000000000000000000000000000000068, tokenIn: 0x1d1499e622D69689cdf9004d05Ec547d650Ff211, tokenOut: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, typeIn: 0, typeOut: 0, amountIn: 500000000000000 [5e14], amountOut: 1000000 [1e6], minutesValueIn: 500000000000000 [5e14], minutesValueOut: 1000000 [1e6], slippageTolerance: 100, filledAmount: 628430 [6.284e5], timestamp: 1, expiration: 50250 [5.025e4], status: 2, rebookEnabled: true, rebookAttempts: 0, verificationId: 0xd377caf415a12181f8739473d6b1c621194145f580e70de1da0601d5923310be, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ [2563] MockToken::balanceOf(0x0000000000000000000000000000000000000068) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 999999685534559572583 [9.999e20]
+    Γöé   Γö£ΓöÇ [2861] MockToken::allowance(0x0000000000000000000000000000000000000068, WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 115792089237316195423570985008687907853269984665640564039457584007913129639935 [1.157e77]
+    Γöé   Γö£ΓöÇ emit MatchCalculated(orderIdA: 0x14d3ddf91ef76b2fbef58848939af8c60bd7e4a12e7ed4ae9c641e330f654098, orderIdB: 0xd549c6883a4519163b7816fab60a93bad04d40f89712805a18bd5848129d406b, amountAtoB: 371570 [3.715e5], amountBtoA: 185785000000000 [1.857e14])
+    Γöé   Γö£ΓöÇ [10796] MockToken::transferFrom(0x0000000000000000000000000000000000000068, 0x0000000000000000000000000000000000000066, 185785000000000 [1.857e14])
+    Γöé   Γöé   Γö£ΓöÇ emit Transfer(from: 0x0000000000000000000000000000000000000068, to: 0x0000000000000000000000000000000000000066, value: 185785000000000 [1.857e14])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] true
+    Γöé   Γö£ΓöÇ [7996] MockToken::transferFrom(0x0000000000000000000000000000000000000066, 0x0000000000000000000000000000000000000068, 371570 [3.715e5])
+    Γöé   Γöé   Γö£ΓöÇ emit Transfer(from: 0x0000000000000000000000000000000000000066, to: 0x0000000000000000000000000000000000000068, value: 371570 [3.715e5])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] true
+    Γöé   Γö£ΓöÇ [79559] EulerLagrangeOrderProcessor::updateOrderFill(0x14d3ddf91ef76b2fbef58848939af8c60bd7e4a12e7ed4ae9c641e330f654098, 185785000000000 [1.857e14])
+    Γöé   Γöé   Γö£ΓöÇ emit OrderPartiallyFilled(orderId: 0x14d3ddf91ef76b2fbef58848939af8c60bd7e4a12e7ed4ae9c641e330f654098, filledAmount: 185785000000000 [1.857e14], remainingAmount: 37828778711522479036 [3.782e19], timestamp: 1)
+    Γöé   Γöé   Γö£ΓöÇ [52454] VirtualLiquidityPool::reduceLiquidity(MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], 27659348467216 [2.765e13])
+    Γöé   Γöé   Γöé   Γö£ΓöÇ emit LiquidityChanged(token0: MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], token1: MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], newLiquidity: 5632068727493932146 [5.632e18], timestamp: 1)
+    Γöé   Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ [64094] EulerLagrangeOrderProcessor::updateOrderStatus(0xd549c6883a4519163b7816fab60a93bad04d40f89712805a18bd5848129d406b, 1)
+    Γöé   Γöé   Γö£ΓöÇ emit OrderFilled(orderId: 0xd549c6883a4519163b7816fab60a93bad04d40f89712805a18bd5848129d406b, filledAmount: 1000000 [1e6], remainingAmount: 0, timestamp: 1)
+    Γöé   Γöé   Γö£ΓöÇ [52456] VirtualLiquidityPool::reduceLiquidity(MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 500000000000000 [5e14])
+    Γöé   Γöé   Γöé   Γö£ΓöÇ emit LiquidityChanged(token0: MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], token1: MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], newLiquidity: 5631568727493932146 [5.631e18], timestamp: 1)
+    Γöé   Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ [9589] EulerLagrangeOrderProcessor::removeFromPairIndex(0xd549c6883a4519163b7816fab60a93bad04d40f89712805a18bd5848129d406b)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ emit OrderExecuted(orderId: 0x14d3ddf91ef76b2fbef58848939af8c60bd7e4a12e7ed4ae9c641e330f654098, taker: 0x0000000000000000000000000000000000000068, amountOut: 185785000000000 [1.857e14], timestamp: 1)
+    Γöé   Γö£ΓöÇ emit OrderExecuted(orderId: 0xd549c6883a4519163b7816fab60a93bad04d40f89712805a18bd5848129d406b, taker: 0x0000000000000000000000000000000000000066, amountOut: 371570 [3.715e5], timestamp: 1)
+    Γöé   Γö£ΓöÇ emit OrderAutoMatched(orderIdA: 0x14d3ddf91ef76b2fbef58848939af8c60bd7e4a12e7ed4ae9c641e330f654098, orderIdB: 0xd549c6883a4519163b7816fab60a93bad04d40f89712805a18bd5848129d406b, timestamp: 1)
+    Γöé   Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0x14d3ddf91ef76b2fbef58848939af8c60bd7e4a12e7ed4ae9c641e330f654098) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0x0000000000000000000000000000000000000066, tokenIn: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, tokenOut: 0x1d1499e622D69689cdf9004d05Ec547d650Ff211, typeIn: 0, typeOut: 0, amountIn: 5631910601842399362 [5.631e18], amountOut: 37828964496522479036 [3.782e19], minutesValueIn: 5631910601842399362 [5.631e18], minutesValueOut: 37828964496522479036 [3.782e19], slippageTolerance: 100, filledAmount: 185785000000000 [1.857e14], timestamp: 1, expiration: 42087 [4.208e4], status: 2, rebookEnabled: true, rebookAttempts: 0, verificationId: 0x9ca76083d72435d4774e0b603de4a506f45631df88af5ce431c1c0d357fd08c4, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ [1404] EulerLagrangeOrderProcessor::findMatchingOrder(MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], 5631882942493932145 [5.631e18], 37828778711522479036 [3.782e19]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0x0000000000000000000000000000000000000000000000000000000000000000
+    Γöé   ΓööΓöÇ ΓåÉ [Return] 0x14d3ddf91ef76b2fbef58848939af8c60bd7e4a12e7ed4ae9c641e330f654098
+    Γö£ΓöÇ [0] VM::stopPrank()
+    Γöé   ΓööΓöÇ ΓåÉ [Return]
+    ΓööΓöÇ ΓåÉ [Return]
+
+  [170447] OrderProcessorInvariants::invariant_liquidity_consistency()
+    Γö£ΓöÇ [2659] VirtualLiquidityPool::getAvailableLiquidity(MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211]) [staticcall]
+    Γöé   ΓööΓöÇ ΓåÉ [Return] 5631568727493932146 [5.631e18]
+    Γö£ΓöÇ [661] VirtualLiquidityPool::getAvailableLiquidity(MockToken: [0x1d1499e622D69689cdf9004d05Ec547d650Ff211], MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598]) [staticcall]
+    Γöé   ΓööΓöÇ ΓåÉ [Return] 5631568727493932146 [5.631e18]
+    Γö£ΓöÇ [2706] EulerLagrangeOrderProcessor::getOrderCount() [staticcall]
+    Γöé   ΓööΓöÇ ΓåÉ [Return] 4
+    Γö£ΓöÇ [2701] EulerLagrangeOrderProcessor::orderIds(0) [staticcall]
+    Γöé   ΓööΓöÇ ΓåÉ [Return] 0x34603888b787b78024e13f9d32527a6ece30be497af9196789275d1cd65c5002
+    Γö£ΓöÇ [31696] EulerLagrangeOrderProcessor::getOrder(0x34603888b787b78024e13f9d32527a6ece30be497af9196789275d1cd65c5002) [staticcall]
+    Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0x0000000000000000000000000000000000000067, tokenIn: 0x1d1499e622D69689cdf9004d05Ec547d650Ff211, tokenOut: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, typeIn: 0, typeOut: 0, amountIn: 9999999999999086401 [9.999e18], amountOut: 99999999999999005001 [9.999e19], minutesValueIn: 9999999999999086401 [9.999e18], minutesValueOut: 99999999999999005001 [9.999e19], slippageTolerance: 100, filledAmount: 0, timestamp: 1, expiration: 7109, status: 3, rebookEnabled: true, rebookAttempts: 0, verificationId: 0x12b3326853d7f1f69ead65b2b6ac289daaac7e83023a01f3716c199386f6706d, targetChainId: 0 })
+    Γö£ΓöÇ [2701] EulerLagrangeOrderProcessor::orderIds(1) [staticcall]
+    Γöé   ΓööΓöÇ ΓåÉ [Return] 0xd549c6883a4519163b7816fab60a93bad04d40f89712805a18bd5848129d406b
+    Γö£ΓöÇ [31696] EulerLagrangeOrderProcessor::getOrder(0xd549c6883a4519163b7816fab60a93bad04d40f89712805a18bd5848129d406b) [staticcall]
+    Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0x0000000000000000000000000000000000000068, tokenIn: 0x1d1499e622D69689cdf9004d05Ec547d650Ff211, tokenOut: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, typeIn: 0, typeOut: 0, amountIn: 500000000000000 [5e14], amountOut: 1000000 [1e6], minutesValueIn: 500000000000000 [5e14], minutesValueOut: 1000000 [1e6], slippageTolerance: 100, filledAmount: 1000000 [1e6], timestamp: 1, expiration: 50250 [5.025e4], status: 1, rebookEnabled: true, rebookAttempts: 0, verificationId: 0xd377caf415a12181f8739473d6b1c621194145f580e70de1da0601d5923310be, targetChainId: 0 })
+    Γö£ΓöÇ [2701] EulerLagrangeOrderProcessor::orderIds(2) [staticcall]
+    Γöé   ΓööΓöÇ ΓåÉ [Return] 0x7e12e2e361f0d14990dd12a8d9dceff49629f66c65ea965d06bb695abbb9578d
+    Γö£ΓöÇ [31696] EulerLagrangeOrderProcessor::getOrder(0x7e12e2e361f0d14990dd12a8d9dceff49629f66c65ea965d06bb695abbb9578d) [staticcall]
+    Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0x0000000000000000000000000000000000000069, tokenIn: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, tokenOut: 0x1d1499e622D69689cdf9004d05Ec547d650Ff211, typeIn: 0, typeOut: 0, amountIn: 7687334594059568804 [7.687e18], amountOut: 314215440427417 [3.142e14], minutesValueIn: 7687334594059568804 [7.687e18], minutesValueOut: 314215440427417 [3.142e14], slippageTolerance: 100, filledAmount: 314215440427417 [3.142e14], timestamp: 1, expiration: 5010, status: 1, rebookEnabled: true, rebookAttempts: 0, verificationId: 0xf40c04e375349b4452d0233174ce80427ecbe4d103e0570817a8a53e0a5230d5, targetChainId: 0 })
+    Γö£ΓöÇ [2701] EulerLagrangeOrderProcessor::orderIds(3) [staticcall]
+    Γöé   ΓööΓöÇ ΓåÉ [Return] 0x14d3ddf91ef76b2fbef58848939af8c60bd7e4a12e7ed4ae9c641e330f654098
+    Γö£ΓöÇ [31696] EulerLagrangeOrderProcessor::getOrder(0x14d3ddf91ef76b2fbef58848939af8c60bd7e4a12e7ed4ae9c641e330f654098) [staticcall]
+    Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0x0000000000000000000000000000000000000066, tokenIn: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, tokenOut: 0x1d1499e622D69689cdf9004d05Ec547d650Ff211, typeIn: 0, typeOut: 0, amountIn: 5631910601842399362 [5.631e18], amountOut: 37828964496522479036 [3.782e19], minutesValueIn: 5631910601842399362 [5.631e18], minutesValueOut: 37828964496522479036 [3.782e19], slippageTolerance: 100, filledAmount: 185785000000000 [1.857e14], timestamp: 1, expiration: 42087 [4.208e4], status: 2, rebookEnabled: true, rebookAttempts: 0, verificationId: 0x9ca76083d72435d4774e0b603de4a506f45631df88af5ce431c1c0d357fd08c4, targetChainId: 0 })
+    Γö£ΓöÇ [0] VM::assertApproxEqAbs(5631568727493932146 [5.631e18], 5631882942493932146 [5.631e18], 10, "Liquidity mismatch: pool vs orders") [staticcall]
+    Γöé   ΓööΓöÇ ΓåÉ [Revert] Liquidity mismatch: pool vs orders: 5631568727493932146 !~= 5631882942493932146 (max delta: 10, real delta: 314215000000000)
+    ΓööΓöÇ ΓåÉ [Revert] Liquidity mismatch: pool vs orders: 5631568727493932146 !~= 5631882942493932146 (max delta: 10, real delta: 314215000000000)
+
+Suite result: FAILED. 1 passed; 1 failed; 0 skipped; finished in 67.80s (78.50s CPU time)
+
+Ran 1 test suite in 67.86s (67.80s CPU time): 1 tests passed, 1 failed, 0 skipped (2 total tests)
+
+Failing tests:
+Encountered 1 failing test in test/OrderProcessorInvariants.t.sol:OrderProcessorInvariants
+[FAIL: invariant_liquidity_consistency replay failure]
+	[Sequence] (original: 5, shrunk: 5)
+		sender=0x0000000000000000000000000000000000001B63 addr=[test/OrderProcessorHandler.sol:OrderProcessorHandler]0xA4AD4f68d0b91CFD19687c881e50f3A00242828c calldata=createOrder(uint256,bool,uint256,uint256,uint256) args=[41871604799558342786444078225716118860916783623903991162448285869138682176242 [4.187e76], false, 86400 [8.64e4], 5000, 7108]
+		sender=0xCE6f645430e124e5f6043F5dA050017422f83C18 addr=[test/OrderProcessorHandler.sol:OrderProcessorHandler]0xA4AD4f68d0b91CFD19687c881e50f3A00242828c calldata=createOrder(uint256,bool,uint256,uint256,uint256) args=[75276140696391174450305814049576319106646922510300487059720162673006384432788 [7.527e76], false, 500000000000000 [5e14], 0, 1000000 [1e6]]
+		sender=0x0000000000000000000000000000000000000905 addr=[test/OrderProcessorHandler.sol:OrderProcessorHandler]0xA4AD4f68d0b91CFD19687c881e50f3A00242828c calldata=cancelOrder(uint256) args=[177116229732075176406884468275056147989293522939026 [1.771e50]]
+		sender=0x00000000000000000000065a4D8Aa9bbBd244e10 addr=[test/OrderProcessorHandler.sol:OrderProcessorHandler]0xA4AD4f68d0b91CFD19687c881e50f3A00242828c calldata=createOrder(uint256,bool,uint256,uint256,uint256) args=[4756001100357413460885664506247506071831187334 [4.756e45], true, 8840336151771769582026134037150383694044531 [8.84e42], 314215440427417 [3.142e14], 604245917278405046762812487454984074548270108849583 [6.042e50]]
+		sender=0x0000000000000000000032Ba29bBB0b826b0b4B7 addr=[test/OrderProcessorHandler.sol:OrderProcessorHandler]0xA4AD4f68d0b91CFD19687c881e50f3A00242828c calldata=createOrder(uint256,bool,uint256,uint256,uint256) args=[4101763974363771597918482774693559906049447719534662239037127506 [4.101e63], true, 559019844439464250401004270415233056241066574242050761 [5.59e53], 255250341516108892466888580129675933460156548 [2.552e44], 4544973754286162767 [4.544e18]]
+ invariant_liquidity_consistency() (runs: 1, calls: 1, reverts: 1)
+
+Encountered a total of 1 failing tests, 1 tests succeeded
+
+Tip: Run `forge test --rerun` to retry only the 1 failed test

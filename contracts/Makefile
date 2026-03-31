@@ -7,7 +7,7 @@ RED := \033[0;31m
 NC := \033[0m # No Color
 
 help:
-	@echo "$(BLUE)MVI Reactive Network Smart Contracts$(NC)"
+	@echo "$(BLUE)AutoSwap Reactive Network Smart Contracts$(NC)"
 	@echo ""
 	@echo "Available commands:"
 	@echo "  $(GREEN)make build$(NC)              - Build contracts"

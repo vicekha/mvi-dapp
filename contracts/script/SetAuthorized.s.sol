@@ -13,6 +13,7 @@ contract SetAuthorized is Script {
 
         vm.startBroadcast(deployerPrivateKey);
         WalletSwapMain(walletSwapMainAddress).setAuthorizedReactiveVM(rscAddress);
+        WalletSwapMain(walletSwapMainAddress).setCallbackProxy(rscAddress);
         vm.stopBroadcast();
     }
 }

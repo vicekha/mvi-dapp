@@ -53,6 +53,13 @@ contract MarketSweepTest is Test {
         );
 
         processor.setWalletSwapMain(address(walletSwap));
+
+        // Authorize contracts in VirtualLiquidityPool
+        pool.setAuthorizedCaller(address(processor), true);
+        pool.setAuthorizedCaller(address(walletSwap), true);
+
+        // Set minimum order value to 0 for testing
+        processor.setMinimumOrderValue(0);
         
         // Mint tokens
         tokenB.mint(user1, 1000 * 10**6);
@@ -68,12 +75,17 @@ contract MarketSweepTest is Test {
         
         vm.prank(sweeper);
         tokenA.approve(address(walletSwap), type(uint256).max);
+
+        // Fund ETH for gas fees
+        vm.deal(user1, 1 ether);
+        vm.deal(user2, 1 ether);
+        vm.deal(sweeper, 1 ether);
     }
 
     function testMarketSweep() public {
         // User 1: Sell 25 TokenB for 25 TokenA
         vm.prank(user1);
-        bytes32 order1 = walletSwap.createOrder(
+        bytes32 order1 = walletSwap.createOrder{value: 0.002 ether}(
             address(tokenB), address(tokenA),
             WalletSwapMain.AssetType.ERC20, WalletSwapMain.AssetType.ERC20,
             25 * 10**6, 25 * 10**18, // 25 USDC -> 25 TKA
@@ -83,7 +95,7 @@ contract MarketSweepTest is Test {
 
         // User 2: Sell 50 TokenB for 50 TokenA
         vm.prank(user2);
-        bytes32 order2 = walletSwap.createOrder(
+        bytes32 order2 = walletSwap.createOrder{value: 0.002 ether}(
             address(tokenB), address(tokenA),
             WalletSwapMain.AssetType.ERC20, WalletSwapMain.AssetType.ERC20,
             50 * 10**6, 50 * 10**18, // 50 USDC -> 50 TKA
@@ -93,7 +105,7 @@ contract MarketSweepTest is Test {
 
         // Sweeper: Sell 75 TokenA for 75 TokenB (Should fill both)
         vm.prank(sweeper);
-        bytes32 sweepOrder = walletSwap.createOrder(
+        bytes32 sweepOrder = walletSwap.createOrder{value: 0.002 ether}(
             address(tokenA), address(tokenB),
             WalletSwapMain.AssetType.ERC20, WalletSwapMain.AssetType.ERC20,
             75 * 10**18, 75 * 10**6, // 75 TKA -> 75 USDC

@@ -1,7 +1,7 @@
 {
-  "name": "mvi-reactive-contracts",
+  "name": "autoswap-reactive-contracts",
   "version": "1.0.0",
-  "description": "Reactive Network-compliant smart contracts for MVI DApp non-custodial wallet-to-wallet swaps",
+  "description": "Reactive Network-compliant smart contracts for AutoSwap DApp non-custodial wallet-to-wallet swaps",
   "scripts": {
     "build": "forge build",
     "test": "forge test",

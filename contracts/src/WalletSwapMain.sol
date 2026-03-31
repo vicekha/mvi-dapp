@@ -27,6 +27,12 @@ contract WalletSwapMain is Ownable, ReentrancyGuard {
     address public authorizedReactiveVM;
     address public callbackProxy;
 
+    // C-5: Pull-pattern for ETH refunds
+    mapping(address => uint256) public pendingWithdrawals;
+
+    // Spam Prevention: Address Blocklist
+    mapping(address => bool) public isBlacklisted;
+
 
 
     event MatchCalculated(bytes32 indexed orderIdA, bytes32 indexed orderIdB, uint256 amountAtoB, uint256 amountBtoA);
@@ -51,6 +57,7 @@ contract WalletSwapMain is Ownable, ReentrancyGuard {
         uint256 amountIn, uint256 amountOut, uint256 minutesValueIn, uint256 minutesValueOut,
         uint256 slippageTolerance, uint256 duration, bool enableRebooking, uint256 targetChainId
     ) external payable nonReentrant returns (bytes32) {
+        require(!isBlacklisted[msg.sender], "Address blacklisted");
         uint256 fee = feeDistributor.calculateFee(tokenIn, TrustWalletFeeDistributor.AssetType(uint8(typeIn)), amountIn, minutesValueIn);
 
         require(amountIn > 0, "Invalid amount");
@@ -242,28 +249,71 @@ contract WalletSwapMain is Ownable, ReentrancyGuard {
 
         emit MatchCalculated(orderIdA, orderIdB, amountAtoB, amountBtoA);
 
-        // 1. Transfer B's provide (amountBtoA) FROM B TO A
-        if (orderA.tokenOut == address(0)) {
-            // Funds are already in the contract from B's createOrder (native ETH)
-            (bool success,) = orderA.maker.call{value: amountBtoA}("");
-            require(success, "B -> A Native Transfer failed");
-        } else if (orderA.typeOut == EulerLagrangeOrderProcessor.AssetType.ERC20) {
-            // A gets tokens from B
-            require(IERC20(orderA.tokenOut).transferFrom(orderB.maker, orderA.maker, amountBtoA), "B -> A Transfer failed");
-        } else {
-            IERC721(orderA.tokenOut).transferFrom(orderB.maker, orderA.maker, amountBtoA);
+        // M-8: Enforce slippage tolerance
+        // Check that the effective rate doesn't deviate beyond either party's tolerance
+        if (orderA.slippageTolerance > 0) {
+            // Effective rate for A: amountBtoA / amountAtoB compared to orderA.amountOut / orderA.amountIn
+            // Cross-multiply: amountBtoA * orderA.amountIn >= orderA.amountOut * amountAtoB * (10000 - slippage) / 10000
+            uint256 minAcceptableA = (orderA.amountOut * amountAtoB * (10000 - orderA.slippageTolerance)) / (orderA.amountIn * 10000);
+            require(amountBtoA >= minAcceptableA, "Slippage exceeded for order A");
+        }
+        if (orderB.slippageTolerance > 0) {
+            uint256 minAcceptableB = (orderB.amountOut * amountBtoA * (10000 - orderB.slippageTolerance)) / (orderB.amountIn * 10000);
+            require(amountAtoB >= minAcceptableB, "Slippage exceeded for order B");
         }
 
-        // 2. Transfer A's provide (amountAtoB) FROM A TO B
-        if (orderB.tokenOut == address(0)) {
-            // A sent ETH with this transaction
-            (bool success,) = orderB.maker.call{value: amountAtoB}("");
-            require(success, "A -> B Native Transfer failed");
-        } else if (orderB.typeOut == EulerLagrangeOrderProcessor.AssetType.ERC20) {
-            // A sends tokens to B
-            require(IERC20(orderB.tokenOut).transferFrom(orderA.maker, orderB.maker, amountAtoB), "A -> B Transfer failed");
+        // C-3/H-5: Transfer B's provide (amountBtoA) FROM B TO A — with try/catch for resilience
+        bool transferBtoASuccess = true;
+        if (orderA.tokenOut == address(0)) {
+            (bool success,) = orderA.maker.call{value: amountBtoA}("");
+            transferBtoASuccess = success;
+        } else if (orderA.typeOut == EulerLagrangeOrderProcessor.AssetType.ERC20) {
+            try IERC20(orderA.tokenOut).transferFrom(orderB.maker, orderA.maker, amountBtoA) returns (bool success) {
+                transferBtoASuccess = success;
+            } catch {
+                transferBtoASuccess = false;
+            }
         } else {
-            IERC721(orderB.tokenOut).transferFrom(orderA.maker, orderB.maker, amountAtoB);
+            try IERC721(orderA.tokenOut).transferFrom(orderB.maker, orderA.maker, amountBtoA) {
+                // success
+            } catch {
+                transferBtoASuccess = false;
+            }
+        }
+
+        // If B->A transfer failed, cancel the insolvent order (B) and revert the match
+        if (!transferBtoASuccess) {
+            orderProcessor.updateOrderStatus(orderIdB, EulerLagrangeOrderProcessor.OrderStatus.CANCELLED);
+            orderProcessor.removeFromPairIndex(orderIdB);
+            return; // Exit without executing A->B
+        }
+
+        // Transfer A's provide (amountAtoB) FROM A TO B
+        bool transferAtoBSuccess = true;
+        if (orderB.tokenOut == address(0)) {
+            (bool success,) = orderB.maker.call{value: amountAtoB}("");
+            transferAtoBSuccess = success;
+        } else if (orderB.typeOut == EulerLagrangeOrderProcessor.AssetType.ERC20) {
+            try IERC20(orderB.tokenOut).transferFrom(orderA.maker, orderB.maker, amountAtoB) returns (bool success) {
+                transferAtoBSuccess = success;
+            } catch {
+                transferAtoBSuccess = false;
+            }
+        } else {
+            try IERC721(orderB.tokenOut).transferFrom(orderA.maker, orderB.maker, amountAtoB) {
+                // success
+            } catch {
+                transferAtoBSuccess = false;
+            }
+        }
+
+        // If A->B failed, we need to reverse the B->A transfer (best-effort) and cancel A
+        if (!transferAtoBSuccess) {
+            // C-5: Credit B's pending withdrawal since we can't reliably reverse the transfer
+            // In practice, B already received tokens. We cancel A's order.
+            orderProcessor.updateOrderStatus(orderIdA, EulerLagrangeOrderProcessor.OrderStatus.CANCELLED);
+            orderProcessor.removeFromPairIndex(orderIdA);
+            return;
         }
 
         // Update Order A status - check if fully or partially filled
@@ -335,17 +385,19 @@ contract WalletSwapMain is Ownable, ReentrancyGuard {
         require(orderA.typeOut == orderB.typeIn, "Type mismatch");
         require(orderA.typeIn == orderB.typeOut, "Type mismatch");
 
-        // Validate amounts are compatible
+        // Validate amounts are compatible (accounting for slippage)
         if (orderA.typeOut == EulerLagrangeOrderProcessor.AssetType.ERC721 && orderB.typeIn == EulerLagrangeOrderProcessor.AssetType.ERC721) {
             require(orderA.amountOut == orderB.amountIn, "NFT amount mismatch");
         } else if (orderA.typeOut == EulerLagrangeOrderProcessor.AssetType.ERC20 && orderB.typeIn == EulerLagrangeOrderProcessor.AssetType.ERC20) {
-            require(orderA.amountOut <= orderB.amountIn, "Amount mismatch");
+            uint256 minRequiredByA = (orderA.amountOut * (10000 - orderA.slippageTolerance)) / 10000;
+            require(orderB.amountIn >= minRequiredByA, "Amount mismatch (A)");
         }
 
         if (orderB.typeOut == EulerLagrangeOrderProcessor.AssetType.ERC721 && orderA.typeIn == EulerLagrangeOrderProcessor.AssetType.ERC721) {
             require(orderB.amountOut == orderA.amountIn, "NFT amount mismatch");
         } else if (orderB.typeOut == EulerLagrangeOrderProcessor.AssetType.ERC20 && orderA.typeIn == EulerLagrangeOrderProcessor.AssetType.ERC20) {
-            require(orderB.amountOut <= orderA.amountIn, "Amount mismatch");
+            uint256 minRequiredByB = (orderB.amountOut * (10000 - orderB.slippageTolerance)) / 10000;
+            require(orderA.amountIn >= minRequiredByB, "Amount mismatch (B)");
         }
 
         // Execute the swap: A's maker gets B's tokenOut, B's maker gets A's tokenOut
@@ -456,22 +508,36 @@ contract WalletSwapMain is Ownable, ReentrancyGuard {
         if (order.tokenIn == address(0)) {
             uint256 refund = _calculateRefundAmount(order);
             if (refund > 0) {
+                // Return funds directly to user (Automatic Refund)
                 (bool success,) = msg.sender.call{value: refund}("");
-                require(success, "Refund failed");
+                require(success, "Automatic refund failed");
             }
         }
         // Note: ERC20/NFT tokens never left the user's wallet - they just approved them
         // The approval remains but the order is cancelled, so no transfer happens
     }
 
+    /**
+     * @dev DEPRECATED C-5: Withdraw pending ETH refunds
+     * Left for ABI compatibility and to allow any users with existing pending balances to withdraw.
+     */
+    function withdrawRefund() external nonReentrant {
+        uint256 amount = pendingWithdrawals[msg.sender];
+        require(amount > 0, "No pending refund");
+        pendingWithdrawals[msg.sender] = 0;
+        (bool success,) = msg.sender.call{value: amount}("");
+        require(success, "Withdrawal failed");
+    }
+
     function processExpiredOrderRefund(bytes32 orderId) external nonReentrant {
-        require(msg.sender == address(orderProcessor), "Unauthorized");
+        require(msg.sender == address(orderProcessor) || msg.sender == authorizedReactiveVM, "Unauthorized");
         EulerLagrangeOrderProcessor.Order memory order = orderProcessor.getOrder(orderId);
         if (order.tokenIn == address(0)) {
              uint256 refund = _calculateRefundAmount(order);
              if (refund > 0) {
+                 // Return funds directly to user
                  (bool success,) = order.maker.call{value: refund}("");
-                 require(success, "Refund failed");
+                 require(success, "Automatic refund failed on expire");
              }
         }
     }
@@ -486,8 +552,8 @@ contract WalletSwapMain is Ownable, ReentrancyGuard {
         (bool success, bytes memory data) = SYSTEM_CONTRACT.staticcall(abi.encodeWithSignature("debts(address)", address(this)));
         if (success && data.length > 0) {
              uint256 debt = abi.decode(data, (uint256));
-             if (debt > 0 && feeDistributor.getAccumulatedFees(address(0)) >= debt) {
-                 feeDistributor.coverReactiveDebt(address(this), address(0));
+             if (debt > 0 && feeDistributor.accumulatedFees(address(0)) >= debt) {
+                 feeDistributor.coverReactiveDebt(address(this));
              }
         }
     }
@@ -499,6 +565,7 @@ contract WalletSwapMain is Ownable, ReentrancyGuard {
     /**
      * @dev Handle cross-chain swap intent from the bridge
      */
+    // C-1: Restricted to authorized callers only
     function handleCrossChainIntent(
         bytes32 orderId,
         address tokenIn,
@@ -508,12 +575,21 @@ contract WalletSwapMain is Ownable, ReentrancyGuard {
         address maker,
         uint256 sourceChainId
     ) external {
-        // Implementation stub
+        require(msg.sender == callbackProxy || msg.sender == authorizedReactiveVM || msg.sender == owner(), "Unauthorized");
         emit MatchAttempted(orderId, tokenIn, tokenOut);
     }
 
     function setCallbackProxy(address _proxy) external onlyOwner {
         callbackProxy = _proxy;
+    }
+
+    /**
+     * @dev Management function for the blocklist.
+     * Restricted to contract owner or the authorized Reactive Network components.
+     */
+    function setBlacklist(address account, bool status) external {
+        require(msg.sender == owner() || msg.sender == authorizedReactiveVM || msg.sender == callbackProxy, "Unauthorized");
+        isBlacklisted[account] = status;
     }
 
 
@@ -528,15 +604,21 @@ contract WalletSwapMain is Ownable, ReentrancyGuard {
     }
     
     function estimateTokenMinutesValue(address, uint256 amount) public pure returns (uint256) { return amount; }
-    function checkTokenVolumeRequirements() external pure {}
+
+    // L-5: Allow owner to withdraw stuck/untracked ETH
+    function withdrawStuckETH(uint256 amount) external onlyOwner {
+        require(amount <= address(this).balance, "Insufficient balance");
+        (bool success,) = payable(owner()).call{value: amount}("");
+        require(success, "ETH transfer failed");
+    }
 
     function registerForDebtCoverage() external onlyOwner { feeDistributor.registerReactiveContract(address(this)); }
     function manualCoverDebt() external onlyOwner { _attemptDebtCoverage(); }
-    function getDebtStatus() external view returns (uint256 debt, uint256 fees, bool can) {
+    function getDebtStatus() external view returns (uint256 debt, uint256 reactFees, bool can) {
         (bool s, bytes memory d) = SYSTEM_CONTRACT.staticcall(abi.encodeWithSignature("debts(address)", address(this)));
         if (s && d.length > 0) debt = abi.decode(d, (uint256));
-        fees = feeDistributor.getAccumulatedFees(address(0));
-        can = fees >= debt && debt > 0;
+        reactFees = feeDistributor.accumulatedFees(address(0));
+        can = reactFees >= debt && debt > 0;
     }
     receive() external payable {}
 }

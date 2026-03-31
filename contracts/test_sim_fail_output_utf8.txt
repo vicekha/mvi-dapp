@@ -1,0 +1,73 @@
+﻿No files changed, compilation skipped
+
+Ran 3 tests for test/EconomicSimulation.t.sol:EconomicSimulation
+[FAIL: EvmError: Revert] test_scenario_A_MarketSweepEfficiency() (gas: 86918)
+Traces:
+  [86918] EconomicSimulation::test_scenario_A_MarketSweepEfficiency()
+    Γö£ΓöÇ [37344] SimulationHandler::mint(false, 0x00000000000000000000000000000000000007d0, 1000000000000000000000 [1e21])
+    Γöé   Γö£ΓöÇ [31582] MockToken::mint(0x00000000000000000000000000000000000007d0, 1000000000000000000000 [1e21])
+    Γöé   Γöé   Γö£ΓöÇ emit Transfer(from: 0x0000000000000000000000000000000000000000, to: 0x00000000000000000000000000000000000007d0, value: 1000000000000000000000 [1e21])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γö£ΓöÇ [0] VM::startPrank(0x00000000000000000000000000000000000007d0)
+    Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γö£ΓöÇ [24377] MockToken::approve(WalletSwapMain: [0x6d1B5488E2Fe2adFB0146cD11Dd29eF2DBAd8a9F], 115792089237316195423570985008687907853269984665640564039457584007913129639935 [1.157e77])
+    Γöé   Γö£ΓöÇ emit Approval(owner: 0x00000000000000000000000000000000000007d0, spender: WalletSwapMain: [0x6d1B5488E2Fe2adFB0146cD11Dd29eF2DBAd8a9F], value: 115792089237316195423570985008687907853269984665640564039457584007913129639935 [1.157e77])
+    Γöé   ΓööΓöÇ ΓåÉ [Return] true
+    Γö£ΓöÇ [0] WalletSwapMain::createOrder{value: 1000000000000000000}(MockToken: [0x99ab54533cf1c9DBcbEB563F6153641cFBeeA85D], MockToken: [0xB01abbb01C4d4407C1f70228eae9227D3379b15c], 0, 0, 100000000000000000000 [1e20], 50000000000000000000 [5e19], 100000000000000000000 [1e20], 50000000000000000000 [5e19], 0, 86400 [8.64e4], true, 0)
+    Γöé   ΓööΓöÇ ΓåÉ [OutOfFunds] EvmError: OutOfFunds
+    ΓööΓöÇ ΓåÉ [Revert] EvmError: Revert
+
+Backtrace:
+  at WalletSwapMain.createOrder
+  at EconomicSimulation.test_scenario_A_MarketSweepEfficiency
+
+[FAIL: ERC20: insufficient allowance] test_scenario_B_RebookingThresholds() (gas: 73558)
+Traces:
+  [73558] EconomicSimulation::test_scenario_B_RebookingThresholds()
+    Γö£ΓöÇ [57147] WalletSwapMain::createOrder{value: 1000000000000000000}(MockToken: [0xB01abbb01C4d4407C1f70228eae9227D3379b15c], MockToken: [0x99ab54533cf1c9DBcbEB563F6153641cFBeeA85D], 0, 0, 100000000000000000000 [1e20], 100000000000000000000 [1e20], 100000000000000000000 [1e20], 100000000000000000000 [1e20], 0, 3600, true, 0)
+    Γöé   Γö£ΓöÇ [5386] TrustWalletFeeDistributor::calculateFee(MockToken: [0xB01abbb01C4d4407C1f70228eae9227D3379b15c], 0, 100000000000000000000 [1e20], 100000000000000000000 [1e20]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 50000000000000000 [5e16]
+    Γöé   Γö£ΓöÇ [25088] TrustWalletFeeDistributor::depositGasForDebt{value: 2000000000000000}(0x0000000000000000000000000000000000000000000000000000000000000000)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γö£ΓöÇ [2752] MockToken::transferFrom(EconomicSimulation: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496], WalletSwapMain: [0x6d1B5488E2Fe2adFB0146cD11Dd29eF2DBAd8a9F], 50000000000000000 [5e16])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Revert] ERC20: insufficient allowance
+    Γöé   ΓööΓöÇ ΓåÉ [Revert] ERC20: insufficient allowance
+    ΓööΓöÇ ΓåÉ [Revert] ERC20: insufficient allowance
+
+Backtrace:
+  at MockToken.transferFrom
+  at WalletSwapMain.createOrder
+  at EconomicSimulation.test_scenario_B_RebookingThresholds
+
+[FAIL: ERC20: insufficient allowance] test_scenario_C_SlippageRobustness() (gas: 73470)
+Traces:
+  [73470] EconomicSimulation::test_scenario_C_SlippageRobustness()
+    Γö£ΓöÇ [57147] WalletSwapMain::createOrder{value: 1000000000000000000}(MockToken: [0xB01abbb01C4d4407C1f70228eae9227D3379b15c], MockToken: [0x99ab54533cf1c9DBcbEB563F6153641cFBeeA85D], 0, 0, 100000000000000000000 [1e20], 100000000000000000000 [1e20], 100000000000000000000 [1e20], 100000000000000000000 [1e20], 100, 86400 [8.64e4], true, 0)
+    Γöé   Γö£ΓöÇ [5386] TrustWalletFeeDistributor::calculateFee(MockToken: [0xB01abbb01C4d4407C1f70228eae9227D3379b15c], 0, 100000000000000000000 [1e20], 100000000000000000000 [1e20]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 50000000000000000 [5e16]
+    Γöé   Γö£ΓöÇ [25088] TrustWalletFeeDistributor::depositGasForDebt{value: 2000000000000000}(0x0000000000000000000000000000000000000000000000000000000000000000)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γö£ΓöÇ [2752] MockToken::transferFrom(EconomicSimulation: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496], WalletSwapMain: [0x6d1B5488E2Fe2adFB0146cD11Dd29eF2DBAd8a9F], 50000000000000000 [5e16])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Revert] ERC20: insufficient allowance
+    Γöé   ΓööΓöÇ ΓåÉ [Revert] ERC20: insufficient allowance
+    ΓööΓöÇ ΓåÉ [Revert] ERC20: insufficient allowance
+
+Backtrace:
+  at MockToken.transferFrom
+  at WalletSwapMain.createOrder
+  at EconomicSimulation.test_scenario_C_SlippageRobustness
+
+Suite result: FAILED. 0 passed; 3 failed; 0 skipped; finished in 4.71ms (1.07ms CPU time)
+
+Ran 1 test suite in 43.59ms (4.71ms CPU time): 0 tests passed, 3 failed, 0 skipped (3 total tests)
+
+Failing tests:
+Encountered 3 failing tests in test/EconomicSimulation.t.sol:EconomicSimulation
+[FAIL: EvmError: Revert] test_scenario_A_MarketSweepEfficiency() (gas: 86918)
+[FAIL: ERC20: insufficient allowance] test_scenario_B_RebookingThresholds() (gas: 73558)
+[FAIL: ERC20: insufficient allowance] test_scenario_C_SlippageRobustness() (gas: 73470)
+
+Encountered a total of 3 failing tests, 0 tests succeeded
+
+Tip: Run `forge test --rerun` to retry only the 3 failed tests

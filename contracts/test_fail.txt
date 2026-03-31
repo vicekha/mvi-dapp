@@ -1,0 +1,62 @@
+﻿No files changed, compilation skipped
+
+Ran 1 test for test/OrderProcessorInvariants.t.sol:OrderProcessorInvariants
+[FAIL: Ownable: caller is not the owner] setUp() (gas: 0)
+Traces:
+  [10870615] OrderProcessorInvariants::setUp()
+    Γö£ΓöÇ [752951] ΓåÆ new VirtualLiquidityPool@0x5615dEB798BB3E4dFa0139dFa1b3D433Cc23b72f
+    Γöé   Γö£ΓöÇ emit OwnershipTransferred(previousOwner: 0x0000000000000000000000000000000000000000, newOwner: OrderProcessorInvariants: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496])
+    Γöé   Γö£ΓöÇ emit LiquidityPoolInitialized(owner: OrderProcessorInvariants: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496])
+    Γöé   ΓööΓöÇ ΓåÉ [Return] 3416 bytes of code
+    Γö£ΓöÇ [1833297] ΓåÆ new TrustWalletFeeDistributor@0x2e234DAe75C793f67A35089C9d99245E1C58470b
+    Γöé   Γö£ΓöÇ emit OwnershipTransferred(previousOwner: 0x0000000000000000000000000000000000000000, newOwner: OrderProcessorInvariants: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496])
+    Γöé   Γö£ΓöÇ emit FeeDistributorInitialized(owner: OrderProcessorInvariants: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496], defaultWallet: Identity: [0x0000000000000000000000000000000000000004])
+    Γöé   Γö£ΓöÇ emit DefaultTrustWalletSet(wallet: Identity: [0x0000000000000000000000000000000000000004])
+    Γöé   ΓööΓöÇ ΓåÉ [Return] 8462 bytes of code
+    Γö£ΓöÇ [913746] ΓåÆ new AssetVerifier@0xF62849F9A0B5Bf2913b396098F7c7019b51A820a
+    Γöé   Γö£ΓöÇ emit OwnershipTransferred(previousOwner: 0x0000000000000000000000000000000000000000, newOwner: OrderProcessorInvariants: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496])
+    Γöé   Γö£ΓöÇ emit AssetVerifierInitialized(owner: OrderProcessorInvariants: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496])
+    Γöé   ΓööΓöÇ ΓåÉ [Return] 4440 bytes of code
+    Γö£ΓöÇ [1901139] ΓåÆ new EulerLagrangeOrderProcessor@0x5991A2dF15A8F6A256D3Ec51E99254Cd3fb576A9
+    Γöé   Γö£ΓöÇ emit OwnershipTransferred(previousOwner: 0x0000000000000000000000000000000000000000, newOwner: OrderProcessorInvariants: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496])
+    Γöé   Γö£ΓöÇ emit OrderProcessorInitialized(owner: OrderProcessorInvariants: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496])
+    Γöé   ΓööΓöÇ ΓåÉ [Return] 8916 bytes of code
+    Γö£ΓöÇ [3471528] ΓåÆ new WalletSwapMain@0xc7183455a4C133Ae270771860664b6B7ec320bB1
+    Γöé   Γö£ΓöÇ emit OwnershipTransferred(previousOwner: 0x0000000000000000000000000000000000000000, newOwner: OrderProcessorInvariants: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496])
+    Γöé   Γö£ΓöÇ emit WalletSwapMainInitialized(owner: OrderProcessorInvariants: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496])
+    Γöé   ΓööΓöÇ ΓåÉ [Return] 16659 bytes of code
+    Γö£ΓöÇ [22878] EulerLagrangeOrderProcessor::setWalletSwapMain(WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1])
+    Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γö£ΓöÇ [24090] VirtualLiquidityPool::setAuthorizedCaller(EulerLagrangeOrderProcessor: [0x5991A2dF15A8F6A256D3Ec51E99254Cd3fb576A9], true)
+    Γöé   Γö£ΓöÇ emit AuthorizedCallerSet(caller: EulerLagrangeOrderProcessor: [0x5991A2dF15A8F6A256D3Ec51E99254Cd3fb576A9], authorized: true)
+    Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γö£ΓöÇ [24090] VirtualLiquidityPool::setAuthorizedCaller(WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], true)
+    Γöé   Γö£ΓöÇ emit AuthorizedCallerSet(caller: WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], authorized: true)
+    Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γö£ΓöÇ [678] EulerLagrangeOrderProcessor::setMinimumOrderValue(0)
+    Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γö£ΓöÇ [649106] ΓåÆ new MockToken@0xa0Cb889707d426A7A386870A03bc70d1b0697598
+    Γöé   Γö£ΓöÇ emit OwnershipTransferred(previousOwner: 0x0000000000000000000000000000000000000000, newOwner: OrderProcessorInvariants: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496])
+    Γöé   ΓööΓöÇ ΓåÉ [Return] 2899 bytes of code
+    Γö£ΓöÇ [649106] ΓåÆ new MockToken@0x1d1499e622D69689cdf9004d05Ec547d650Ff211
+    Γöé   Γö£ΓöÇ emit OwnershipTransferred(previousOwner: 0x0000000000000000000000000000000000000000, newOwner: OrderProcessorInvariants: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496])
+    Γöé   ΓööΓöÇ ΓåÉ [Return] 2899 bytes of code
+    Γö£ΓöÇ [204109] ΓåÆ new <unknown>@0xA4AD4f68d0b91CFD19687c881e50f3A00242828c
+    Γöé   Γö£ΓöÇ [0] VM::deal(0x0000000000000000000000000000000000000065, 100000000000000000000 [1e20])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ [584] MockToken::mint(0x0000000000000000000000000000000000000065, 1000000000000000000000 [1e21])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Revert] Ownable: caller is not the owner
+    Γöé   ΓööΓöÇ ΓåÉ [Revert] 0x08c379a0000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000204f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e6572
+    ΓööΓöÇ ΓåÉ [Revert] Ownable: caller is not the owner
+
+Suite result: FAILED. 0 passed; 1 failed; 0 skipped; finished in 1.90ms (0.00ns CPU time)
+
+Ran 1 test suite in 20.55ms (1.90ms CPU time): 0 tests passed, 1 failed, 0 skipped (1 total tests)
+
+Failing tests:
+Encountered 1 failing test in test/OrderProcessorInvariants.t.sol:OrderProcessorInvariants
+[FAIL: Ownable: caller is not the owner] setUp() (gas: 0)
+
+Encountered a total of 1 failing tests, 0 tests succeeded
+
+Tip: Run `forge test --rerun` to retry only the 1 failed test

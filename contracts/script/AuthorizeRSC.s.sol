@@ -4,29 +4,25 @@ pragma solidity ^0.8.0;
 import "forge-std/Script.sol";
 import "../src/WalletSwapMain.sol";
 
+/**
+ * @notice Authorize a deployed SwapMatcherMultiChain RSC on a WalletSwapMain instance.
+ *         Set RSC_ADDRESS and WALLET_SWAP_ADDRESS in .env before running.
+ */
 contract AuthorizeRSC is Script {
     function run() external {
         uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
-        
-        // Load target contract addresses from env
-        address walletSwapAddress;
-        address rscAddress = vm.envAddress("SWAP_MATCHER_RSC_ADDRESS"); // Pass this in command line or env
-
-        // Determine chain to select correct WalletSwap address
-        uint256 chainId = block.chainid;
-        if (chainId == 11155111) {
-            walletSwapAddress = vm.envAddress("WALLET_SWAP_SEPOLIA");
-        } else if (chainId == 5318007) {
-            walletSwapAddress = vm.envAddress("WALLET_SWAP_LASNA");
-        } else {
-            revert("Unsupported chain");
-        }
+        address walletSwapAddress  = vm.envAddress("WALLET_SWAP_ADDRESS");
+        address rscAddress         = vm.envAddress("RSC_ADDRESS");
 
         vm.startBroadcast(deployerPrivateKey);
 
-        WalletSwapMain(payable(walletSwapAddress)).setAuthorizedReactiveVM(rscAddress);
-        console.log("Authorized RSC", rscAddress, "on WalletSwapMain", walletSwapAddress);
+        WalletSwapMain walletSwap = WalletSwapMain(payable(walletSwapAddress));
+        walletSwap.setAuthorizedReactiveVM(rscAddress);
+        walletSwap.setCallbackProxy(rscAddress);
 
         vm.stopBroadcast();
+
+        console.log("RSC authorized on WalletSwapMain:", walletSwapAddress);
+        console.log("RSC address:", rscAddress);
     }
 }

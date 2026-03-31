@@ -46,6 +46,18 @@ contract DeployFullStack is Script {
         orderProcessor.setWalletSwapMain(address(walletSwap));
         console.log("Linked OrderProcessor to WalletSwapMain");
         
+        // Security Configuration (New)
+        liquidityPool.setAuthorizedCaller(address(orderProcessor), true);
+        liquidityPool.setAuthorizedCaller(address(walletSwap), true);
+        console.log("Authorized callers for LiquidityPool");
+
+        orderProcessor.setMinimumOrderValue(0.01 ether); // $20-$30 at current ETH price
+        console.log("Set minimum order value to 0.01 ETH");
+
+        feeDistributor.setMinFeeMinutes(15);
+        feeDistributor.setMinNftFeeWei(0.005 ether);
+        console.log("Configured FeeDistributor minimums");
+
         // Register WalletSwapMain for automated debt coverage
         feeDistributor.registerReactiveContract(address(walletSwap));
         console.log("Registered WalletSwapMain with FeeDistributor");

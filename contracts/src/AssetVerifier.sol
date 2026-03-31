@@ -20,6 +20,7 @@ contract AssetVerifier is Ownable {
         bool isNft;
         uint256 timestamp;
         bool active;
+        address creator; // M-6: Track who created the verification
     }
 
     // Verification mapping
@@ -29,6 +30,9 @@ contract AssetVerifier is Ownable {
     bytes32[] public activeVerificationIds;
     mapping(bytes32 => uint256) public verificationIndex;
 
+    // M-6: Authorized contracts that can end verifications
+    mapping(address => bool) public authorizedCallers;
+
     // Events - Reactive Network compliant
     event VerificationStarted(
         bytes32 indexed verificationId, address indexed token, address indexed owner, uint256 amount, bool isNft
@@ -36,9 +40,20 @@ contract AssetVerifier is Ownable {
     event VerificationEnded(bytes32 indexed verificationId, bool success);
     event AssetMoved(bytes32 indexed verificationId, address indexed token, address indexed from, address to);
     event AssetVerifierInitialized(address indexed owner);
+    event AuthorizedCallerSet(address indexed caller, bool authorized);
 
     constructor() {
         emit AssetVerifierInitialized(msg.sender);
+    }
+
+    /**
+     * @dev Set authorized caller status
+     * @param caller Address to authorize/deauthorize
+     * @param authorized Whether the caller is authorized
+     */
+    function setAuthorizedCaller(address caller, bool authorized) external onlyOwner {
+        authorizedCallers[caller] = authorized;
+        emit AuthorizedCallerSet(caller, authorized);
     }
 
     /**
@@ -71,7 +86,8 @@ contract AssetVerifier is Ownable {
             tokenId: 0,
             isNft: false,
             timestamp: block.timestamp,
-            active: true
+            active: true,
+            creator: msg.sender
         });
 
         // Add to active verifications
@@ -111,7 +127,8 @@ contract AssetVerifier is Ownable {
             tokenId: tokenId,
             isNft: true,
             timestamp: block.timestamp,
-            active: true
+            active: true,
+            creator: msg.sender
         });
 
         // Add to active verifications
@@ -154,12 +171,20 @@ contract AssetVerifier is Ownable {
     }
 
     /**
-     * @dev End verification
+     * @dev End verification — M-6: restricted to verification creator, authorized callers, or owner
      * @param verificationId Verification ID
      */
     function endVerification(bytes32 verificationId) external {
         Verification storage verification = verifications[verificationId];
         require(verification.active, "Verification not active");
+        // M-6: Access control
+        require(
+            msg.sender == verification.creator ||
+            msg.sender == verification.owner ||
+            msg.sender == owner() ||
+            authorizedCallers[msg.sender],
+            "Unauthorized: not creator, owner, or authorized caller"
+        );
 
         verification.active = false;
 

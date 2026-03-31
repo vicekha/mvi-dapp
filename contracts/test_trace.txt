@@ -1,0 +1,487 @@
+﻿No files changed, compilation skipped
+
+Ran 1 test for test/CrossChainSettlementTest.t.sol:CrossChainSettlementTest
+[FAIL: assertion failed: 0 != 1] testMatchOrdersUnitMismatch() (gas: 2944924)
+Traces:
+  [9072442] CrossChainSettlementTest::setUp()
+    Γö£ΓöÇ [752951] ΓåÆ new VirtualLiquidityPool@0x5615dEB798BB3E4dFa0139dFa1b3D433Cc23b72f
+    Γöé   Γö£ΓöÇ emit OwnershipTransferred(previousOwner: 0x0000000000000000000000000000000000000000, newOwner: CrossChainSettlementTest: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496])
+    Γöé   Γö£ΓöÇ emit LiquidityPoolInitialized(owner: CrossChainSettlementTest: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496])
+    Γöé   ΓööΓöÇ ΓåÉ [Return] 3416 bytes of code
+    Γö£ΓöÇ [1683721] ΓåÆ new TrustWalletFeeDistributor@0x2e234DAe75C793f67A35089C9d99245E1C58470b
+    Γöé   Γö£ΓöÇ emit OwnershipTransferred(previousOwner: 0x0000000000000000000000000000000000000000, newOwner: CrossChainSettlementTest: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496])
+    Γöé   Γö£ΓöÇ emit FeeDistributorInitialized(owner: CrossChainSettlementTest: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496], defaultWallet: Identity: [0x0000000000000000000000000000000000000004])
+    Γöé   Γö£ΓöÇ emit DefaultTrustWalletSet(wallet: Identity: [0x0000000000000000000000000000000000000004])
+    Γöé   ΓööΓöÇ ΓåÉ [Return] 7726 bytes of code
+    Γö£ΓöÇ [913746] ΓåÆ new AssetVerifier@0xF62849F9A0B5Bf2913b396098F7c7019b51A820a
+    Γöé   Γö£ΓöÇ emit OwnershipTransferred(previousOwner: 0x0000000000000000000000000000000000000000, newOwner: CrossChainSettlementTest: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496])
+    Γöé   Γö£ΓöÇ emit AssetVerifierInitialized(owner: CrossChainSettlementTest: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496])
+    Γöé   ΓööΓöÇ ΓåÉ [Return] 4440 bytes of code
+    Γö£ΓöÇ [1921039] ΓåÆ new EulerLagrangeOrderProcessor@0x5991A2dF15A8F6A256D3Ec51E99254Cd3fb576A9
+    Γöé   Γö£ΓöÇ emit OwnershipTransferred(previousOwner: 0x0000000000000000000000000000000000000000, newOwner: CrossChainSettlementTest: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496])
+    Γöé   Γö£ΓöÇ emit OrderProcessorInitialized(owner: CrossChainSettlementTest: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496])
+    Γöé   ΓööΓöÇ ΓåÉ [Return] 8916 bytes of code
+    Γö£ΓöÇ [3408448] ΓåÆ new WalletSwapMain@0xc7183455a4C133Ae270771860664b6B7ec320bB1
+    Γöé   Γö£ΓöÇ emit OwnershipTransferred(previousOwner: 0x0000000000000000000000000000000000000000, newOwner: CrossChainSettlementTest: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496])
+    Γöé   Γö£ΓöÇ emit WalletSwapMainInitialized(owner: CrossChainSettlementTest: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496])
+    Γöé   ΓööΓöÇ ΓåÉ [Return] 16344 bytes of code
+    Γö£ΓöÇ [22878] EulerLagrangeOrderProcessor::setWalletSwapMain(WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1])
+    Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γö£ΓöÇ [22903] WalletSwapMain::setAuthorizedReactiveVM(RIPEMD-160: [0x0000000000000000000000000000000000000003])
+    Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γö£ΓöÇ [22661] WalletSwapMain::setCallbackProxy(RIPEMD-160: [0x0000000000000000000000000000000000000003])
+    Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γö£ΓöÇ [24090] VirtualLiquidityPool::setAuthorizedCaller(EulerLagrangeOrderProcessor: [0x5991A2dF15A8F6A256D3Ec51E99254Cd3fb576A9], true)
+    Γöé   Γö£ΓöÇ emit AuthorizedCallerSet(caller: EulerLagrangeOrderProcessor: [0x5991A2dF15A8F6A256D3Ec51E99254Cd3fb576A9], authorized: true)
+    Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γö£ΓöÇ [24090] VirtualLiquidityPool::setAuthorizedCaller(WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], true)
+    Γöé   Γö£ΓöÇ emit AuthorizedCallerSet(caller: WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], authorized: true)
+    Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γö£ΓöÇ [678] EulerLagrangeOrderProcessor::setMinimumOrderValue(0)
+    Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γö£ΓöÇ [714] TrustWalletFeeDistributor::setMinFeeMinutes(0)
+    Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γö£ΓöÇ [1151] TrustWalletFeeDistributor::setMinNftFeeWei(0)
+    Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γö£ΓöÇ [0] VM::deal(ECRecover: [0x0000000000000000000000000000000000000001], 10000000000000000000 [1e19])
+    Γöé   ΓööΓöÇ ΓåÉ [Return]
+    ΓööΓöÇ ΓåÉ [Return]
+
+  [2944924] CrossChainSettlementTest::testMatchOrdersUnitMismatch()
+    Γö£ΓöÇ [0] VM::addr(<pk>) [staticcall]
+    Γöé   ΓööΓöÇ ΓåÉ [Return] makerA: [0xD6B58c2Da790f9959527c44Dd2c0da554cf27373]
+    Γö£ΓöÇ [0] VM::label(makerA: [0xD6B58c2Da790f9959527c44Dd2c0da554cf27373], "makerA")
+    Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γö£ΓöÇ [0] VM::addr(<pk>) [staticcall]
+    Γöé   ΓööΓöÇ ΓåÉ [Return] makerB: [0xA5eFe908726b09A92C20C733f2A66A04964701D2]
+    Γö£ΓöÇ [0] VM::label(makerB: [0xA5eFe908726b09A92C20C733f2A66A04964701D2], "makerB")
+    Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γö£ΓöÇ [649106] ΓåÆ new MockToken@0xa0Cb889707d426A7A386870A03bc70d1b0697598
+    Γöé   Γö£ΓöÇ emit OwnershipTransferred(previousOwner: 0x0000000000000000000000000000000000000000, newOwner: CrossChainSettlementTest: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496])
+    Γöé   ΓööΓöÇ ΓåÉ [Return] 2899 bytes of code
+    Γö£ΓöÇ [0] VM::deal(makerA: [0xD6B58c2Da790f9959527c44Dd2c0da554cf27373], 1000000000000000000 [1e18])
+    Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γö£ΓöÇ [46682] MockToken::mint(makerB: [0xA5eFe908726b09A92C20C733f2A66A04964701D2], 10000000000000000000 [1e19])
+    Γöé   Γö£ΓöÇ emit Transfer(from: 0x0000000000000000000000000000000000000000, to: makerB: [0xA5eFe908726b09A92C20C733f2A66A04964701D2], value: 10000000000000000000 [1e19])
+    Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γö£ΓöÇ [0] VM::startPrank(makerA: [0xD6B58c2Da790f9959527c44Dd2c0da554cf27373])
+    Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γö£ΓöÇ [709897] WalletSwapMain::createOrder{value: 100000000000000000}(0x0000000000000000000000000000000000000000, MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 0, 0, 100000000 [1e8], 1000000000000000000 [1e18], 1, 1, 100, 3600, false, 0)
+    Γöé   Γö£ΓöÇ [5364] TrustWalletFeeDistributor::calculateFee(0x0000000000000000000000000000000000000000, 0, 100000000 [1e8], 1) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 50000 [5e4]
+    Γöé   Γö£ΓöÇ [25066] TrustWalletFeeDistributor::depositGasForDebt{value: 2000000000000000}(0x0000000000000000000000000000000000000000000000000000000000000000)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γö£ΓöÇ [124267] TrustWalletFeeDistributor::distributeFee{value: 50000}(0x0000000000000000000000000000000000000000, 0, 100000000 [1e8], 1, makerA: [0xD6B58c2Da790f9959527c44Dd2c0da554cf27373], 0xd45ff80c9a2e88cba99f2e47d05358591685ac1ef422d2a9594b1a1cc3c79544)
+    Γöé   Γöé   Γö£ΓöÇ emit FeeDistributed(token: 0x0000000000000000000000000000000000000000, recipient: Identity: [0x0000000000000000000000000000000000000004], amount: 50000 [5e4], orderId: 0xd45ff80c9a2e88cba99f2e47d05358591685ac1ef422d2a9594b1a1cc3c79544, timestamp: 1)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 50000 [5e4]
+    Γöé   Γö£ΓöÇ [507142] EulerLagrangeOrderProcessor::createOrder(makerA: [0xD6B58c2Da790f9959527c44Dd2c0da554cf27373], 0x0000000000000000000000000000000000000000, MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 0, 0, 100000000 [1e8], 1000000000000000000 [1e18], 1, 1, 100, 3601, false, 0)
+    Γöé   Γöé   Γö£ΓöÇ [124277] VirtualLiquidityPool::addLiquidity(0x0000000000000000000000000000000000000000, MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 1)
+    Γöé   Γöé   Γöé   Γö£ΓöÇ emit LiquidityChanged(token0: 0x0000000000000000000000000000000000000000, token1: MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], newLiquidity: 1, timestamp: 1)
+    Γöé   Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γöé   Γö£ΓöÇ emit OrderCreated(orderId: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, maker: makerA: [0xD6B58c2Da790f9959527c44Dd2c0da554cf27373], tokenIn: 0x0000000000000000000000000000000000000000, tokenOut: MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], typeIn: 0, typeOut: 0, amountIn: 100000000 [1e8], amountOut: 1000000000000000000 [1e18], minutesValueIn: 1, targetChainId: 0, timestamp: 1)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3
+    Γöé   Γö£ΓöÇ emit OrderInitiated(orderId: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, maker: makerA: [0xD6B58c2Da790f9959527c44Dd2c0da554cf27373], tokenIn: 0x0000000000000000000000000000000000000000, tokenOut: MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], typeIn: 0, typeOut: 0, amountIn: 100000000 [1e8], amountOut: 1000000000000000000 [1e18], targetChainId: 0, timestamp: 1)
+    Γöé   Γö£ΓöÇ emit MatchAttempted(orderId: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, tokenIn: 0x0000000000000000000000000000000000000000, tokenOut: MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598])
+    Γöé   Γö£ΓöÇ [5696] EulerLagrangeOrderProcessor::getOrder(0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xD6B58c2Da790f9959527c44Dd2c0da554cf27373, tokenIn: 0x0000000000000000000000000000000000000000, tokenOut: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, typeIn: 0, typeOut: 0, amountIn: 100000000 [1e8], amountOut: 1000000000000000000 [1e18], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 100, filledAmount: 0, timestamp: 1, expiration: 3601, status: 0, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x301026798255b1931a6eefaeb2a43b2a7b48bc7329994d8e487631998ae87a1d, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ [2701] EulerLagrangeOrderProcessor::findMatchingOrder(0x0000000000000000000000000000000000000000, MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 100000000 [1e8], 1000000000000000000 [1e18]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0x0000000000000000000000000000000000000000000000000000000000000000
+    Γöé   ΓööΓöÇ ΓåÉ [Return] 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3
+    Γö£ΓöÇ [0] VM::stopPrank()
+    Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γö£ΓöÇ [0] VM::deal(makerB: [0xA5eFe908726b09A92C20C733f2A66A04964701D2], 1000000000000000000 [1e18])
+    Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γö£ΓöÇ [0] VM::startPrank(makerB: [0xA5eFe908726b09A92C20C733f2A66A04964701D2])
+    Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γö£ΓöÇ [24377] MockToken::approve(WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], 1000000000000000000 [1e18])
+    Γöé   Γö£ΓöÇ emit Approval(owner: makerB: [0xA5eFe908726b09A92C20C733f2A66A04964701D2], spender: WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], value: 1000000000000000000 [1e18])
+    Γöé   ΓööΓöÇ ΓåÉ [Return] true
+    Γö£ΓöÇ [24377] MockToken::approve(TrustWalletFeeDistributor: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], 100000000000000000 [1e17])
+    Γöé   Γö£ΓöÇ emit Approval(owner: makerB: [0xA5eFe908726b09A92C20C733f2A66A04964701D2], spender: TrustWalletFeeDistributor: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], value: 100000000000000000 [1e17])
+    Γöé   ΓööΓöÇ ΓåÉ [Return] true
+    Γö£ΓöÇ [1407571] WalletSwapMain::createOrder{value: 2000000000000000}(MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 0x0000000000000000000000000000000000000000, 0, 0, 1000000000000000000 [1e18], 100000000 [1e8], 1, 1, 0, 3600, false, 0)
+    Γöé   Γö£ΓöÇ [1364] TrustWalletFeeDistributor::calculateFee(MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 0, 1000000000000000000 [1e18], 1) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 500000000000000 [5e14]
+    Γöé   Γö£ΓöÇ [1166] TrustWalletFeeDistributor::depositGasForDebt{value: 2000000000000000}(0x0000000000000000000000000000000000000000000000000000000000000000)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γö£ΓöÇ [27263] MockToken::transferFrom(makerB: [0xA5eFe908726b09A92C20C733f2A66A04964701D2], WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], 500000000000000 [5e14])
+    Γöé   Γöé   Γö£ΓöÇ emit Approval(owner: makerB: [0xA5eFe908726b09A92C20C733f2A66A04964701D2], spender: WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], value: 999500000000000000 [9.995e17])
+    Γöé   Γöé   Γö£ΓöÇ emit Transfer(from: makerB: [0xA5eFe908726b09A92C20C733f2A66A04964701D2], to: WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], value: 500000000000000 [5e14])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] true
+    Γöé   Γö£ΓöÇ [4477] MockToken::approve(TrustWalletFeeDistributor: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], 0)
+    Γöé   Γöé   Γö£ΓöÇ emit Approval(owner: WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], spender: TrustWalletFeeDistributor: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], value: 0)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] true
+    Γöé   Γö£ΓöÇ [861] MockToken::allowance(WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], TrustWalletFeeDistributor: [0x2e234DAe75C793f67A35089C9d99245E1C58470b]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0
+    Γöé   Γö£ΓöÇ [22277] MockToken::approve(TrustWalletFeeDistributor: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], 500000000000000 [5e14])
+    Γöé   Γöé   Γö£ΓöÇ emit Approval(owner: WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], spender: TrustWalletFeeDistributor: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], value: 500000000000000 [5e14])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] true
+    Γöé   Γö£ΓöÇ [145847] TrustWalletFeeDistributor::distributeFee(MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 0, 1000000000000000000 [1e18], 1, WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], 0xc3c6dd133c1b07c081b2ead0d3cd6ccaae49b7927409a31ee839be1d507ee8fc)
+    Γöé   Γöé   Γö£ΓöÇ [27263] MockToken::transferFrom(WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], Identity: [0x0000000000000000000000000000000000000004], 500000000000000 [5e14])
+    Γöé   Γöé   Γöé   Γö£ΓöÇ emit Approval(owner: WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], spender: TrustWalletFeeDistributor: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], value: 0)
+    Γöé   Γöé   Γöé   Γö£ΓöÇ emit Transfer(from: WalletSwapMain: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], to: Identity: [0x0000000000000000000000000000000000000004], value: 500000000000000 [5e14])
+    Γöé   Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] true
+    Γöé   Γöé   Γö£ΓöÇ emit FeeDistributed(token: MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], recipient: Identity: [0x0000000000000000000000000000000000000004], amount: 500000000000000 [5e14], orderId: 0xc3c6dd133c1b07c081b2ead0d3cd6ccaae49b7927409a31ee839be1d507ee8fc, timestamp: 1)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 500000000000000 [5e14]
+    Γöé   Γö£ΓöÇ [530669] EulerLagrangeOrderProcessor::createOrder(makerB: [0xA5eFe908726b09A92C20C733f2A66A04964701D2], MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 0x0000000000000000000000000000000000000000, 0, 0, 1000000000000000000 [1e18], 100000000 [1e8], 1, 1, 0, 3601, false, 0)
+    Γöé   Γöé   Γö£ΓöÇ [166860] AssetVerifier::verifyToken(MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], makerB: [0xA5eFe908726b09A92C20C733f2A66A04964701D2], 1000000000000000000 [1e18])
+    Γöé   Γöé   Γöé   Γö£ΓöÇ [563] MockToken::balanceOf(makerB: [0xA5eFe908726b09A92C20C733f2A66A04964701D2]) [staticcall]
+    Γöé   Γöé   Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 9999500000000000000 [9.999e18]
+    Γöé   Γöé   Γöé   Γö£ΓöÇ emit VerificationStarted(verificationId: 0x2c1c1713d32f63841574d16fc6950c14c77446d779df96ea925a69a2269fa26a, token: MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], owner: makerB: [0xA5eFe908726b09A92C20C733f2A66A04964701D2], amount: 1000000000000000000 [1e18], isNft: false)
+    Γöé   Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0x2c1c1713d32f63841574d16fc6950c14c77446d779df96ea925a69a2269fa26a
+    Γöé   Γöé   Γö£ΓöÇ [52575] VirtualLiquidityPool::addLiquidity(MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 0x0000000000000000000000000000000000000000, 1)
+    Γöé   Γöé   Γöé   Γö£ΓöÇ emit LiquidityChanged(token0: 0x0000000000000000000000000000000000000000, token1: MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], newLiquidity: 2, timestamp: 1)
+    Γöé   Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γöé   Γö£ΓöÇ emit OrderCreated(orderId: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, maker: makerB: [0xA5eFe908726b09A92C20C733f2A66A04964701D2], tokenIn: MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], tokenOut: 0x0000000000000000000000000000000000000000, typeIn: 0, typeOut: 0, amountIn: 1000000000000000000 [1e18], amountOut: 100000000 [1e8], minutesValueIn: 1, targetChainId: 0, timestamp: 1)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98
+    Γöé   Γö£ΓöÇ emit OrderInitiated(orderId: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, maker: makerB: [0xA5eFe908726b09A92C20C733f2A66A04964701D2], tokenIn: MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], tokenOut: 0x0000000000000000000000000000000000000000, typeIn: 0, typeOut: 0, amountIn: 1000000000000000000 [1e18], amountOut: 100000000 [1e8], targetChainId: 0, timestamp: 1)
+    Γöé   Γö£ΓöÇ emit MatchAttempted(orderId: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, tokenIn: MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], tokenOut: 0x0000000000000000000000000000000000000000)
+    Γöé   Γö£ΓöÇ [5696] EulerLagrangeOrderProcessor::getOrder(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xA5eFe908726b09A92C20C733f2A66A04964701D2, tokenIn: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, tokenOut: 0x0000000000000000000000000000000000000000, typeIn: 0, typeOut: 0, amountIn: 1000000000000000000 [1e18], amountOut: 100000000 [1e8], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 0, filledAmount: 0, timestamp: 1, expiration: 3601, status: 0, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x2c1c1713d32f63841574d16fc6950c14c77446d779df96ea925a69a2269fa26a, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ [2513] EulerLagrangeOrderProcessor::findMatchingOrder(MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 0x0000000000000000000000000000000000000000, 1000000000000000000 [1e18], 100000000 [1e8]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3
+    Γöé   Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xD6B58c2Da790f9959527c44Dd2c0da554cf27373, tokenIn: 0x0000000000000000000000000000000000000000, tokenOut: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, typeIn: 0, typeOut: 0, amountIn: 100000000 [1e8], amountOut: 1000000000000000000 [1e18], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 100, filledAmount: 0, timestamp: 1, expiration: 3601, status: 0, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x301026798255b1931a6eefaeb2a43b2a7b48bc7329994d8e487631998ae87a1d, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ emit MatchCalculated(orderIdA: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, orderIdB: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, amountAtoB: 1000000000000000000 [1e18], amountBtoA: 100000000 [1e8])
+    Γöé   Γö£ΓöÇ [0] makerB::fallback{value: 100000000}()
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γö£ΓöÇ [752] MockToken::transferFrom(makerB: [0xA5eFe908726b09A92C20C733f2A66A04964701D2], makerA: [0xD6B58c2Da790f9959527c44Dd2c0da554cf27373], 1000000000000000000 [1e18])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Revert] ERC20: insufficient allowance
+    Γöé   Γö£ΓöÇ [22801] EulerLagrangeOrderProcessor::updateOrderStatus(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, 3)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ [3492] EulerLagrangeOrderProcessor::removeFromPairIndex(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ emit OrderAutoMatched(orderIdA: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, orderIdB: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, timestamp: 1)
+    Γöé   Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xA5eFe908726b09A92C20C733f2A66A04964701D2, tokenIn: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, tokenOut: 0x0000000000000000000000000000000000000000, typeIn: 0, typeOut: 0, amountIn: 1000000000000000000 [1e18], amountOut: 100000000 [1e8], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 0, filledAmount: 0, timestamp: 1, expiration: 3601, status: 3, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x2c1c1713d32f63841574d16fc6950c14c77446d779df96ea925a69a2269fa26a, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ [2513] EulerLagrangeOrderProcessor::findMatchingOrder(MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 0x0000000000000000000000000000000000000000, 1000000000000000000 [1e18], 100000000 [1e8]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3
+    Γöé   Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xD6B58c2Da790f9959527c44Dd2c0da554cf27373, tokenIn: 0x0000000000000000000000000000000000000000, tokenOut: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, typeIn: 0, typeOut: 0, amountIn: 100000000 [1e8], amountOut: 1000000000000000000 [1e18], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 100, filledAmount: 0, timestamp: 1, expiration: 3601, status: 0, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x301026798255b1931a6eefaeb2a43b2a7b48bc7329994d8e487631998ae87a1d, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ emit MatchCalculated(orderIdA: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, orderIdB: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, amountAtoB: 1000000000000000000 [1e18], amountBtoA: 100000000 [1e8])
+    Γöé   Γö£ΓöÇ [0] makerB::fallback{value: 100000000}()
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γö£ΓöÇ [752] MockToken::transferFrom(makerB: [0xA5eFe908726b09A92C20C733f2A66A04964701D2], makerA: [0xD6B58c2Da790f9959527c44Dd2c0da554cf27373], 1000000000000000000 [1e18])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Revert] ERC20: insufficient allowance
+    Γöé   Γö£ΓöÇ [901] EulerLagrangeOrderProcessor::updateOrderStatus(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, 3)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ [1607] EulerLagrangeOrderProcessor::removeFromPairIndex(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ emit OrderAutoMatched(orderIdA: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, orderIdB: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, timestamp: 1)
+    Γöé   Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xA5eFe908726b09A92C20C733f2A66A04964701D2, tokenIn: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, tokenOut: 0x0000000000000000000000000000000000000000, typeIn: 0, typeOut: 0, amountIn: 1000000000000000000 [1e18], amountOut: 100000000 [1e8], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 0, filledAmount: 0, timestamp: 1, expiration: 3601, status: 3, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x2c1c1713d32f63841574d16fc6950c14c77446d779df96ea925a69a2269fa26a, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ [2513] EulerLagrangeOrderProcessor::findMatchingOrder(MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 0x0000000000000000000000000000000000000000, 1000000000000000000 [1e18], 100000000 [1e8]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3
+    Γöé   Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xD6B58c2Da790f9959527c44Dd2c0da554cf27373, tokenIn: 0x0000000000000000000000000000000000000000, tokenOut: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, typeIn: 0, typeOut: 0, amountIn: 100000000 [1e8], amountOut: 1000000000000000000 [1e18], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 100, filledAmount: 0, timestamp: 1, expiration: 3601, status: 0, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x301026798255b1931a6eefaeb2a43b2a7b48bc7329994d8e487631998ae87a1d, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ emit MatchCalculated(orderIdA: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, orderIdB: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, amountAtoB: 1000000000000000000 [1e18], amountBtoA: 100000000 [1e8])
+    Γöé   Γö£ΓöÇ [0] makerB::fallback{value: 100000000}()
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γö£ΓöÇ [752] MockToken::transferFrom(makerB: [0xA5eFe908726b09A92C20C733f2A66A04964701D2], makerA: [0xD6B58c2Da790f9959527c44Dd2c0da554cf27373], 1000000000000000000 [1e18])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Revert] ERC20: insufficient allowance
+    Γöé   Γö£ΓöÇ [901] EulerLagrangeOrderProcessor::updateOrderStatus(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, 3)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ [1607] EulerLagrangeOrderProcessor::removeFromPairIndex(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ emit OrderAutoMatched(orderIdA: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, orderIdB: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, timestamp: 1)
+    Γöé   Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xA5eFe908726b09A92C20C733f2A66A04964701D2, tokenIn: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, tokenOut: 0x0000000000000000000000000000000000000000, typeIn: 0, typeOut: 0, amountIn: 1000000000000000000 [1e18], amountOut: 100000000 [1e8], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 0, filledAmount: 0, timestamp: 1, expiration: 3601, status: 3, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x2c1c1713d32f63841574d16fc6950c14c77446d779df96ea925a69a2269fa26a, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ [2513] EulerLagrangeOrderProcessor::findMatchingOrder(MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 0x0000000000000000000000000000000000000000, 1000000000000000000 [1e18], 100000000 [1e8]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3
+    Γöé   Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xD6B58c2Da790f9959527c44Dd2c0da554cf27373, tokenIn: 0x0000000000000000000000000000000000000000, tokenOut: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, typeIn: 0, typeOut: 0, amountIn: 100000000 [1e8], amountOut: 1000000000000000000 [1e18], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 100, filledAmount: 0, timestamp: 1, expiration: 3601, status: 0, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x301026798255b1931a6eefaeb2a43b2a7b48bc7329994d8e487631998ae87a1d, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ emit MatchCalculated(orderIdA: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, orderIdB: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, amountAtoB: 1000000000000000000 [1e18], amountBtoA: 100000000 [1e8])
+    Γöé   Γö£ΓöÇ [0] makerB::fallback{value: 100000000}()
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γö£ΓöÇ [752] MockToken::transferFrom(makerB: [0xA5eFe908726b09A92C20C733f2A66A04964701D2], makerA: [0xD6B58c2Da790f9959527c44Dd2c0da554cf27373], 1000000000000000000 [1e18])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Revert] ERC20: insufficient allowance
+    Γöé   Γö£ΓöÇ [901] EulerLagrangeOrderProcessor::updateOrderStatus(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, 3)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ [1607] EulerLagrangeOrderProcessor::removeFromPairIndex(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ emit OrderAutoMatched(orderIdA: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, orderIdB: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, timestamp: 1)
+    Γöé   Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xA5eFe908726b09A92C20C733f2A66A04964701D2, tokenIn: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, tokenOut: 0x0000000000000000000000000000000000000000, typeIn: 0, typeOut: 0, amountIn: 1000000000000000000 [1e18], amountOut: 100000000 [1e8], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 0, filledAmount: 0, timestamp: 1, expiration: 3601, status: 3, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x2c1c1713d32f63841574d16fc6950c14c77446d779df96ea925a69a2269fa26a, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ [2513] EulerLagrangeOrderProcessor::findMatchingOrder(MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 0x0000000000000000000000000000000000000000, 1000000000000000000 [1e18], 100000000 [1e8]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3
+    Γöé   Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xD6B58c2Da790f9959527c44Dd2c0da554cf27373, tokenIn: 0x0000000000000000000000000000000000000000, tokenOut: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, typeIn: 0, typeOut: 0, amountIn: 100000000 [1e8], amountOut: 1000000000000000000 [1e18], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 100, filledAmount: 0, timestamp: 1, expiration: 3601, status: 0, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x301026798255b1931a6eefaeb2a43b2a7b48bc7329994d8e487631998ae87a1d, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ emit MatchCalculated(orderIdA: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, orderIdB: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, amountAtoB: 1000000000000000000 [1e18], amountBtoA: 100000000 [1e8])
+    Γöé   Γö£ΓöÇ [0] makerB::fallback{value: 100000000}()
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γö£ΓöÇ [752] MockToken::transferFrom(makerB: [0xA5eFe908726b09A92C20C733f2A66A04964701D2], makerA: [0xD6B58c2Da790f9959527c44Dd2c0da554cf27373], 1000000000000000000 [1e18])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Revert] ERC20: insufficient allowance
+    Γöé   Γö£ΓöÇ [901] EulerLagrangeOrderProcessor::updateOrderStatus(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, 3)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ [1607] EulerLagrangeOrderProcessor::removeFromPairIndex(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ emit OrderAutoMatched(orderIdA: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, orderIdB: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, timestamp: 1)
+    Γöé   Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xA5eFe908726b09A92C20C733f2A66A04964701D2, tokenIn: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, tokenOut: 0x0000000000000000000000000000000000000000, typeIn: 0, typeOut: 0, amountIn: 1000000000000000000 [1e18], amountOut: 100000000 [1e8], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 0, filledAmount: 0, timestamp: 1, expiration: 3601, status: 3, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x2c1c1713d32f63841574d16fc6950c14c77446d779df96ea925a69a2269fa26a, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ [2513] EulerLagrangeOrderProcessor::findMatchingOrder(MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 0x0000000000000000000000000000000000000000, 1000000000000000000 [1e18], 100000000 [1e8]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3
+    Γöé   Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xD6B58c2Da790f9959527c44Dd2c0da554cf27373, tokenIn: 0x0000000000000000000000000000000000000000, tokenOut: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, typeIn: 0, typeOut: 0, amountIn: 100000000 [1e8], amountOut: 1000000000000000000 [1e18], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 100, filledAmount: 0, timestamp: 1, expiration: 3601, status: 0, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x301026798255b1931a6eefaeb2a43b2a7b48bc7329994d8e487631998ae87a1d, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ emit MatchCalculated(orderIdA: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, orderIdB: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, amountAtoB: 1000000000000000000 [1e18], amountBtoA: 100000000 [1e8])
+    Γöé   Γö£ΓöÇ [0] makerB::fallback{value: 100000000}()
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γö£ΓöÇ [752] MockToken::transferFrom(makerB: [0xA5eFe908726b09A92C20C733f2A66A04964701D2], makerA: [0xD6B58c2Da790f9959527c44Dd2c0da554cf27373], 1000000000000000000 [1e18])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Revert] ERC20: insufficient allowance
+    Γöé   Γö£ΓöÇ [901] EulerLagrangeOrderProcessor::updateOrderStatus(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, 3)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ [1607] EulerLagrangeOrderProcessor::removeFromPairIndex(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ emit OrderAutoMatched(orderIdA: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, orderIdB: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, timestamp: 1)
+    Γöé   Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xA5eFe908726b09A92C20C733f2A66A04964701D2, tokenIn: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, tokenOut: 0x0000000000000000000000000000000000000000, typeIn: 0, typeOut: 0, amountIn: 1000000000000000000 [1e18], amountOut: 100000000 [1e8], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 0, filledAmount: 0, timestamp: 1, expiration: 3601, status: 3, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x2c1c1713d32f63841574d16fc6950c14c77446d779df96ea925a69a2269fa26a, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ [2513] EulerLagrangeOrderProcessor::findMatchingOrder(MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 0x0000000000000000000000000000000000000000, 1000000000000000000 [1e18], 100000000 [1e8]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3
+    Γöé   Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xD6B58c2Da790f9959527c44Dd2c0da554cf27373, tokenIn: 0x0000000000000000000000000000000000000000, tokenOut: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, typeIn: 0, typeOut: 0, amountIn: 100000000 [1e8], amountOut: 1000000000000000000 [1e18], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 100, filledAmount: 0, timestamp: 1, expiration: 3601, status: 0, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x301026798255b1931a6eefaeb2a43b2a7b48bc7329994d8e487631998ae87a1d, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ emit MatchCalculated(orderIdA: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, orderIdB: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, amountAtoB: 1000000000000000000 [1e18], amountBtoA: 100000000 [1e8])
+    Γöé   Γö£ΓöÇ [0] makerB::fallback{value: 100000000}()
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γö£ΓöÇ [752] MockToken::transferFrom(makerB: [0xA5eFe908726b09A92C20C733f2A66A04964701D2], makerA: [0xD6B58c2Da790f9959527c44Dd2c0da554cf27373], 1000000000000000000 [1e18])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Revert] ERC20: insufficient allowance
+    Γöé   Γö£ΓöÇ [901] EulerLagrangeOrderProcessor::updateOrderStatus(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, 3)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ [1607] EulerLagrangeOrderProcessor::removeFromPairIndex(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ emit OrderAutoMatched(orderIdA: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, orderIdB: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, timestamp: 1)
+    Γöé   Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xA5eFe908726b09A92C20C733f2A66A04964701D2, tokenIn: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, tokenOut: 0x0000000000000000000000000000000000000000, typeIn: 0, typeOut: 0, amountIn: 1000000000000000000 [1e18], amountOut: 100000000 [1e8], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 0, filledAmount: 0, timestamp: 1, expiration: 3601, status: 3, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x2c1c1713d32f63841574d16fc6950c14c77446d779df96ea925a69a2269fa26a, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ [2513] EulerLagrangeOrderProcessor::findMatchingOrder(MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 0x0000000000000000000000000000000000000000, 1000000000000000000 [1e18], 100000000 [1e8]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3
+    Γöé   Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xD6B58c2Da790f9959527c44Dd2c0da554cf27373, tokenIn: 0x0000000000000000000000000000000000000000, tokenOut: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, typeIn: 0, typeOut: 0, amountIn: 100000000 [1e8], amountOut: 1000000000000000000 [1e18], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 100, filledAmount: 0, timestamp: 1, expiration: 3601, status: 0, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x301026798255b1931a6eefaeb2a43b2a7b48bc7329994d8e487631998ae87a1d, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ emit MatchCalculated(orderIdA: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, orderIdB: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, amountAtoB: 1000000000000000000 [1e18], amountBtoA: 100000000 [1e8])
+    Γöé   Γö£ΓöÇ [0] makerB::fallback{value: 100000000}()
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γö£ΓöÇ [752] MockToken::transferFrom(makerB: [0xA5eFe908726b09A92C20C733f2A66A04964701D2], makerA: [0xD6B58c2Da790f9959527c44Dd2c0da554cf27373], 1000000000000000000 [1e18])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Revert] ERC20: insufficient allowance
+    Γöé   Γö£ΓöÇ [901] EulerLagrangeOrderProcessor::updateOrderStatus(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, 3)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ [1607] EulerLagrangeOrderProcessor::removeFromPairIndex(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ emit OrderAutoMatched(orderIdA: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, orderIdB: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, timestamp: 1)
+    Γöé   Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xA5eFe908726b09A92C20C733f2A66A04964701D2, tokenIn: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, tokenOut: 0x0000000000000000000000000000000000000000, typeIn: 0, typeOut: 0, amountIn: 1000000000000000000 [1e18], amountOut: 100000000 [1e8], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 0, filledAmount: 0, timestamp: 1, expiration: 3601, status: 3, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x2c1c1713d32f63841574d16fc6950c14c77446d779df96ea925a69a2269fa26a, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ [2513] EulerLagrangeOrderProcessor::findMatchingOrder(MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 0x0000000000000000000000000000000000000000, 1000000000000000000 [1e18], 100000000 [1e8]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3
+    Γöé   Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xD6B58c2Da790f9959527c44Dd2c0da554cf27373, tokenIn: 0x0000000000000000000000000000000000000000, tokenOut: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, typeIn: 0, typeOut: 0, amountIn: 100000000 [1e8], amountOut: 1000000000000000000 [1e18], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 100, filledAmount: 0, timestamp: 1, expiration: 3601, status: 0, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x301026798255b1931a6eefaeb2a43b2a7b48bc7329994d8e487631998ae87a1d, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ emit MatchCalculated(orderIdA: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, orderIdB: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, amountAtoB: 1000000000000000000 [1e18], amountBtoA: 100000000 [1e8])
+    Γöé   Γö£ΓöÇ [0] makerB::fallback{value: 100000000}()
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γö£ΓöÇ [752] MockToken::transferFrom(makerB: [0xA5eFe908726b09A92C20C733f2A66A04964701D2], makerA: [0xD6B58c2Da790f9959527c44Dd2c0da554cf27373], 1000000000000000000 [1e18])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Revert] ERC20: insufficient allowance
+    Γöé   Γö£ΓöÇ [901] EulerLagrangeOrderProcessor::updateOrderStatus(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, 3)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ [1607] EulerLagrangeOrderProcessor::removeFromPairIndex(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ emit OrderAutoMatched(orderIdA: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, orderIdB: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, timestamp: 1)
+    Γöé   Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xA5eFe908726b09A92C20C733f2A66A04964701D2, tokenIn: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, tokenOut: 0x0000000000000000000000000000000000000000, typeIn: 0, typeOut: 0, amountIn: 1000000000000000000 [1e18], amountOut: 100000000 [1e8], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 0, filledAmount: 0, timestamp: 1, expiration: 3601, status: 3, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x2c1c1713d32f63841574d16fc6950c14c77446d779df96ea925a69a2269fa26a, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ [2513] EulerLagrangeOrderProcessor::findMatchingOrder(MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 0x0000000000000000000000000000000000000000, 1000000000000000000 [1e18], 100000000 [1e8]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3
+    Γöé   Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xD6B58c2Da790f9959527c44Dd2c0da554cf27373, tokenIn: 0x0000000000000000000000000000000000000000, tokenOut: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, typeIn: 0, typeOut: 0, amountIn: 100000000 [1e8], amountOut: 1000000000000000000 [1e18], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 100, filledAmount: 0, timestamp: 1, expiration: 3601, status: 0, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x301026798255b1931a6eefaeb2a43b2a7b48bc7329994d8e487631998ae87a1d, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ emit MatchCalculated(orderIdA: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, orderIdB: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, amountAtoB: 1000000000000000000 [1e18], amountBtoA: 100000000 [1e8])
+    Γöé   Γö£ΓöÇ [0] makerB::fallback{value: 100000000}()
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γö£ΓöÇ [752] MockToken::transferFrom(makerB: [0xA5eFe908726b09A92C20C733f2A66A04964701D2], makerA: [0xD6B58c2Da790f9959527c44Dd2c0da554cf27373], 1000000000000000000 [1e18])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Revert] ERC20: insufficient allowance
+    Γöé   Γö£ΓöÇ [901] EulerLagrangeOrderProcessor::updateOrderStatus(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, 3)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ [1607] EulerLagrangeOrderProcessor::removeFromPairIndex(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ emit OrderAutoMatched(orderIdA: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, orderIdB: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, timestamp: 1)
+    Γöé   Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xA5eFe908726b09A92C20C733f2A66A04964701D2, tokenIn: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, tokenOut: 0x0000000000000000000000000000000000000000, typeIn: 0, typeOut: 0, amountIn: 1000000000000000000 [1e18], amountOut: 100000000 [1e8], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 0, filledAmount: 0, timestamp: 1, expiration: 3601, status: 3, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x2c1c1713d32f63841574d16fc6950c14c77446d779df96ea925a69a2269fa26a, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ [2513] EulerLagrangeOrderProcessor::findMatchingOrder(MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 0x0000000000000000000000000000000000000000, 1000000000000000000 [1e18], 100000000 [1e8]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3
+    Γöé   Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xD6B58c2Da790f9959527c44Dd2c0da554cf27373, tokenIn: 0x0000000000000000000000000000000000000000, tokenOut: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, typeIn: 0, typeOut: 0, amountIn: 100000000 [1e8], amountOut: 1000000000000000000 [1e18], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 100, filledAmount: 0, timestamp: 1, expiration: 3601, status: 0, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x301026798255b1931a6eefaeb2a43b2a7b48bc7329994d8e487631998ae87a1d, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ emit MatchCalculated(orderIdA: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, orderIdB: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, amountAtoB: 1000000000000000000 [1e18], amountBtoA: 100000000 [1e8])
+    Γöé   Γö£ΓöÇ [0] makerB::fallback{value: 100000000}()
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γö£ΓöÇ [752] MockToken::transferFrom(makerB: [0xA5eFe908726b09A92C20C733f2A66A04964701D2], makerA: [0xD6B58c2Da790f9959527c44Dd2c0da554cf27373], 1000000000000000000 [1e18])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Revert] ERC20: insufficient allowance
+    Γöé   Γö£ΓöÇ [901] EulerLagrangeOrderProcessor::updateOrderStatus(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, 3)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ [1607] EulerLagrangeOrderProcessor::removeFromPairIndex(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ emit OrderAutoMatched(orderIdA: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, orderIdB: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, timestamp: 1)
+    Γöé   Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xA5eFe908726b09A92C20C733f2A66A04964701D2, tokenIn: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, tokenOut: 0x0000000000000000000000000000000000000000, typeIn: 0, typeOut: 0, amountIn: 1000000000000000000 [1e18], amountOut: 100000000 [1e8], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 0, filledAmount: 0, timestamp: 1, expiration: 3601, status: 3, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x2c1c1713d32f63841574d16fc6950c14c77446d779df96ea925a69a2269fa26a, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ [2513] EulerLagrangeOrderProcessor::findMatchingOrder(MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 0x0000000000000000000000000000000000000000, 1000000000000000000 [1e18], 100000000 [1e8]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3
+    Γöé   Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xD6B58c2Da790f9959527c44Dd2c0da554cf27373, tokenIn: 0x0000000000000000000000000000000000000000, tokenOut: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, typeIn: 0, typeOut: 0, amountIn: 100000000 [1e8], amountOut: 1000000000000000000 [1e18], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 100, filledAmount: 0, timestamp: 1, expiration: 3601, status: 0, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x301026798255b1931a6eefaeb2a43b2a7b48bc7329994d8e487631998ae87a1d, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ emit MatchCalculated(orderIdA: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, orderIdB: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, amountAtoB: 1000000000000000000 [1e18], amountBtoA: 100000000 [1e8])
+    Γöé   Γö£ΓöÇ [0] makerB::fallback{value: 100000000}()
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γö£ΓöÇ [752] MockToken::transferFrom(makerB: [0xA5eFe908726b09A92C20C733f2A66A04964701D2], makerA: [0xD6B58c2Da790f9959527c44Dd2c0da554cf27373], 1000000000000000000 [1e18])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Revert] ERC20: insufficient allowance
+    Γöé   Γö£ΓöÇ [901] EulerLagrangeOrderProcessor::updateOrderStatus(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, 3)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ [1607] EulerLagrangeOrderProcessor::removeFromPairIndex(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ emit OrderAutoMatched(orderIdA: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, orderIdB: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, timestamp: 1)
+    Γöé   Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xA5eFe908726b09A92C20C733f2A66A04964701D2, tokenIn: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, tokenOut: 0x0000000000000000000000000000000000000000, typeIn: 0, typeOut: 0, amountIn: 1000000000000000000 [1e18], amountOut: 100000000 [1e8], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 0, filledAmount: 0, timestamp: 1, expiration: 3601, status: 3, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x2c1c1713d32f63841574d16fc6950c14c77446d779df96ea925a69a2269fa26a, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ [2513] EulerLagrangeOrderProcessor::findMatchingOrder(MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 0x0000000000000000000000000000000000000000, 1000000000000000000 [1e18], 100000000 [1e8]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3
+    Γöé   Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xD6B58c2Da790f9959527c44Dd2c0da554cf27373, tokenIn: 0x0000000000000000000000000000000000000000, tokenOut: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, typeIn: 0, typeOut: 0, amountIn: 100000000 [1e8], amountOut: 1000000000000000000 [1e18], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 100, filledAmount: 0, timestamp: 1, expiration: 3601, status: 0, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x301026798255b1931a6eefaeb2a43b2a7b48bc7329994d8e487631998ae87a1d, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ emit MatchCalculated(orderIdA: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, orderIdB: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, amountAtoB: 1000000000000000000 [1e18], amountBtoA: 100000000 [1e8])
+    Γöé   Γö£ΓöÇ [0] makerB::fallback{value: 100000000}()
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γö£ΓöÇ [752] MockToken::transferFrom(makerB: [0xA5eFe908726b09A92C20C733f2A66A04964701D2], makerA: [0xD6B58c2Da790f9959527c44Dd2c0da554cf27373], 1000000000000000000 [1e18])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Revert] ERC20: insufficient allowance
+    Γöé   Γö£ΓöÇ [901] EulerLagrangeOrderProcessor::updateOrderStatus(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, 3)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ [1607] EulerLagrangeOrderProcessor::removeFromPairIndex(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ emit OrderAutoMatched(orderIdA: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, orderIdB: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, timestamp: 1)
+    Γöé   Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xA5eFe908726b09A92C20C733f2A66A04964701D2, tokenIn: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, tokenOut: 0x0000000000000000000000000000000000000000, typeIn: 0, typeOut: 0, amountIn: 1000000000000000000 [1e18], amountOut: 100000000 [1e8], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 0, filledAmount: 0, timestamp: 1, expiration: 3601, status: 3, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x2c1c1713d32f63841574d16fc6950c14c77446d779df96ea925a69a2269fa26a, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ [2513] EulerLagrangeOrderProcessor::findMatchingOrder(MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 0x0000000000000000000000000000000000000000, 1000000000000000000 [1e18], 100000000 [1e8]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3
+    Γöé   Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xD6B58c2Da790f9959527c44Dd2c0da554cf27373, tokenIn: 0x0000000000000000000000000000000000000000, tokenOut: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, typeIn: 0, typeOut: 0, amountIn: 100000000 [1e8], amountOut: 1000000000000000000 [1e18], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 100, filledAmount: 0, timestamp: 1, expiration: 3601, status: 0, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x301026798255b1931a6eefaeb2a43b2a7b48bc7329994d8e487631998ae87a1d, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ emit MatchCalculated(orderIdA: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, orderIdB: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, amountAtoB: 1000000000000000000 [1e18], amountBtoA: 100000000 [1e8])
+    Γöé   Γö£ΓöÇ [0] makerB::fallback{value: 100000000}()
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γö£ΓöÇ [752] MockToken::transferFrom(makerB: [0xA5eFe908726b09A92C20C733f2A66A04964701D2], makerA: [0xD6B58c2Da790f9959527c44Dd2c0da554cf27373], 1000000000000000000 [1e18])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Revert] ERC20: insufficient allowance
+    Γöé   Γö£ΓöÇ [901] EulerLagrangeOrderProcessor::updateOrderStatus(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, 3)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ [1607] EulerLagrangeOrderProcessor::removeFromPairIndex(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ emit OrderAutoMatched(orderIdA: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, orderIdB: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, timestamp: 1)
+    Γöé   Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xA5eFe908726b09A92C20C733f2A66A04964701D2, tokenIn: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, tokenOut: 0x0000000000000000000000000000000000000000, typeIn: 0, typeOut: 0, amountIn: 1000000000000000000 [1e18], amountOut: 100000000 [1e8], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 0, filledAmount: 0, timestamp: 1, expiration: 3601, status: 3, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x2c1c1713d32f63841574d16fc6950c14c77446d779df96ea925a69a2269fa26a, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ [2513] EulerLagrangeOrderProcessor::findMatchingOrder(MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 0x0000000000000000000000000000000000000000, 1000000000000000000 [1e18], 100000000 [1e8]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3
+    Γöé   Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xD6B58c2Da790f9959527c44Dd2c0da554cf27373, tokenIn: 0x0000000000000000000000000000000000000000, tokenOut: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, typeIn: 0, typeOut: 0, amountIn: 100000000 [1e8], amountOut: 1000000000000000000 [1e18], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 100, filledAmount: 0, timestamp: 1, expiration: 3601, status: 0, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x301026798255b1931a6eefaeb2a43b2a7b48bc7329994d8e487631998ae87a1d, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ emit MatchCalculated(orderIdA: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, orderIdB: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, amountAtoB: 1000000000000000000 [1e18], amountBtoA: 100000000 [1e8])
+    Γöé   Γö£ΓöÇ [0] makerB::fallback{value: 100000000}()
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γö£ΓöÇ [752] MockToken::transferFrom(makerB: [0xA5eFe908726b09A92C20C733f2A66A04964701D2], makerA: [0xD6B58c2Da790f9959527c44Dd2c0da554cf27373], 1000000000000000000 [1e18])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Revert] ERC20: insufficient allowance
+    Γöé   Γö£ΓöÇ [901] EulerLagrangeOrderProcessor::updateOrderStatus(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, 3)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ [1607] EulerLagrangeOrderProcessor::removeFromPairIndex(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ emit OrderAutoMatched(orderIdA: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, orderIdB: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, timestamp: 1)
+    Γöé   Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xA5eFe908726b09A92C20C733f2A66A04964701D2, tokenIn: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, tokenOut: 0x0000000000000000000000000000000000000000, typeIn: 0, typeOut: 0, amountIn: 1000000000000000000 [1e18], amountOut: 100000000 [1e8], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 0, filledAmount: 0, timestamp: 1, expiration: 3601, status: 3, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x2c1c1713d32f63841574d16fc6950c14c77446d779df96ea925a69a2269fa26a, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ [2513] EulerLagrangeOrderProcessor::findMatchingOrder(MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 0x0000000000000000000000000000000000000000, 1000000000000000000 [1e18], 100000000 [1e8]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3
+    Γöé   Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xD6B58c2Da790f9959527c44Dd2c0da554cf27373, tokenIn: 0x0000000000000000000000000000000000000000, tokenOut: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, typeIn: 0, typeOut: 0, amountIn: 100000000 [1e8], amountOut: 1000000000000000000 [1e18], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 100, filledAmount: 0, timestamp: 1, expiration: 3601, status: 0, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x301026798255b1931a6eefaeb2a43b2a7b48bc7329994d8e487631998ae87a1d, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ emit MatchCalculated(orderIdA: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, orderIdB: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, amountAtoB: 1000000000000000000 [1e18], amountBtoA: 100000000 [1e8])
+    Γöé   Γö£ΓöÇ [0] makerB::fallback{value: 100000000}()
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γö£ΓöÇ [752] MockToken::transferFrom(makerB: [0xA5eFe908726b09A92C20C733f2A66A04964701D2], makerA: [0xD6B58c2Da790f9959527c44Dd2c0da554cf27373], 1000000000000000000 [1e18])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Revert] ERC20: insufficient allowance
+    Γöé   Γö£ΓöÇ [901] EulerLagrangeOrderProcessor::updateOrderStatus(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, 3)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ [1607] EulerLagrangeOrderProcessor::removeFromPairIndex(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ emit OrderAutoMatched(orderIdA: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, orderIdB: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, timestamp: 1)
+    Γöé   Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xA5eFe908726b09A92C20C733f2A66A04964701D2, tokenIn: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, tokenOut: 0x0000000000000000000000000000000000000000, typeIn: 0, typeOut: 0, amountIn: 1000000000000000000 [1e18], amountOut: 100000000 [1e8], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 0, filledAmount: 0, timestamp: 1, expiration: 3601, status: 3, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x2c1c1713d32f63841574d16fc6950c14c77446d779df96ea925a69a2269fa26a, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ [2513] EulerLagrangeOrderProcessor::findMatchingOrder(MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 0x0000000000000000000000000000000000000000, 1000000000000000000 [1e18], 100000000 [1e8]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3
+    Γöé   Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xD6B58c2Da790f9959527c44Dd2c0da554cf27373, tokenIn: 0x0000000000000000000000000000000000000000, tokenOut: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, typeIn: 0, typeOut: 0, amountIn: 100000000 [1e8], amountOut: 1000000000000000000 [1e18], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 100, filledAmount: 0, timestamp: 1, expiration: 3601, status: 0, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x301026798255b1931a6eefaeb2a43b2a7b48bc7329994d8e487631998ae87a1d, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ emit MatchCalculated(orderIdA: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, orderIdB: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, amountAtoB: 1000000000000000000 [1e18], amountBtoA: 100000000 [1e8])
+    Γöé   Γö£ΓöÇ [0] makerB::fallback{value: 100000000}()
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γö£ΓöÇ [752] MockToken::transferFrom(makerB: [0xA5eFe908726b09A92C20C733f2A66A04964701D2], makerA: [0xD6B58c2Da790f9959527c44Dd2c0da554cf27373], 1000000000000000000 [1e18])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Revert] ERC20: insufficient allowance
+    Γöé   Γö£ΓöÇ [901] EulerLagrangeOrderProcessor::updateOrderStatus(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, 3)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ [1607] EulerLagrangeOrderProcessor::removeFromPairIndex(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ emit OrderAutoMatched(orderIdA: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, orderIdB: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, timestamp: 1)
+    Γöé   Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xA5eFe908726b09A92C20C733f2A66A04964701D2, tokenIn: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, tokenOut: 0x0000000000000000000000000000000000000000, typeIn: 0, typeOut: 0, amountIn: 1000000000000000000 [1e18], amountOut: 100000000 [1e8], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 0, filledAmount: 0, timestamp: 1, expiration: 3601, status: 3, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x2c1c1713d32f63841574d16fc6950c14c77446d779df96ea925a69a2269fa26a, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ [2513] EulerLagrangeOrderProcessor::findMatchingOrder(MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 0x0000000000000000000000000000000000000000, 1000000000000000000 [1e18], 100000000 [1e8]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3
+    Γöé   Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xD6B58c2Da790f9959527c44Dd2c0da554cf27373, tokenIn: 0x0000000000000000000000000000000000000000, tokenOut: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, typeIn: 0, typeOut: 0, amountIn: 100000000 [1e8], amountOut: 1000000000000000000 [1e18], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 100, filledAmount: 0, timestamp: 1, expiration: 3601, status: 0, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x301026798255b1931a6eefaeb2a43b2a7b48bc7329994d8e487631998ae87a1d, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ emit MatchCalculated(orderIdA: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, orderIdB: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, amountAtoB: 1000000000000000000 [1e18], amountBtoA: 100000000 [1e8])
+    Γöé   Γö£ΓöÇ [0] makerB::fallback{value: 100000000}()
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γö£ΓöÇ [752] MockToken::transferFrom(makerB: [0xA5eFe908726b09A92C20C733f2A66A04964701D2], makerA: [0xD6B58c2Da790f9959527c44Dd2c0da554cf27373], 1000000000000000000 [1e18])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Revert] ERC20: insufficient allowance
+    Γöé   Γö£ΓöÇ [901] EulerLagrangeOrderProcessor::updateOrderStatus(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, 3)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ [1607] EulerLagrangeOrderProcessor::removeFromPairIndex(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ emit OrderAutoMatched(orderIdA: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, orderIdB: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, timestamp: 1)
+    Γöé   Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xA5eFe908726b09A92C20C733f2A66A04964701D2, tokenIn: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, tokenOut: 0x0000000000000000000000000000000000000000, typeIn: 0, typeOut: 0, amountIn: 1000000000000000000 [1e18], amountOut: 100000000 [1e8], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 0, filledAmount: 0, timestamp: 1, expiration: 3601, status: 3, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x2c1c1713d32f63841574d16fc6950c14c77446d779df96ea925a69a2269fa26a, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ [2513] EulerLagrangeOrderProcessor::findMatchingOrder(MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 0x0000000000000000000000000000000000000000, 1000000000000000000 [1e18], 100000000 [1e8]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3
+    Γöé   Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xD6B58c2Da790f9959527c44Dd2c0da554cf27373, tokenIn: 0x0000000000000000000000000000000000000000, tokenOut: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, typeIn: 0, typeOut: 0, amountIn: 100000000 [1e8], amountOut: 1000000000000000000 [1e18], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 100, filledAmount: 0, timestamp: 1, expiration: 3601, status: 0, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x301026798255b1931a6eefaeb2a43b2a7b48bc7329994d8e487631998ae87a1d, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ emit MatchCalculated(orderIdA: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, orderIdB: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, amountAtoB: 1000000000000000000 [1e18], amountBtoA: 100000000 [1e8])
+    Γöé   Γö£ΓöÇ [0] makerB::fallback{value: 100000000}()
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γö£ΓöÇ [752] MockToken::transferFrom(makerB: [0xA5eFe908726b09A92C20C733f2A66A04964701D2], makerA: [0xD6B58c2Da790f9959527c44Dd2c0da554cf27373], 1000000000000000000 [1e18])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Revert] ERC20: insufficient allowance
+    Γöé   Γö£ΓöÇ [901] EulerLagrangeOrderProcessor::updateOrderStatus(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, 3)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ [1607] EulerLagrangeOrderProcessor::removeFromPairIndex(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ emit OrderAutoMatched(orderIdA: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, orderIdB: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, timestamp: 1)
+    Γöé   Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xA5eFe908726b09A92C20C733f2A66A04964701D2, tokenIn: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, tokenOut: 0x0000000000000000000000000000000000000000, typeIn: 0, typeOut: 0, amountIn: 1000000000000000000 [1e18], amountOut: 100000000 [1e8], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 0, filledAmount: 0, timestamp: 1, expiration: 3601, status: 3, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x2c1c1713d32f63841574d16fc6950c14c77446d779df96ea925a69a2269fa26a, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ [2513] EulerLagrangeOrderProcessor::findMatchingOrder(MockToken: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 0x0000000000000000000000000000000000000000, 1000000000000000000 [1e18], 100000000 [1e8]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3
+    Γöé   Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xD6B58c2Da790f9959527c44Dd2c0da554cf27373, tokenIn: 0x0000000000000000000000000000000000000000, tokenOut: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, typeIn: 0, typeOut: 0, amountIn: 100000000 [1e8], amountOut: 1000000000000000000 [1e18], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 100, filledAmount: 0, timestamp: 1, expiration: 3601, status: 0, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x301026798255b1931a6eefaeb2a43b2a7b48bc7329994d8e487631998ae87a1d, targetChainId: 0 })
+    Γöé   Γö£ΓöÇ emit MatchCalculated(orderIdA: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, orderIdB: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, amountAtoB: 1000000000000000000 [1e18], amountBtoA: 100000000 [1e8])
+    Γöé   Γö£ΓöÇ [0] makerB::fallback{value: 100000000}()
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γö£ΓöÇ [752] MockToken::transferFrom(makerB: [0xA5eFe908726b09A92C20C733f2A66A04964701D2], makerA: [0xD6B58c2Da790f9959527c44Dd2c0da554cf27373], 1000000000000000000 [1e18])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Revert] ERC20: insufficient allowance
+    Γöé   Γö£ΓöÇ [901] EulerLagrangeOrderProcessor::updateOrderStatus(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, 3)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ [1607] EulerLagrangeOrderProcessor::removeFromPairIndex(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γöé   Γö£ΓöÇ emit OrderAutoMatched(orderIdA: 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98, orderIdB: 0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3, timestamp: 1)
+    Γöé   ΓööΓöÇ ΓåÉ [Return] 0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98
+    Γö£ΓöÇ [0] VM::stopPrank()
+    Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3) [staticcall]
+    Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xD6B58c2Da790f9959527c44Dd2c0da554cf27373, tokenIn: 0x0000000000000000000000000000000000000000, tokenOut: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, typeIn: 0, typeOut: 0, amountIn: 100000000 [1e8], amountOut: 1000000000000000000 [1e18], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 100, filledAmount: 0, timestamp: 1, expiration: 3601, status: 0, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x301026798255b1931a6eefaeb2a43b2a7b48bc7329994d8e487631998ae87a1d, targetChainId: 0 })
+    Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0xf6aefbf0b3e3f01768bdf3c8ed5b2ec04802ea165c66827f9d6f57ee52571d98) [staticcall]
+    Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xA5eFe908726b09A92C20C733f2A66A04964701D2, tokenIn: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, tokenOut: 0x0000000000000000000000000000000000000000, typeIn: 0, typeOut: 0, amountIn: 1000000000000000000 [1e18], amountOut: 100000000 [1e8], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 0, filledAmount: 0, timestamp: 1, expiration: 3601, status: 3, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x2c1c1713d32f63841574d16fc6950c14c77446d779df96ea925a69a2269fa26a, targetChainId: 0 })
+    Γö£ΓöÇ [3696] EulerLagrangeOrderProcessor::getOrder(0x58b643470b5d0c78a7ab5ae436c931c903f056da406c9293c13cb462ae27a9c3) [staticcall]
+    Γöé   ΓööΓöÇ ΓåÉ [Return] Order({ maker: 0xD6B58c2Da790f9959527c44Dd2c0da554cf27373, tokenIn: 0x0000000000000000000000000000000000000000, tokenOut: 0xa0Cb889707d426A7A386870A03bc70d1b0697598, typeIn: 0, typeOut: 0, amountIn: 100000000 [1e8], amountOut: 1000000000000000000 [1e18], minutesValueIn: 1, minutesValueOut: 1, slippageTolerance: 100, filledAmount: 0, timestamp: 1, expiration: 3601, status: 0, rebookEnabled: false, rebookAttempts: 0, verificationId: 0x301026798255b1931a6eefaeb2a43b2a7b48bc7329994d8e487631998ae87a1d, targetChainId: 0 })
+    Γö£ΓöÇ [0] VM::assertEq(0, 1) [staticcall]
+    Γöé   ΓööΓöÇ ΓåÉ [Revert] assertion failed: 0 != 1
+    ΓööΓöÇ ΓåÉ [Revert] assertion failed: 0 != 1
+
+Backtrace:
+  at MockToken.transferFrom
+  at WalletSwapMain.createOrder
+  at CrossChainSettlementTest.testMatchOrdersUnitMismatch
+
+Suite result: FAILED. 0 passed; 1 failed; 0 skipped; finished in 9.61ms (5.95ms CPU time)
+
+Ran 1 test suite in 58.77ms (9.61ms CPU time): 0 tests passed, 1 failed, 0 skipped (1 total tests)
+
+Failing tests:
+Encountered 1 failing test in test/CrossChainSettlementTest.t.sol:CrossChainSettlementTest
+[FAIL: assertion failed: 0 != 1] testMatchOrdersUnitMismatch() (gas: 2944924)
+
+Encountered a total of 1 failing tests, 0 tests succeeded
+
+Tip: Run `forge test --rerun` to retry only the 1 failed test

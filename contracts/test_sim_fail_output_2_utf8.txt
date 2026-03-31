@@ -1,0 +1,160 @@
+﻿No files changed, compilation skipped
+
+Ran 3 tests for test/EconomicSimulation.t.sol:EconomicSimulation
+[FAIL: Unauthorized caller] test_scenario_A_MarketSweepEfficiency() (gas: 882317)
+Traces:
+  [882317] EconomicSimulation::test_scenario_A_MarketSweepEfficiency()
+    Γö£ΓöÇ [0] VM::deal(0x00000000000000000000000000000000000007d0, 10000000000000000000 [1e19])
+    Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γö£ΓöÇ [37344] SimulationHandler::mint(false, 0x00000000000000000000000000000000000007d0, 1000000000000000000000 [1e21])
+    Γöé   Γö£ΓöÇ [31582] MockToken::mint(0x00000000000000000000000000000000000007d0, 1000000000000000000000 [1e21])
+    Γöé   Γöé   Γö£ΓöÇ emit Transfer(from: 0x0000000000000000000000000000000000000000, to: 0x00000000000000000000000000000000000007d0, value: 1000000000000000000000 [1e21])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γö£ΓöÇ [0] VM::startPrank(0x00000000000000000000000000000000000007d0)
+    Γöé   ΓööΓöÇ ΓåÉ [Return]
+    Γö£ΓöÇ [24377] MockToken::approve(WalletSwapMain: [0x6d1B5488E2Fe2adFB0146cD11Dd29eF2DBAd8a9F], 115792089237316195423570985008687907853269984665640564039457584007913129639935 [1.157e77])
+    Γöé   Γö£ΓöÇ emit Approval(owner: 0x00000000000000000000000000000000000007d0, spender: WalletSwapMain: [0x6d1B5488E2Fe2adFB0146cD11Dd29eF2DBAd8a9F], value: 115792089237316195423570985008687907853269984665640564039457584007913129639935 [1.157e77])
+    Γöé   ΓööΓöÇ ΓåÉ [Return] true
+    Γö£ΓöÇ [794849] WalletSwapMain::createOrder{value: 1000000000000000000}(MockToken: [0x99ab54533cf1c9DBcbEB563F6153641cFBeeA85D], MockToken: [0xB01abbb01C4d4407C1f70228eae9227D3379b15c], 0, 0, 100000000000000000000 [1e20], 50000000000000000000 [5e19], 100000000000000000000 [1e20], 50000000000000000000 [5e19], 0, 86400 [8.64e4], true, 0)
+    Γöé   Γö£ΓöÇ [5386] TrustWalletFeeDistributor::calculateFee(MockToken: [0x99ab54533cf1c9DBcbEB563F6153641cFBeeA85D], 0, 100000000000000000000 [1e20], 100000000000000000000 [1e20]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 50000000000000000 [5e16]
+    Γöé   Γö£ΓöÇ [25088] TrustWalletFeeDistributor::depositGasForDebt{value: 2000000000000000}(0x0000000000000000000000000000000000000000000000000000000000000000)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γö£ΓöÇ [25096] MockToken::transferFrom(0x00000000000000000000000000000000000007d0, WalletSwapMain: [0x6d1B5488E2Fe2adFB0146cD11Dd29eF2DBAd8a9F], 50000000000000000 [5e16])
+    Γöé   Γöé   Γö£ΓöÇ emit Transfer(from: 0x00000000000000000000000000000000000007d0, to: WalletSwapMain: [0x6d1B5488E2Fe2adFB0146cD11Dd29eF2DBAd8a9F], value: 50000000000000000 [5e16])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] true
+    Γöé   Γö£ΓöÇ [4477] MockToken::approve(TrustWalletFeeDistributor: [0x6D82c5430Df28f7CCb158955D2C654a51c865f4C], 0)
+    Γöé   Γöé   Γö£ΓöÇ emit Approval(owner: WalletSwapMain: [0x6d1B5488E2Fe2adFB0146cD11Dd29eF2DBAd8a9F], spender: TrustWalletFeeDistributor: [0x6D82c5430Df28f7CCb158955D2C654a51c865f4C], value: 0)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] true
+    Γöé   Γö£ΓöÇ [861] MockToken::allowance(WalletSwapMain: [0x6d1B5488E2Fe2adFB0146cD11Dd29eF2DBAd8a9F], TrustWalletFeeDistributor: [0x6D82c5430Df28f7CCb158955D2C654a51c865f4C]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0
+    Γöé   Γö£ΓöÇ [22277] MockToken::approve(TrustWalletFeeDistributor: [0x6D82c5430Df28f7CCb158955D2C654a51c865f4C], 50000000000000000 [5e16])
+    Γöé   Γöé   Γö£ΓöÇ emit Approval(owner: WalletSwapMain: [0x6d1B5488E2Fe2adFB0146cD11Dd29eF2DBAd8a9F], spender: TrustWalletFeeDistributor: [0x6D82c5430Df28f7CCb158955D2C654a51c865f4C], value: 50000000000000000 [5e16])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] true
+    Γöé   Γö£ΓöÇ [169769] TrustWalletFeeDistributor::distributeFee(MockToken: [0x99ab54533cf1c9DBcbEB563F6153641cFBeeA85D], 0, 100000000000000000000 [1e20], 100000000000000000000 [1e20], WalletSwapMain: [0x6d1B5488E2Fe2adFB0146cD11Dd29eF2DBAd8a9F], 0xf2d485824295bcf4c4ceba734500d6059dedd471ec849ffbd46e05c6068c3ea2)
+    Γöé   Γöé   Γö£ΓöÇ [27263] MockToken::transferFrom(WalletSwapMain: [0x6d1B5488E2Fe2adFB0146cD11Dd29eF2DBAd8a9F], 0x00000000000000000000000000000000000000Ad, 50000000000000000 [5e16])
+    Γöé   Γöé   Γöé   Γö£ΓöÇ emit Approval(owner: WalletSwapMain: [0x6d1B5488E2Fe2adFB0146cD11Dd29eF2DBAd8a9F], spender: TrustWalletFeeDistributor: [0x6D82c5430Df28f7CCb158955D2C654a51c865f4C], value: 0)
+    Γöé   Γöé   Γöé   Γö£ΓöÇ emit Transfer(from: WalletSwapMain: [0x6d1B5488E2Fe2adFB0146cD11Dd29eF2DBAd8a9F], to: 0x00000000000000000000000000000000000000Ad, value: 50000000000000000 [5e16])
+    Γöé   Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] true
+    Γöé   Γöé   Γö£ΓöÇ emit FeeDistributed(token: MockToken: [0x99ab54533cf1c9DBcbEB563F6153641cFBeeA85D], recipient: 0x00000000000000000000000000000000000000Ad, amount: 50000000000000000 [5e16], orderId: 0xf2d485824295bcf4c4ceba734500d6059dedd471ec849ffbd46e05c6068c3ea2, timestamp: 1)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 50000000000000000 [5e16]
+    Γöé   Γö£ΓöÇ [510735] EulerLagrangeOrderProcessor::createOrder(0x00000000000000000000000000000000000007d0, MockToken: [0x99ab54533cf1c9DBcbEB563F6153641cFBeeA85D], MockToken: [0xB01abbb01C4d4407C1f70228eae9227D3379b15c], 0, 0, 100000000000000000000 [1e20], 50000000000000000000 [5e19], 100000000000000000000 [1e20], 50000000000000000000 [5e19], 0, 86401 [8.64e4], true, 0)
+    Γöé   Γöé   Γö£ΓöÇ [166860] AssetVerifier::verifyToken(MockToken: [0x99ab54533cf1c9DBcbEB563F6153641cFBeeA85D], 0x00000000000000000000000000000000000007d0, 100000000000000000000 [1e20])
+    Γöé   Γöé   Γöé   Γö£ΓöÇ [563] MockToken::balanceOf(0x00000000000000000000000000000000000007d0) [staticcall]
+    Γöé   Γöé   Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 999950000000000000000 [9.999e20]
+    Γöé   Γöé   Γöé   Γö£ΓöÇ emit VerificationStarted(verificationId: 0xbe822246140cfc6d0378e3ffece1d1b833eab174263af27c5baeed3bf61f6161, token: MockToken: [0x99ab54533cf1c9DBcbEB563F6153641cFBeeA85D], owner: 0x00000000000000000000000000000000000007d0, amount: 100000000000000000000 [1e20], isNft: false)
+    Γöé   Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0xbe822246140cfc6d0378e3ffece1d1b833eab174263af27c5baeed3bf61f6161
+    Γöé   Γöé   Γö£ΓöÇ [10100] VirtualLiquidityPool::addLiquidity(MockToken: [0x99ab54533cf1c9DBcbEB563F6153641cFBeeA85D], MockToken: [0xB01abbb01C4d4407C1f70228eae9227D3379b15c], 100000000000000000000 [1e20])
+    Γöé   Γöé   Γöé   ΓööΓöÇ ΓåÉ [Revert] Unauthorized caller
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Revert] Unauthorized caller
+    Γöé   ΓööΓöÇ ΓåÉ [Revert] Unauthorized caller
+    ΓööΓöÇ ΓåÉ [Revert] Unauthorized caller
+
+Backtrace:
+  at VirtualLiquidityPool.addLiquidity
+  at EulerLagrangeOrderProcessor.createOrder
+  at WalletSwapMain.createOrder
+  at EconomicSimulation.test_scenario_A_MarketSweepEfficiency
+
+[FAIL: Unauthorized caller] test_scenario_B_RebookingThresholds() (gas: 820560)
+Traces:
+  [820560] EconomicSimulation::test_scenario_B_RebookingThresholds()
+    Γö£ΓöÇ [804149] WalletSwapMain::createOrder{value: 1000000000000000000}(MockToken: [0xB01abbb01C4d4407C1f70228eae9227D3379b15c], MockToken: [0x99ab54533cf1c9DBcbEB563F6153641cFBeeA85D], 0, 0, 100000000000000000000 [1e20], 100000000000000000000 [1e20], 100000000000000000000 [1e20], 100000000000000000000 [1e20], 0, 3600, true, 0)
+    Γöé   Γö£ΓöÇ [5386] TrustWalletFeeDistributor::calculateFee(MockToken: [0xB01abbb01C4d4407C1f70228eae9227D3379b15c], 0, 100000000000000000000 [1e20], 100000000000000000000 [1e20]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 50000000000000000 [5e16]
+    Γöé   Γö£ΓöÇ [25088] TrustWalletFeeDistributor::depositGasForDebt{value: 2000000000000000}(0x0000000000000000000000000000000000000000000000000000000000000000)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γö£ΓöÇ [31896] MockToken::transferFrom(EconomicSimulation: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496], WalletSwapMain: [0x6d1B5488E2Fe2adFB0146cD11Dd29eF2DBAd8a9F], 50000000000000000 [5e16])
+    Γöé   Γöé   Γö£ΓöÇ emit Transfer(from: EconomicSimulation: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496], to: WalletSwapMain: [0x6d1B5488E2Fe2adFB0146cD11Dd29eF2DBAd8a9F], value: 50000000000000000 [5e16])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] true
+    Γöé   Γö£ΓöÇ [4477] MockToken::approve(TrustWalletFeeDistributor: [0x6D82c5430Df28f7CCb158955D2C654a51c865f4C], 0)
+    Γöé   Γöé   Γö£ΓöÇ emit Approval(owner: WalletSwapMain: [0x6d1B5488E2Fe2adFB0146cD11Dd29eF2DBAd8a9F], spender: TrustWalletFeeDistributor: [0x6D82c5430Df28f7CCb158955D2C654a51c865f4C], value: 0)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] true
+    Γöé   Γö£ΓöÇ [861] MockToken::allowance(WalletSwapMain: [0x6d1B5488E2Fe2adFB0146cD11Dd29eF2DBAd8a9F], TrustWalletFeeDistributor: [0x6D82c5430Df28f7CCb158955D2C654a51c865f4C]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0
+    Γöé   Γö£ΓöÇ [22277] MockToken::approve(TrustWalletFeeDistributor: [0x6D82c5430Df28f7CCb158955D2C654a51c865f4C], 50000000000000000 [5e16])
+    Γöé   Γöé   Γö£ΓöÇ emit Approval(owner: WalletSwapMain: [0x6d1B5488E2Fe2adFB0146cD11Dd29eF2DBAd8a9F], spender: TrustWalletFeeDistributor: [0x6D82c5430Df28f7CCb158955D2C654a51c865f4C], value: 50000000000000000 [5e16])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] true
+    Γöé   Γö£ΓöÇ [169769] TrustWalletFeeDistributor::distributeFee(MockToken: [0xB01abbb01C4d4407C1f70228eae9227D3379b15c], 0, 100000000000000000000 [1e20], 100000000000000000000 [1e20], WalletSwapMain: [0x6d1B5488E2Fe2adFB0146cD11Dd29eF2DBAd8a9F], 0xcf98c01a7f9ad3fde0dbe00b9aaba2c013d414d4c4abeddf2442ee25fa588754)
+    Γöé   Γöé   Γö£ΓöÇ [27263] MockToken::transferFrom(WalletSwapMain: [0x6d1B5488E2Fe2adFB0146cD11Dd29eF2DBAd8a9F], 0x00000000000000000000000000000000000000Ad, 50000000000000000 [5e16])
+    Γöé   Γöé   Γöé   Γö£ΓöÇ emit Approval(owner: WalletSwapMain: [0x6d1B5488E2Fe2adFB0146cD11Dd29eF2DBAd8a9F], spender: TrustWalletFeeDistributor: [0x6D82c5430Df28f7CCb158955D2C654a51c865f4C], value: 0)
+    Γöé   Γöé   Γöé   Γö£ΓöÇ emit Transfer(from: WalletSwapMain: [0x6d1B5488E2Fe2adFB0146cD11Dd29eF2DBAd8a9F], to: 0x00000000000000000000000000000000000000Ad, value: 50000000000000000 [5e16])
+    Γöé   Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] true
+    Γöé   Γöé   Γö£ΓöÇ emit FeeDistributed(token: MockToken: [0xB01abbb01C4d4407C1f70228eae9227D3379b15c], recipient: 0x00000000000000000000000000000000000000Ad, amount: 50000000000000000 [5e16], orderId: 0xcf98c01a7f9ad3fde0dbe00b9aaba2c013d414d4c4abeddf2442ee25fa588754, timestamp: 1)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 50000000000000000 [5e16]
+    Γöé   Γö£ΓöÇ [510735] EulerLagrangeOrderProcessor::createOrder(EconomicSimulation: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496], MockToken: [0xB01abbb01C4d4407C1f70228eae9227D3379b15c], MockToken: [0x99ab54533cf1c9DBcbEB563F6153641cFBeeA85D], 0, 0, 100000000000000000000 [1e20], 100000000000000000000 [1e20], 100000000000000000000 [1e20], 100000000000000000000 [1e20], 0, 3601, true, 0)
+    Γöé   Γöé   Γö£ΓöÇ [166860] AssetVerifier::verifyToken(MockToken: [0xB01abbb01C4d4407C1f70228eae9227D3379b15c], EconomicSimulation: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496], 100000000000000000000 [1e20])
+    Γöé   Γöé   Γöé   Γö£ΓöÇ [563] MockToken::balanceOf(EconomicSimulation: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496]) [staticcall]
+    Γöé   Γöé   Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 9999950000000000000000 [9.999e21]
+    Γöé   Γöé   Γöé   Γö£ΓöÇ emit VerificationStarted(verificationId: 0xe87503af4aa5e1d299407fe2592de576a30f91292698de849d13f4404f00aa6f, token: MockToken: [0xB01abbb01C4d4407C1f70228eae9227D3379b15c], owner: EconomicSimulation: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496], amount: 100000000000000000000 [1e20], isNft: false)
+    Γöé   Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0xe87503af4aa5e1d299407fe2592de576a30f91292698de849d13f4404f00aa6f
+    Γöé   Γöé   Γö£ΓöÇ [10100] VirtualLiquidityPool::addLiquidity(MockToken: [0xB01abbb01C4d4407C1f70228eae9227D3379b15c], MockToken: [0x99ab54533cf1c9DBcbEB563F6153641cFBeeA85D], 100000000000000000000 [1e20])
+    Γöé   Γöé   Γöé   ΓööΓöÇ ΓåÉ [Revert] Unauthorized caller
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Revert] Unauthorized caller
+    Γöé   ΓööΓöÇ ΓåÉ [Revert] Unauthorized caller
+    ΓööΓöÇ ΓåÉ [Revert] Unauthorized caller
+
+Backtrace:
+  at VirtualLiquidityPool.addLiquidity
+  at EulerLagrangeOrderProcessor.createOrder
+  at WalletSwapMain.createOrder
+  at EconomicSimulation.test_scenario_B_RebookingThresholds
+
+[FAIL: Unauthorized caller] test_scenario_C_SlippageRobustness() (gas: 840372)
+Traces:
+  [840372] EconomicSimulation::test_scenario_C_SlippageRobustness()
+    Γö£ΓöÇ [824049] WalletSwapMain::createOrder{value: 1000000000000000000}(MockToken: [0xB01abbb01C4d4407C1f70228eae9227D3379b15c], MockToken: [0x99ab54533cf1c9DBcbEB563F6153641cFBeeA85D], 0, 0, 100000000000000000000 [1e20], 100000000000000000000 [1e20], 100000000000000000000 [1e20], 100000000000000000000 [1e20], 100, 86400 [8.64e4], true, 0)
+    Γöé   Γö£ΓöÇ [5386] TrustWalletFeeDistributor::calculateFee(MockToken: [0xB01abbb01C4d4407C1f70228eae9227D3379b15c], 0, 100000000000000000000 [1e20], 100000000000000000000 [1e20]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 50000000000000000 [5e16]
+    Γöé   Γö£ΓöÇ [25088] TrustWalletFeeDistributor::depositGasForDebt{value: 2000000000000000}(0x0000000000000000000000000000000000000000000000000000000000000000)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Stop]
+    Γöé   Γö£ΓöÇ [31896] MockToken::transferFrom(EconomicSimulation: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496], WalletSwapMain: [0x6d1B5488E2Fe2adFB0146cD11Dd29eF2DBAd8a9F], 50000000000000000 [5e16])
+    Γöé   Γöé   Γö£ΓöÇ emit Transfer(from: EconomicSimulation: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496], to: WalletSwapMain: [0x6d1B5488E2Fe2adFB0146cD11Dd29eF2DBAd8a9F], value: 50000000000000000 [5e16])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] true
+    Γöé   Γö£ΓöÇ [4477] MockToken::approve(TrustWalletFeeDistributor: [0x6D82c5430Df28f7CCb158955D2C654a51c865f4C], 0)
+    Γöé   Γöé   Γö£ΓöÇ emit Approval(owner: WalletSwapMain: [0x6d1B5488E2Fe2adFB0146cD11Dd29eF2DBAd8a9F], spender: TrustWalletFeeDistributor: [0x6D82c5430Df28f7CCb158955D2C654a51c865f4C], value: 0)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] true
+    Γöé   Γö£ΓöÇ [861] MockToken::allowance(WalletSwapMain: [0x6d1B5488E2Fe2adFB0146cD11Dd29eF2DBAd8a9F], TrustWalletFeeDistributor: [0x6D82c5430Df28f7CCb158955D2C654a51c865f4C]) [staticcall]
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0
+    Γöé   Γö£ΓöÇ [22277] MockToken::approve(TrustWalletFeeDistributor: [0x6D82c5430Df28f7CCb158955D2C654a51c865f4C], 50000000000000000 [5e16])
+    Γöé   Γöé   Γö£ΓöÇ emit Approval(owner: WalletSwapMain: [0x6d1B5488E2Fe2adFB0146cD11Dd29eF2DBAd8a9F], spender: TrustWalletFeeDistributor: [0x6D82c5430Df28f7CCb158955D2C654a51c865f4C], value: 50000000000000000 [5e16])
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] true
+    Γöé   Γö£ΓöÇ [169769] TrustWalletFeeDistributor::distributeFee(MockToken: [0xB01abbb01C4d4407C1f70228eae9227D3379b15c], 0, 100000000000000000000 [1e20], 100000000000000000000 [1e20], WalletSwapMain: [0x6d1B5488E2Fe2adFB0146cD11Dd29eF2DBAd8a9F], 0xcf98c01a7f9ad3fde0dbe00b9aaba2c013d414d4c4abeddf2442ee25fa588754)
+    Γöé   Γöé   Γö£ΓöÇ [27263] MockToken::transferFrom(WalletSwapMain: [0x6d1B5488E2Fe2adFB0146cD11Dd29eF2DBAd8a9F], 0x00000000000000000000000000000000000000Ad, 50000000000000000 [5e16])
+    Γöé   Γöé   Γöé   Γö£ΓöÇ emit Approval(owner: WalletSwapMain: [0x6d1B5488E2Fe2adFB0146cD11Dd29eF2DBAd8a9F], spender: TrustWalletFeeDistributor: [0x6D82c5430Df28f7CCb158955D2C654a51c865f4C], value: 0)
+    Γöé   Γöé   Γöé   Γö£ΓöÇ emit Transfer(from: WalletSwapMain: [0x6d1B5488E2Fe2adFB0146cD11Dd29eF2DBAd8a9F], to: 0x00000000000000000000000000000000000000Ad, value: 50000000000000000 [5e16])
+    Γöé   Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] true
+    Γöé   Γöé   Γö£ΓöÇ emit FeeDistributed(token: MockToken: [0xB01abbb01C4d4407C1f70228eae9227D3379b15c], recipient: 0x00000000000000000000000000000000000000Ad, amount: 50000000000000000 [5e16], orderId: 0xcf98c01a7f9ad3fde0dbe00b9aaba2c013d414d4c4abeddf2442ee25fa588754, timestamp: 1)
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 50000000000000000 [5e16]
+    Γöé   Γö£ΓöÇ [530635] EulerLagrangeOrderProcessor::createOrder(EconomicSimulation: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496], MockToken: [0xB01abbb01C4d4407C1f70228eae9227D3379b15c], MockToken: [0x99ab54533cf1c9DBcbEB563F6153641cFBeeA85D], 0, 0, 100000000000000000000 [1e20], 100000000000000000000 [1e20], 100000000000000000000 [1e20], 100000000000000000000 [1e20], 100, 86401 [8.64e4], true, 0)
+    Γöé   Γöé   Γö£ΓöÇ [166860] AssetVerifier::verifyToken(MockToken: [0xB01abbb01C4d4407C1f70228eae9227D3379b15c], EconomicSimulation: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496], 100000000000000000000 [1e20])
+    Γöé   Γöé   Γöé   Γö£ΓöÇ [563] MockToken::balanceOf(EconomicSimulation: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496]) [staticcall]
+    Γöé   Γöé   Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 9999950000000000000000 [9.999e21]
+    Γöé   Γöé   Γöé   Γö£ΓöÇ emit VerificationStarted(verificationId: 0xe87503af4aa5e1d299407fe2592de576a30f91292698de849d13f4404f00aa6f, token: MockToken: [0xB01abbb01C4d4407C1f70228eae9227D3379b15c], owner: EconomicSimulation: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496], amount: 100000000000000000000 [1e20], isNft: false)
+    Γöé   Γöé   Γöé   ΓööΓöÇ ΓåÉ [Return] 0xe87503af4aa5e1d299407fe2592de576a30f91292698de849d13f4404f00aa6f
+    Γöé   Γöé   Γö£ΓöÇ [10100] VirtualLiquidityPool::addLiquidity(MockToken: [0xB01abbb01C4d4407C1f70228eae9227D3379b15c], MockToken: [0x99ab54533cf1c9DBcbEB563F6153641cFBeeA85D], 100000000000000000000 [1e20])
+    Γöé   Γöé   Γöé   ΓööΓöÇ ΓåÉ [Revert] Unauthorized caller
+    Γöé   Γöé   ΓööΓöÇ ΓåÉ [Revert] Unauthorized caller
+    Γöé   ΓööΓöÇ ΓåÉ [Revert] Unauthorized caller
+    ΓööΓöÇ ΓåÉ [Revert] Unauthorized caller
+
+Backtrace:
+  at VirtualLiquidityPool.addLiquidity
+  at EulerLagrangeOrderProcessor.createOrder
+  at WalletSwapMain.createOrder
+  at EconomicSimulation.test_scenario_C_SlippageRobustness
+
+Suite result: FAILED. 0 passed; 3 failed; 0 skipped; finished in 3.80ms (2.00ms CPU time)
+
+Ran 1 test suite in 49.99ms (3.80ms CPU time): 0 tests passed, 3 failed, 0 skipped (3 total tests)
+
+Failing tests:
+Encountered 3 failing tests in test/EconomicSimulation.t.sol:EconomicSimulation
+[FAIL: Unauthorized caller] test_scenario_A_MarketSweepEfficiency() (gas: 882317)
+[FAIL: Unauthorized caller] test_scenario_B_RebookingThresholds() (gas: 820560)
+[FAIL: Unauthorized caller] test_scenario_C_SlippageRobustness() (gas: 840372)
+
+Encountered a total of 3 failing tests, 0 tests succeeded
+
+Tip: Run `forge test --rerun` to retry only the 3 failed tests

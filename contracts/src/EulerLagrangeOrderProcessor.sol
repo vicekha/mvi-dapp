@@ -71,8 +71,11 @@ contract EulerLagrangeOrderProcessor is Ownable, ReentrancyGuard {
     // Order queue removed for scalability
 
 
+    // M-2: Nonce for unique order IDs
+    uint256 private _orderNonce;
+
     // Automatic rebooking parameters
-    uint256 public constant MINIMUM_ORDER_VALUE = 0; // lowered for testing to allow small orders
+    uint256 public minimumOrderValue = 0; // L-3: Zero minimum order value (spam prevented via blocklist)
     uint256 public constant LARGE_ORDER_THRESHOLD = 500 * 10 ** 18; // 500 minutes
     uint256 public constant MEGA_ORDER_THRESHOLD = 1000 * 10 ** 18; // 1000 minutes
     uint256 public constant BPS_MAX = 10000; // 100% in basis points
@@ -106,7 +109,8 @@ contract EulerLagrangeOrderProcessor is Ownable, ReentrancyGuard {
         uint256 amountOut,
         uint256 minutesValueIn,
         uint256 targetChainId,
-        uint256 timestamp
+        uint256 timestamp,
+        uint256 expiration
     );
     event OrderFilled(bytes32 indexed orderId, uint256 filledAmount, uint256 remainingAmount, uint256 timestamp);
     event OrderPartiallyFilled(
@@ -182,11 +186,12 @@ contract EulerLagrangeOrderProcessor is Ownable, ReentrancyGuard {
         //     "Token not whitelisted"
         // );
         require(amountIn > 0 && amountOut > 0, "Invalid amounts");
-        require(minutesValueIn >= MINIMUM_ORDER_VALUE, "Order value too small");
+        require(minutesValueIn >= minimumOrderValue, "Order value too small");
         require(minutesValueIn > 0 && minutesValueOut > 0, "Invalid minutes valuation");
         require(expiration > block.timestamp, "Invalid expiration");
 
-        // Generate order ID
+        // M-2: Generate unique order ID with nonce to prevent collisions
+        _orderNonce++;
         // forge-lint: disable-next-line(asm-keccak256)
         bytes32 orderId = keccak256(
             abi.encodePacked(
@@ -200,7 +205,8 @@ contract EulerLagrangeOrderProcessor is Ownable, ReentrancyGuard {
                 minutesValueIn,
                 minutesValueOut,
                 block.timestamp,
-                block.number
+                block.number,
+                _orderNonce
             )
         );
 
@@ -240,7 +246,6 @@ contract EulerLagrangeOrderProcessor is Ownable, ReentrancyGuard {
 
         // Add to order tracking
         orderIds.push(orderId);
-        orderIds.push(orderId);
         // orderSizes[orderId] = minutesValueIn;
         // _insertOrderInQueue(orderId, minutesValueIn);
 
@@ -253,7 +258,7 @@ contract EulerLagrangeOrderProcessor is Ownable, ReentrancyGuard {
         tokenMonthlyVolume[tokenIn][month] += minutesValueIn;
 
         emit OrderCreated(
-            orderId, maker, tokenIn, tokenOut, typeIn, typeOut, amountIn, amountOut, minutesValueIn, targetChainId, block.timestamp
+            orderId, maker, tokenIn, tokenOut, typeIn, typeOut, amountIn, amountOut, minutesValueIn, targetChainId, block.timestamp, expiration
         );
 
         // Add to pair index for auto-matching (All orders now included to allow shadow matching/RSC pool consistency)
@@ -275,7 +280,10 @@ contract EulerLagrangeOrderProcessor is Ownable, ReentrancyGuard {
         Order storage order = orders[orderId];
         require(order.maker == msg.sender || msg.sender == owner() || msg.sender == walletSwapMain, "Unauthorized");
         require(
-            order.status == OrderStatus.ACTIVE || order.status == OrderStatus.PARTIALLY_FILLED, "Order not cancellable"
+            order.status == OrderStatus.ACTIVE || 
+            order.status == OrderStatus.PARTIALLY_FILLED ||
+            order.status == OrderStatus.EXPIRED, 
+            "Order not cancellable"
         );
 
         order.status = OrderStatus.CANCELLED;
@@ -303,11 +311,16 @@ contract EulerLagrangeOrderProcessor is Ownable, ReentrancyGuard {
         order.status = newStatus;
 
         if (newStatus == OrderStatus.FILLED) {
+            // Calculate remaining virtual liquidity to reduce (accounts for partial fills)
+            uint256 remainingValue = order.minutesValueIn - ((order.filledAmount * order.minutesValueIn) / order.amountOut);
+            
             order.filledAmount = order.amountOut;
             emit OrderFilled(orderId, order.amountOut, 0, block.timestamp);
 
-            // Reduce virtual liquidity
-            liquidityPool.reduceLiquidity(order.tokenIn, order.tokenOut, order.minutesValueIn);
+            // Reduce virtual liquidity by exactly what's left
+            if (remainingValue > 0) {
+                liquidityPool.reduceLiquidity(order.tokenIn, order.tokenOut, remainingValue);
+            }
         }
     }
 
@@ -325,8 +338,10 @@ contract EulerLagrangeOrderProcessor is Ownable, ReentrancyGuard {
         order.filledAmount += amountFilled;
         require(order.filledAmount <= order.amountOut, "Overfilled");
         
-        // Calculate proportional minutes value for liquidity reduction
-        uint256 filledMinutes = (amountFilled * order.minutesValueIn) / order.amountOut;
+        // Calculate proportional minutes value for liquidity reduction using cumulative math to avoid drift
+        uint256 oldTotalFilledMinutes = ((order.filledAmount - amountFilled) * order.minutesValueIn) / order.amountOut;
+        uint256 newTotalFilledMinutes = (order.filledAmount * order.minutesValueIn) / order.amountOut;
+        uint256 filledMinutes = newTotalFilledMinutes - oldTotalFilledMinutes;
             
         if (order.filledAmount == order.amountOut) {
             order.status = OrderStatus.FILLED;
@@ -349,14 +364,16 @@ contract EulerLagrangeOrderProcessor is Ownable, ReentrancyGuard {
      * @dev Process specific orders (batch)
      * @param orderIdsBatch Array of order IDs to process
      */
+    // H-2: Restricted to owner or authorized keepers
     function processOrderBatch(bytes32[] calldata orderIdsBatch) external nonReentrant {
+        require(msg.sender == owner() || msg.sender == walletSwapMain, "Unauthorized: only owner or WalletSwapMain");
         for (uint256 i = 0; i < orderIdsBatch.length; i++) {
             bytes32 orderId = orderIdsBatch[i];
             Order storage order = orders[orderId];
 
             // Check expiration
             if (block.timestamp > order.expiration) {
-                if (order.status == OrderStatus.ACTIVE) {
+                if (order.status == OrderStatus.ACTIVE || order.status == OrderStatus.PARTIALLY_FILLED) {
                     _handleExpiredOrder(orderId);
                 }
             }
@@ -421,8 +438,9 @@ contract EulerLagrangeOrderProcessor is Ownable, ReentrancyGuard {
         uint256 extensionTime = originalDuration / 2;
         order.expiration = block.timestamp + extensionTime;
 
-        // Reset filled amount for new booking
-        order.filledAmount = 0;
+        // C-4: DO NOT reset filledAmount — preserve partial fill progress
+        // The matching logic already uses (amountOut - filledAmount) as remaining.
+        // Resetting to 0 would allow double-spend of already-transferred assets.
         order.status = OrderStatus.ACTIVE;
 
         // Add to rebook queue
@@ -430,6 +448,13 @@ contract EulerLagrangeOrderProcessor is Ownable, ReentrancyGuard {
         rebookTime[orderId] = block.timestamp;
 
         emit OrderRebooked(orderId, order.rebookAttempts, order.expiration);
+    }
+
+    /**
+     * @dev L-3: Set minimum order value
+     */
+    function setMinimumOrderValue(uint256 _minimumOrderValue) external onlyOwner {
+        minimumOrderValue = _minimumOrderValue;
     }
 
     // Internal queue insertion removed

@@ -15,8 +15,11 @@ simple-indexer/dist/
 
 # Environment variables
 .env
+**/.env
 .env.local
 .env.*.local
+**/.env.local
+**/.env.*.local
 
 # IDEs and OS files
 .vscode/

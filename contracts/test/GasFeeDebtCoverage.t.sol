@@ -53,6 +53,16 @@ contract GasFeeDebtCoverageTest is Test {
         walletSwap = new WalletSwapMain(address(liquidityPool), address(orderProcessor), address(feeDistributor), address(assetVerifier));
 
         orderProcessor.setWalletSwapMain(address(walletSwap));
+
+        // Authorize contracts in VirtualLiquidityPool
+        liquidityPool.setAuthorizedCaller(address(orderProcessor), true);
+        liquidityPool.setAuthorizedCaller(address(walletSwap), true);
+
+        // Set minimum order value to 0 for testing
+        orderProcessor.setMinimumOrderValue(0);
+        // Set min fees to 0 for testing
+        feeDistributor.setMinFeeMinutes(0);
+        feeDistributor.setMinNftFeeWei(0);
         
         // Register WalletSwapMain for debt coverage
         feeDistributor.registerReactiveContract(address(walletSwap));

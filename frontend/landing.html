@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoSwap | P2P intent-based OTC swapping</title>
+    <!-- Google Fonts: Syne (display) and DM Mono (body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Syne:wght@400..800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-dark: #030712;
+            /* Deep navy / near-black */
+            --bg-card: #0b1121;
+            /* Slightly lighter for cards */
+            --cyan: #8b5cf6;
+            /* Electric cyan */
+            --violet: #7c3aed;
+            /* Secondary violet */
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        /* --- Base Reset & Cyberpunk Overlays --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Use custom cursor only if JS is enabled and active */
+        .js-cursor-enabled * {
+            cursor: none;
+        }
+
+        .js-cursor-enabled a,
+        .js-cursor-enabled button {
+            cursor: none;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'DM Mono', monospace;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        .display-font {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+        }
+
+        a,
+        button {
+            cursor: none;
+        }
+
+        /* ensure custom cursor is respected */
+
+        /* Particle Canvas Background */
+        #network-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+        }
+
+        /* CRT Scanline Overlay */
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(to bottom,
+                    rgba(255, 255, 255, 0),
+                    rgba(255, 255, 255, 0) 50%,
+                    rgba(0, 0, 0, 0.1) 50%,
+                    rgba(0, 0, 0, 0.1));
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Subtle Grid Lines */
+        .grid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image:
+                linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        /* --- Custom Cursor --- */
+        .cursor-dot {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 4px;
+            background-color: var(--cyan);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+        }
+
+        .cursor-ring {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 30px;
+            height: 30px;
+            border: 1px solid var(--cyan);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+
+        .cursor-ring.active {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(139, 92, 246, 0.1);
+        }
+
+        /* --- Layout & Utilities --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        section {
+            padding: 120px 0;
+            position: relative;
+        }
+
+        .outline-text {
+            color: transparent;
+            -webkit-text-stroke: 1px var(--text-main);
+        }
+
+        /* Cyberpunk Clipped Button */
+        .btn {
+            display: inline-block;
+            padding: 16px 32px;
+            font-family: 'DM Mono', monospace;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            border: 1px solid var(--text-muted);
+            color: var(--text-main);
+            position: relative;
+            background: transparent;
+            clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
+            transition: border-color 0.3s, color 0.3s;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--cyan);
+            z-index: -1;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .btn:hover {
+            color: var(--bg-dark);
+            border-color: var(--cyan);
+        }
+
+        .btn:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .btn-primary {
+            background: var(--cyan);
+            color: var(--bg-dark);
+            border-color: var(--cyan);
+        }
+
+        .btn-primary::before {
+            background: var(--text-main);
+        }
+
+        /* --- 1. Fixed Nav --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 24px 0;
+            z-index: 100;
+            background: rgba(3, 7, 18, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: var(--text-main);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--cyan);
+            border-radius: 50%;
+            box-shadow: 0 0 12px var(--cyan);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.7);
+            }
+
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 10px rgba(139, 92, 246, 0);
+            }
+
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(139, 92, 246, 0);
+            }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--cyan);
+        }
+
+        /* --- 2. Animated Ticker --- */
+        .ticker-wrap {
+            width: 100%;
+            background: var(--cyan);
+            color: var(--bg-dark);
+            padding: 8px 0;
+            overflow: hidden;
+            position: fixed;
+            bottom: 0;
+            z-index: 99;
+        }
+
+        .ticker {
+            display: flex;
+            white-space: nowrap;
+            animation: tickerSlide 20s linear infinite;
+        }
+
+        .ticker-item {
+            padding: 0 32px;
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        @keyframes tickerSlide {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+
+            /* Half distance to loop seamlessly */
+        }
+
+        /* --- 3. Hero --- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 100px;
+            /* Offset for nav */
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 4.5rem;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+        }
+
+        .hero-sub {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            max-width: 500px;
+            line-height: 1.7;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 32px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 24px;
+            font-family: 'Syne', sans-serif;
+            color: var(--cyan);
+            font-weight: 800;
+            font-size: 0.9rem;
+        }
+
+        /* Preview Card with Animated Gradient Border */
+        .preview-wrapper {
+            position: relative;
+            padding: 2px;
+            /* Border thickness */
+            background: linear-gradient(45deg, var(--cyan), var(--violet), var(--cyan));
+            background-size: 200% 200%;
+            animation: borderGlow 4s ease infinite;
+            clip-path: polygon(30px 0, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%, 0 30px);
+        }
+
+        @keyframes borderGlow {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .preview-card {
+            background: var(--bg-card);
+            padding: 40px;
+            height: 100%;
+            clip-path: polygon(29px 0, 100% 0, 100% calc(100% - 29px), calc(100% - 29px) 100%, 0 100%, 0 29px);
+        }
+
+        .pc-header {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 16px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .pc-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            font-size: 1.2rem;
+        }
+
+        .pc-val {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+        }
+
+        .pc-divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 32px 0;
+        }
+
+        .pc-stat-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            font-size: 0.9rem;
+        }
+
+        .pc-stat {
+            display: flex;
+            justify-content: space-between;
+            color: var(--cyan);
+        }
+
+        /* --- Component Helpers --- */
+        .section-header {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 80px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px solid var(--cyan);
+            color: var(--cyan);
+            background: rgba(139, 92, 246, 0.05);
+            margin-bottom: 16px;
+        }
+
+        /* --- 4. How It Works --- */
+        .hiw-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .step-card {
+            background: var(--bg-card);
+            padding: 48px 32px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--cyan);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .step-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        .step-ghost {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-family: 'Syne', sans-serif;
+            font-size: 6rem;
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.03);
+            line-height: 1;
+            z-index: 0;
+        }
+
+        .step-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-card svg {
+            color: var(--cyan);
+            margin-bottom: 24px;
+        }
+
+        .step-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+        }
+
+        .step-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* --- 5. Features Grid --- */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .feat-card {
+            background: var(--bg-card);
+            padding: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .feat-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(124, 58, 237, 0.4);
+        }
+
+        .feat-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+        }
+
+        .feat-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* --- 6. Comparison Table --- */
+        .compare-table-wrap {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        th,
+        td {
+            padding: 24px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        th {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        th:not(:first-child),
+        td:not(:first-child) {
+            text-align: center;
+        }
+
+        td:first-child {
+            font-weight: 500;
+        }
+
+        .col-main {
+            background: rgba(139, 92, 246, 0.05);
+            color: var(--cyan);
+            border-left: 1px solid rgba(139, 92, 246, 0.1);
+            border-right: 1px solid rgba(139, 92, 246, 0.1);
+        }
+
+        .check {
+            color: var(--cyan);
+            font-weight: bold;
+        }
+
+        .cross {
+            color: #f97316;
+        }
+
+        /* Orange */
+
+        /* --- 7. Tech Stack Callout --- */
+        .tech-callout {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .tc-card {
+            position: relative;
+            padding: 80px 40px;
+            background: var(--bg-card);
+            clip-path: polygon(50px 0, 100% 0, 100% calc(100% - 50px), calc(100% - 50px) 100%, 0 100%, 0 50px);
+        }
+
+        .tc-wrapper {
+            padding: 2px;
+            background: linear-gradient(135deg, var(--violet), var(--cyan));
+            clip-path: polygon(50px 0, 100% 0, 100% calc(100% - 50px), calc(100% - 50px) 100%, 0 100%, 0 50px);
+        }
+
+        .tc-card h2 {
+            font-size: 2.5rem;
+            margin: 24px 0;
+        }
+
+        .tc-card p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            line-height: 1.8;
+        }
+
+        /* --- 8. Final CTA --- */
+        .final-hero {
+            text-align: center;
+            padding: 180px 0;
+            position: relative;
+        }
+
+        .glow-orb {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.15) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .final-hero h2 {
+            font-size: 5rem;
+            margin-bottom: 24px;
+        }
+
+        .final-hero p {
+            color: var(--text-muted);
+            font-size: 1.25rem;
+            margin-bottom: 48px;
+        }
+
+        /* --- 9. Footer --- */
+        footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 48px 0;
+            margin-bottom: 40px;
+            /* Buffer for ticker */
+            background: var(--bg-dark);
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-main);
+        }
+
+        /* --- Reveal Animations --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+
+            .hero-grid,
+            .hiw-grid,
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-grid {
+                gap: 40px;
+            }
+
+            nav .nav-links {
+                display: none;
+            }
+
+            .tc-card {
+                padding: 40px 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .final-hero h2 {
+                font-size: 2.5rem;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .cta-group {
+                flex-direction: column;
+                gap: 16px;
+                width: 100%;
+            }
+
+            .btn {
+                text-align: center;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+            }
+
+            section {
+                padding: 80px 0;
+            }
+
+            .section-header {
+                font-size: 2rem;
+                margin-bottom: 40px;
+            }
+
+            .compare-table-wrap {
+                margin: 0 -24px;
+                padding: 0 24px;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                gap: 24px;
+                text-align: center;
+            }
+
+            .footer-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Backgrounds -->
+    <canvas id="network-canvas"></canvas>
+    <div class="grid-bg"></div>
+    <div class="scanlines"></div>
+
+    <!-- Custom Cursor Elements -->
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-ring" id="cursor-ring"></div>
+
+    <!-- 1. Fixed Nav -->
+    <nav>
+        <div class="container nav-inner">
+            <a href="#" class="logo custom-hover">
+                <div class="pulse-dot"></div>
+                AUTOSWAP
+            </a>
+            <div class="nav-links">
+                <a href="#how-it-works" class="nav-link custom-hover">How It Works</a>
+                <a href="#features" class="nav-link custom-hover">Why AutoSwap</a>
+                <a href="#compare" class="nav-link custom-hover">Compare</a>
+                <a href="https://t.me/mviautoswap" target="_blank" rel="noopener" class="nav-link custom-hover"
+                    style="color: var(--cyan);">Telegram ↗</a>
+            </div>
+            <a href="https://autoswap.pages.dev/" class="btn custom-hover"
+                style="padding: 10px 24px; font-size: 0.8rem;">Launch App</a>
+        </div>
+    </nav>
+
+    <!-- 2. Animated Ticker -->
+    <div class="ticker-wrap">
+        <div class="ticker">
+            <div class="ticker-item">Peer-To-Peer</div>
+            <div class="ticker-item">·</div>
+            <div class="ticker-item">Zero Slippage</div>
+            <div class="ticker-item">·</div>
+            <div class="ticker-item">No AMM Pools</div>
+            <div class="ticker-item">·</div>
+            <div class="ticker-item">No Protocol Token</div>
+            <div class="ticker-item">·</div>
+            <div class="ticker-item">No VC Unlocks</div>
+            <div class="ticker-item">·</div>
+            <div class="ticker-item">Multi-Chain Routing</div>
+            <div class="ticker-item">·</div>
+
+            <!-- Duplicated exactly for seamless loop -->
+            <div class="ticker-item">Peer-To-Peer</div>
+            <div class="ticker-item">·</div>
+            <div class="ticker-item">Zero Slippage</div>
+            <div class="ticker-item">·</div>
+            <div class="ticker-item">No AMM Pools</div>
+            <div class="ticker-item">·</div>
+            <div class="ticker-item">No Protocol Token</div>
+            <div class="ticker-item">·</div>
+            <div class="ticker-item">No VC Unlocks</div>
+            <div class="ticker-item">·</div>
+            <div class="ticker-item">Multi-Chain Routing</div>
+            <div class="ticker-item">·</div>
+        </div>
+    </div>
+
+    <!-- 3. Hero Section -->
+    <section class="hero reveal">
+        <div class="container hero-grid">
+            <div class="hero-content">
+                <h1>Pure Execution.<br><span class="outline-text">Zero Slippage.</span></h1>
+                <p class="hero-sub">AutoSwap bridges the gap between DeFi intent architectures and Multi-chain
+                    liquidity. Post your OTC intent directly to solvers without fragmented AMM pools or toxic MEV
+                    sandwich attacks.</p>
+                <div class="cta-group">
+                    <a href="https://autoswap.pages.dev/" class="btn btn-primary custom-hover">Launch App</a>
+                    <a href="#how-it-works" class="btn custom-hover">How It Works</a>
+                </div>
+                <div class="hero-stats">
+                    <span>0% SLIPPAGE</span>
+                    <span>NO POOLS</span>
+                    <span>MULTI-CHAIN</span>
+                    <span>NO VC</span>
+                </div>
+            </div>
+
+            <div class="preview-wrapper">
+                <div class="preview-card">
+                    <div class="pc-header">
+                        <span>P2P Matching Engine</span>
+                        <span style="color: var(--cyan);">Awaiting Settlement...</span>
+                    </div>
+                    <div class="pc-row">
+                        <span class="text-muted">Intent to Sell</span>
+                        <span class="pc-val">50.00 ETH</span>
+                    </div>
+                    <div class="pc-row">
+                        <span class="text-muted">Strict Receive</span>
+                        <span class="pc-val">175,250 USDC</span>
+                    </div>
+                    <div class="pc-divider"></div>
+                    <div class="pc-stat-list">
+                        <div class="pc-stat">
+                            <span>Expected Slippage</span>
+                            <span>0.00%</span>
+                        </div>
+                        <div class="pc-stat">
+                            <span>AMM Pool Dependency</span>
+                            <span>None</span>
+                        </div>
+                        <div class="pc-stat">
+                            <span>MEV Protection</span>
+                            <span>Active / P2P Match</span>
+                        </div>
+                        <div class="pc-stat">
+                            <span>Network</span>
+                            <span>Arbitrum One</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. How It Works -->
+    <section id="how-it-works" class="container reveal">
+        <h2 class="section-header">How Execution Works</h2>
+        <div class="hiw-grid">
+            <div class="step-card custom-hover">
+                <div class="step-ghost">1</div>
+                <div class="step-content">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    <h3>Post Intent</h3>
+                    <p>Simply declare what asset you hold and exactly what you want in return. Your intent drops into
+                        the mempool at zero gas cost. No bridging logic needed by the user.</p>
+                </div>
+            </div>
+            <div class="step-card custom-hover">
+                <div class="step-ghost">2</div>
+                <div class="step-content">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
+                        <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
+                    </svg>
+                    <h3>Solver Competition</h3>
+                    <p>Global solvers and AI routing agents detect your intent. They compete to fulfill your order,
+                        absorbing the complexity of finding the liquidity and the cheapest bridging pathways.</p>
+                </div>
+            </div>
+            <div class="step-card custom-hover">
+                <div class="step-ghost">3</div>
+                <div class="step-content">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                    </svg>
+                    <h3>Atomic Settlement</h3>
+                    <p>When matched, the transaction resolves securely via our smart contracts. You get your exact
+                        requested tokens atomically, completely bypassing sandwich attacks.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Features -->
+    <section id="features" class="container reveal">
+        <h2 class="section-header">Why AutoSwap</h2>
+        <div class="feature-grid">
+            <div class="feat-card custom-hover">
+                <div class="badge">Execution</div>
+                <h3>Zero Slippage</h3>
+                <p>Because you configure strict minimum receive parameters, slippage is mathematically impossible.
+                    Solvers eat the variance.</p>
+            </div>
+            <div class="feat-card custom-hover">
+                <div class="badge">Architecture</div>
+                <h3>No Liquidity Pools</h3>
+                <p>We do not rely on local TVL. AutoSwap routes directly via solvers who source external liquidity
+                    directly, avoiding LP fragmentation.</p>
+            </div>
+            <div class="feat-card custom-hover">
+                <div class="badge">Access</div>
+                <h3>Multi-Chain Native</h3>
+                <p>Whether you're on Base, Arbitrum, or Polygon, AutoSwap treats EVM execution layers symmetrically.
+                    Universal intent propagation.</p>
+            </div>
+            <div class="feat-card custom-hover">
+                <div class="badge">Network Safety</div>
+                <h3>Autonomous Anti-Spam</h3>
+                <p>Our smart contracts implement dust thresholds, blocking bot spam autonomously over Reactive Network
+                    without disrupting high-frequency AI orders.</p>
+            </div>
+            <div class="feat-card custom-hover">
+                <div class="badge">Security</div>
+                <h3>Non-Custodial</h3>
+                <p>Funds remain in your control until conditions are met. Settlements are strictly pull-patterned. Your
+                    wallet, your rules.</p>
+            </div>
+            <div class="feat-card custom-hover">
+                <div class="badge">Ethos</div>
+                <h3>No Token. No VC.</h3>
+                <p>No predatory unlocks or governance theater. We rely strictly on technical supremacy and execution-fee
+                    efficiency.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Comparison Table -->
+    <section id="compare" class="container reveal">
+        <h2 class="section-header">Market Comparison</h2>
+        <div class="compare-table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Capability</th>
+                        <th class="col-main">AutoSwap</th>
+                        <th>Standard AMMs</th>
+                        <th>Centralized OTC</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Zero Slippage Orders</td>
+                        <td class="col-main check">✓</td>
+                        <td class="cross">✗</td>
+                        <td class="check">✓</td>
+                    </tr>
+                    <tr>
+                        <td>Non-Custodial (Your Keys)</td>
+                        <td class="col-main check">✓</td>
+                        <td class="check">✓</td>
+                        <td class="cross">✗</td>
+                    </tr>
+                    <tr>
+                        <td>No Local Pool Needed</td>
+                        <td class="col-main check">✓</td>
+                        <td class="cross">✗</td>
+                        <td class="check">✓</td>
+                    </tr>
+                    <tr>
+                        <td>Atomic On-Chain Settlement</td>
+                        <td class="col-main check">✓</td>
+                        <td class="check">✓</td>
+                        <td class="cross">✗</td>
+                    </tr>
+                    <tr>
+                        <td>No Account / KYC Walls</td>
+                        <td class="col-main check">✓</td>
+                        <td class="check">✓</td>
+                        <td class="cross">✗</td>
+                    </tr>
+                    <tr>
+                        <td>Permissionless Altcoin Support</td>
+                        <td class="col-main check">✓</td>
+                        <td class="check">✓</td>
+                        <td class="cross">✗</td>
+                    </tr>
+                    <tr>
+                        <td>No Protocol Utility Token</td>
+                        <td class="col-main check">✓</td>
+                        <td class="cross">✗ (UNI, etc)</td>
+                        <td class="check">✓</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- 7. Tech Stack Callout -->
+    <section class="container reveal">
+        <div class="tech-callout">
+            <div class="tc-wrapper">
+                <div class="tc-card">
+                    <div class="badge">Infrastructure</div>
+                    <h2>Powered By Reactive Network</h2>
+                    <p>AutoSwap isn't just an interface—it leverages Reactive Network's reactive smart contracts to run
+                        autonomous callbacks. This allows the protocol to natively sniff out multi-chain solver
+                        settlements and blacklist spam originators completely on-chain, omitting the need for fragile
+                        centralized off-chain keepers.</p>
+                    <a href="https://autoswap.pages.dev/" class="btn custom-hover">Enter Application</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. Final CTA -->
+    <section class="final-hero reveal">
+        <div class="glow-orb"></div>
+        <h2>STOP <span class="outline-text">COMPROMISING</span></h2>
+        <p>A new frontier for DeFi swap limits. Execute your intent today.</p>
+        <div class="cta-group" style="justify-content: center;">
+            <a href="https://autoswap.pages.dev/" class="btn btn-primary custom-hover">Launch AutoSwap</a>
+            <a href="https://t.me/mviautoswap" target="_blank" rel="noopener" class="btn custom-hover">Join Telegram</a>
+        </div>
+    </section>
+
+    <!-- 9. Footer -->
+    <footer>
+        <div class="container footer-inner">
+            <p>&copy; 2026 AutoSwap Intent Protocol. Built for execution.</p>
+            <div class="footer-links">
+                <a href="https://autoswap.pages.dev/" class="custom-hover">Launch App</a>
+                <a href="https://t.me/mviautoswap" target="_blank" rel="noopener" class="custom-hover">Telegram</a>
+                <a href="#" class="custom-hover">GitHub</a>
+                <a href="#" class="custom-hover">Twitter</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Custom Lag Cursor
+        const dot = document.getElementById('cursor-dot');
+        const ring = document.getElementById('cursor-ring');
+        let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+        let ringX = mouseX, ringY = mouseY;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            dot.style.left = mouseX + 'px';
+            dot.style.top = mouseY + 'px';
+        });
+
+        function renderCursor() {
+            // Smooth lerp for ring
+            ringX += (mouseX - ringX) * 0.15;
+            ringY += (mouseY - ringY) * 0.15;
+            ring.style.left = ringX + 'px';
+            ring.style.top = ringY + 'px';
+            requestAnimationFrame(renderCursor);
+        }
+        requestAnimationFrame(renderCursor);
+
+        // Hover expansions
+        document.querySelectorAll('.custom-hover').forEach(el => {
+            el.addEventListener('mouseenter', () => ring.classList.add('active'));
+            el.addEventListener('mouseleave', () => ring.classList.remove('active'));
+        });
+
+        // Intersection Observer Reveal
+        const observerOptions = { threshold: 0.15, rootMargin: "0px 0px -50px 0px" };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Animated Particle Network
+        const canvas = document.getElementById('network-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height, particles;
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        class Node {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.6;
+                this.vy = (Math.random() - 0.5) * 0.6;
+                this.radius = Math.random() * 1.5 + 0.5;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(139, 92, 246, 0.4)';
+                ctx.fill();
+            }
+        }
+
+        function initNetwork() {
+            resize();
+            particles = [];
+            const count = window.innerWidth < 768 ? 40 : 80;
+            for (let i = 0; i < count; i++) {
+                particles.push(new Node());
+            }
+        }
+
+        function animateNetwork() {
+            ctx.clearRect(0, 0, width, height);
+
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 150) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(139, 92, 246, ${0.15 - dist / 1100})`;
+                        ctx.lineWidth = 0.8;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animateNetwork);
+        }
+
+        window.addEventListener('resize', () => {
+            resize();
+        });
+
+        // Add class to enable custom cursor styles
+        document.documentElement.classList.add('js-cursor-enabled');
+
+        initNetwork();
+        animateNetwork();
+    </script>
+</body>
+
+</html>

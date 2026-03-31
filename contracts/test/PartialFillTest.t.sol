@@ -41,13 +41,23 @@ contract PartialFillTest is Test {
         );
 
         orderProcessor.setWalletSwapMain(address(walletSwap));
-        orderProcessor.transferOwnership(address(walletSwap)); // Transfer ownership so WalletSwap can update status
+
+        // Authorize contracts in VirtualLiquidityPool
+        liquidityPool.setAuthorizedCaller(address(orderProcessor), true);
+        liquidityPool.setAuthorizedCaller(address(walletSwap), true);
+
+        // Set minimum order value to 0 for testing
+        orderProcessor.setMinimumOrderValue(0);
 
         tokenA = new MockToken();
         tokenB = new MockToken();
 
         tokenA.mint(maker, 1000 ether);
         tokenB.mint(taker, 1000 ether);
+
+        // Fund ETH for gas fees
+        vm.deal(maker, 1 ether);
+        vm.deal(taker, 1 ether);
     }
 
     function testSuccessfulPartialFill() public {
@@ -57,10 +67,15 @@ contract PartialFillTest is Test {
 
         vm.startPrank(maker);
         tokenA.approve(address(walletSwap), amountIn);
-        tokenA.mint(maker, 10 ether); 
+        vm.stopPrank();
+
+        // Mint extra tokens as owner (not pranked)
+        tokenA.mint(maker, 10 ether);
+
+        vm.startPrank(maker);
         tokenA.approve(address(feeDistributor), 10 ether);
 
-        bytes32 orderId = walletSwap.createOrder{value: 0}(
+        bytes32 orderId = walletSwap.createOrder{value: 0.002 ether}(
             address(tokenA),
             address(tokenB),
             WalletSwapMain.AssetType.ERC20,

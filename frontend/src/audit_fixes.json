@@ -1,0 +1,8 @@
+[
+  "Save current project version - 2026-02-12 15:47 (Thorough cleanup of nested git metadata)",
+  "Save current project version - 2026-02-12 15:37 (fixed .gitignore and submodules)",
+  "fix: Update executeInterChainOrder to 4-arg signature for partial fills, deploy new Sepolia contracts",
+  "Backup backend (contracts) code",
+  "Backup NFT swap fixes",
+  "Fix NFT swap logic and restore verification"
+]

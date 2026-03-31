@@ -1,0 +1,55 @@
+﻿forge : Error: 
+Compiler run failed:
+At line:1 char:1
++ forge build 2> 
+build_error.txt
++ ~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~
+    + CategoryInfo    
+          : NotSpeci  
+  fied: (Error: Com   
+ piler run failed:    
+:String) [], Remo    
+teException
+    + FullyQualifiedE 
+   rrorId : NativeCo  
+  mmandError
+ 
+Warning (2424): 
+Natspec 
+memory-safe-assembly 
+special comment for 
+inline assembly is 
+deprecated and 
+scheduled for 
+removal. Use the 
+memory-safe block 
+annotation instead.
+   --> lib/openzeppeli
+n-contracts/contracts/
+utils/Address.sol:236:
+13:
+    |
+236 |             
+assembly {
+    |             ^ 
+(Relevant source part 
+starts here and spans 
+across multiple 
+lines).
+
+Error (6160): Wrong 
+argument count for 
+function call: 2 
+arguments given but 
+expected 1.
+   --> src/TrustWallet
+FeeDistributor.sol:533
+:9:
+    |
+533 |         _tryCove
+rDebt(msg.sender, 
+address(0)); 
+    |         ^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^

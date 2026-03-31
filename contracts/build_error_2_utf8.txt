@@ -1,0 +1,3806 @@
+﻿forge : note[unaliased
+-plain-import]: use 
+named imports '{A, 
+B}' or alias 'import 
+".." as X'
+At line:1 char:1
++ forge build 2> 
+build_error_2.txt
++ ~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~
+    + CategoryInfo    
+          : NotSpeci  
+  fied: (note[unali   
+ ased-...port ".."    
+ as X':String) []    
+, RemoteException
+    + FullyQualifiedE 
+   rrorId : NativeCo  
+  mmandError
+ 
+ --> script\AuthorizeR
+SC.s.sol:4:8
+  |
+4 | import "forge-std/
+Script.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\OrderProcess
+orInvariants.t.sol:4:8
+  |
+4 | import 
+"forge-std/Test.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> 
+src\MockToken.sol:4:8
+  |
+4 | import "@openzeppe
+lin/contracts/token/ER
+C20/ERC20.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[asm-keccak256]: 
+use of inefficient 
+hashing mechanism; 
+consider using inline 
+assembly
+   --> src\EulerLagran
+geOrderProcessor.sol:1
+95:27
+    |
+195 |           
+bytes32 orderId = 
+keccak256(
+    |  _______________
+____________^
+196 | |             
+abi.encodePacked(
+197 | |               
+  maker,
+198 | |               
+  tokenIn,
+...   |
+210 | |         );
+    | |_________^
+    |
+    = help: https://bo
+ok.getfoundry.sh/refer
+ence/forge/forge-lint#
+asm-keccak256
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\AuthorizeR
+SC.s.sol:5:8
+  |
+5 | import "../src/Wal
+letSwapMain.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\OrderProcess
+orInvariants.t.sol:5:8
+  |
+5 | import "forge-std/
+StdInvariant.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\OrderProcess
+orInvariants.t.sol:6:8
+  |
+6 | import "../src/Wal
+letSwapMain.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\OrderProcess
+orInvariants.t.sol:7:8
+  |
+7 | import "../src/Vir
+tualLiquidityPool.sol"
+;
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unwrapped-modifie
+r-logic]: wrap 
+modifier logic to 
+reduce code size
+  --> src\VirtualLiqui
+dityPool.sol:41:5
+   |
+41 | /     modifier 
+onlyAuthorized() {
+42 | |         
+require(msg.sender == 
+owner() || authorizedC
+allers[msg.sender], 
+"Unauthorized 
+caller");
+43 | |         _;
+44 | |     }
+   | |_____^
+   |
+help: wrap modifier 
+logic to reduce code 
+size
+   |
+41 ~     modifier 
+onlyAuthorized() {
+42 +         
+_onlyAuthorized();
+43 +         _;
+44 +     }
+45 + 
+46 +     function 
+_onlyAuthorized() 
+internal {
+47 +         
+require(msg.sender == 
+owner() || authorizedC
+allers[msg.sender], 
+"Unauthorized 
+caller");
+48 +     }
+   |
+   = help: https://boo
+k.getfoundry.sh/refere
+nce/forge/forge-lint#u
+nwrapped-modifier-logi
+c
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployCost
+on2.s.sol:4:8
+  |
+4 | import "forge-std/
+Script.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployCost
+on2.s.sol:5:8
+  |
+5 | import "../src/Vir
+tualLiquidityPool.sol"
+;
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployCost
+on2.s.sol:6:8
+  |
+6 | import "../src/Ass
+etVerifier.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployCost
+on2.s.sol:7:8
+  |
+7 | import "../src/Tru
+stWalletFeeDistributor
+.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployCost
+on2.s.sol:8:8
+  |
+8 | import "../src/Eul
+erLagrangeOrderProcess
+or.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployCost
+on2.s.sol:9:8
+  |
+9 | import "../src/Wal
+letSwapMain.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\OrderProcess
+orInvariants.t.sol:8:8
+  |
+8 | import "../src/Ass
+etVerifier.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\OrderProcess
+orInvariants.t.sol:9:8
+  |
+9 | import "../src/Tru
+stWalletFeeDistributor
+.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+  --> test\OrderProces
+sorInvariants.t.sol:10
+:8
+   |
+10 | import "../src/Eu
+lerLagrangeOrderProces
+sor.sol";
+   |        ^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^
+   |
+   = help: https://boo
+k.getfoundry.sh/refere
+nce/forge/forge-lint#u
+naliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> 
+src\MockNFT.sol:4:8
+  |
+4 | import "@openzeppe
+lin/contracts/token/ER
+C721/ERC721.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> 
+src\MockNFT.sol:5:8
+  |
+5 | import "@openzeppe
+lin/contracts/utils/Co
+unters.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\HashTest.t.s
+ol:4:8
+  |
+4 | import 
+"forge-std/Test.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+warning[unsafe-typecas
+t]: typecasts that 
+can truncate values 
+should be checked
+   --> src\VirtualLiqu
+idityPool.sol:149:33
+    |
+149 |         return 
+liquidityDelta / 
+int256(timeDelta);
+    |                 
+                
+^^^^^^^^^^^^^^^^^
+    |
+    = note: consider 
+disabling this lint 
+if you're certain the 
+cast is safe
+            
+            // 
+casting to 'int256' 
+is safe because 
+[explain why]
+            // 
+forge-lint: disable-ne
+xt-line(unsafe-typecas
+t)
+            
+            
+    = help: https://bo
+ok.getfoundry.sh/refer
+ence/forge/forge-lint#
+unsafe-typecast
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\MarketSweepT
+est.t.sol:4:8
+  |
+4 | import 
+"forge-std/Test.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployRSCS
+tandalone.s.sol:4:8
+  |
+4 | import "forge-std/
+Script.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployRSCS
+tandalone.s.sol:5:8
+  |
+5 | import "../src/Swa
+pMatcherMultiChain.sol
+";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\AutomatedSpa
+mPreventionTest.t.sol:
+4:8
+  |
+4 | import 
+"forge-std/Test.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\AutomatedSpa
+mPreventionTest.t.sol:
+5:8
+  |
+5 | import "../src/Wal
+letSwapMain.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployFeeD
+istributorOnly.s.sol:4
+:8
+  |
+4 | import "forge-std/
+Script.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployFeeD
+istributorOnly.s.sol:5
+:8
+  |
+5 | import "../src/Tru
+stWalletFeeDistributor
+.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\MarketSweepT
+est.t.sol:5:8
+  |
+5 | import "../src/Vir
+tualLiquidityPool.sol"
+;
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeploySoni
+c.s.sol:4:8
+  |
+4 | import "forge-std/
+Script.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeploySoni
+c.s.sol:5:8
+  |
+5 | import "../src/Vir
+tualLiquidityPool.sol"
+;
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeploySoni
+c.s.sol:6:8
+  |
+6 | import "../src/Ass
+etVerifier.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeploySoni
+c.s.sol:7:8
+  |
+7 | import "../src/Tru
+stWalletFeeDistributor
+.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeploySoni
+c.s.sol:8:8
+  |
+8 | import "../src/Eul
+erLagrangeOrderProcess
+or.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+warning[unsafe-typecas
+t]: typecasts that 
+can truncate values 
+should be checked
+   --> src\VirtualLiqu
+idityPool.sol:167:31
+    |
+167 |             
+absRateOfChange = uint
+256(-rateOfChange);
+    |                 
+              
+^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: consider 
+disabling this lint 
+if you're certain the 
+cast is safe
+            
+            // 
+casting to 'uint256' 
+is safe because 
+[explain why]
+            // 
+forge-lint: disable-ne
+xt-line(unsafe-typecas
+t)
+            
+            
+    = help: https://bo
+ok.getfoundry.sh/refer
+ence/forge/forge-lint#
+unsafe-typecast
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> src\SwapMatcherMu
+ltiChain.sol:4:8
+  |
+4 | import "reactive-l
+ib/interfaces/IReactiv
+e.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> src\SwapMatcherMu
+ltiChain.sol:5:8
+  |
+5 | import "reactive-l
+ib/abstract-base/Abstr
+actReactive.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeploySoni
+c.s.sol:9:8
+  |
+9 | import "../src/Wal
+letSwapMain.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+warning[unsafe-typecas
+t]: typecasts that 
+can truncate values 
+should be checked
+   --> src\VirtualLiqu
+idityPool.sol:169:31
+    |
+169 |             
+absRateOfChange = 
+uint256(rateOfChange);
+    |                 
+              
+^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: consider 
+disabling this lint 
+if you're certain the 
+cast is safe
+            
+            // 
+casting to 'uint256' 
+is safe because 
+[explain why]
+            // 
+forge-lint: disable-ne
+xt-line(unsafe-typecas
+t)
+            
+            
+    = help: https://bo
+ok.getfoundry.sh/refer
+ence/forge/forge-lint#
+unsafe-typecast
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\MarketSweepT
+est.t.sol:6:8
+  |
+6 | import "../src/Eul
+erLagrangeOrderProcess
+or.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> 
+src\MockRSC.sol:4:8
+  |
+4 | import "reactive-l
+ib/interfaces/IReactiv
+e.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> 
+src\MockRSC.sol:5:8
+  |
+5 | import "reactive-l
+ib/abstract-base/Abstr
+actReactive.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployFres
+hStack.s.sol:4:8
+  |
+4 | import "forge-std/
+Script.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployFres
+hStack.s.sol:5:8
+  |
+5 | import "../src/Wal
+letSwapMain.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployFres
+hStack.s.sol:6:8
+  |
+6 | import "../src/Eul
+erLagrangeOrderProcess
+or.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> src\MockStablecoi
+n.sol:4:8
+  |
+4 | import "@openzeppe
+lin/contracts/token/ER
+C20/ERC20.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+  --> test\OrderProces
+sorInvariants.t.sol:11
+:8
+   |
+11 | import "../src/Mo
+ckToken.sol";
+   |        
+^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: https://boo
+k.getfoundry.sh/refere
+nce/forge/forge-lint#u
+naliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+  --> script\DeploySon
+ic.s.sol:10:8
+   |
+10 | import "../src/Sw
+apMatcherMultiChain.so
+l";
+   |        ^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^
+   |
+   = help: https://boo
+k.getfoundry.sh/refere
+nce/forge/forge-lint#u
+naliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\AutomatedSpa
+mPreventionTest.t.sol:
+6:8
+  |
+6 | import "../src/Eul
+erLagrangeOrderProcess
+or.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\MarketSweepT
+est.t.sol:7:8
+  |
+7 | import "../src/Wal
+letSwapMain.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\MarketSweepT
+est.t.sol:8:8
+  |
+8 | import "../src/Tru
+stWalletFeeDistributor
+.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\OrderProcess
+orHandler.sol:4:8
+  |
+4 | import 
+"forge-std/Test.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\OrderProcess
+orHandler.sol:5:8
+  |
+5 | import "../src/Wal
+letSwapMain.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\OrderProcess
+orHandler.sol:6:8
+  |
+6 | import "../src/Vir
+tualLiquidityPool.sol"
+;
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\OrderProcess
+orHandler.sol:7:8
+  |
+7 | import "../src/Ass
+etVerifier.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\OrderProcess
+orHandler.sol:8:8
+  |
+8 | import "../src/Eul
+erLagrangeOrderProcess
+or.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+  --> test\OrderProces
+sorInvariants.t.sol:12
+:8
+   |
+12 | import "./OrderPr
+ocessorHandler.sol";
+   |        ^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^
+   |
+   = help: https://boo
+k.getfoundry.sh/refere
+nce/forge/forge-lint#u
+naliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeploySoni
+cMainnet.s.sol:4:8
+  |
+4 | import "forge-std/
+Script.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeploySoni
+cMainnet.s.sol:5:8
+  |
+5 | import "../src/Vir
+tualLiquidityPool.sol"
+;
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeploySoni
+cMainnet.s.sol:6:8
+  |
+6 | import "../src/Ass
+etVerifier.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeploySoni
+cMainnet.s.sol:7:8
+  |
+7 | import "../src/Tru
+stWalletFeeDistributor
+.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeploySoni
+cMainnet.s.sol:8:8
+  |
+8 | import "../src/Eul
+erLagrangeOrderProcess
+or.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeploySoni
+cMainnet.s.sol:9:8
+  |
+9 | import "../src/Wal
+letSwapMain.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\OrderProcess
+orHandler.sol:9:8
+  |
+9 | import "../src/Moc
+kToken.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[mixed-case-functi
+on]: function names 
+should use mixedCase
+   --> src\SwapMatcher
+MultiChain.sol:584:14
+    |
+584 |     function 
+withdrawETH(uint256 
+amount) external 
+onlyOwner {
+    |              
+^^^^^^^^^^^ help: 
+consider using: 
+`withdrawEth`
+    |
+    = help: https://bo
+ok.getfoundry.sh/refer
+ence/forge/forge-lint#
+mixed-case-function
+
+note[mixed-case-functi
+on]: function names 
+should use mixedCase
+   --> src\SwapMatcher
+MultiChain.sol:590:14
+    |
+590 |     function 
+withdrawAllETH() 
+external onlyOwner {
+    |              
+^^^^^^^^^^^^^^ help: 
+consider using: 
+`withdrawAllEth`
+    |
+    = help: https://bo
+ok.getfoundry.sh/refer
+ence/forge/forge-lint#
+mixed-case-function
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployFull
+Stack.s.sol:4:8
+  |
+4 | import "forge-std/
+Script.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployToke
+nsAndNFTs.s.sol:4:8
+  |
+4 | import "forge-std/
+Script.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployToke
+nsAndNFTs.s.sol:5:8
+  |
+5 | import "../src/Moc
+kToken.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployToke
+nsAndNFTs.s.sol:6:8
+  |
+6 | import "../src/Moc
+kStablecoin.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployToke
+nsAndNFTs.s.sol:7:8
+  |
+7 | import 
+"../src/MockNFT.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[mixed-case-variab
+le]: mutable 
+variables should use 
+mixedCase
+  --> test\OrderProces
+sorHandler.sol:23:60
+   |
+23 |     
+mapping(address => 
+mapping(address => 
+uint256)) public 
+ghost_liquidity;
+   |                  
+                      
+                    
+^^^^^^^^^^^^^^^ help: 
+consider using: 
+`ghostLiquidity`
+   |
+   = help: https://boo
+k.getfoundry.sh/refere
+nce/forge/forge-lint#m
+ixed-case-variable
+
+note[mixed-case-variab
+le]: mutable 
+variables should use 
+mixedCase
+  --> test\OrderProces
+sorInvariants.t.sol:71
+:17
+   |
+71 |         uint256 
+poolLiquidityAB = liqu
+idityPool.getAvailable
+Liquidity(address(toke
+nA), address(tokenB));
+   |                 
+^^^^^^^^^^^^^^^ help: 
+consider using: 
+`poolLiquidityAb`
+   |
+   = help: https://boo
+k.getfoundry.sh/refere
+nce/forge/forge-lint#m
+ixed-case-variable
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\AutomatedSpa
+mPreventionTest.t.sol:
+7:8
+  |
+7 | import "../src/Tru
+stWalletFeeDistributor
+.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\AutomatedSpa
+mPreventionTest.t.sol:
+8:8
+  |
+8 | import "../src/Ass
+etVerifier.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\AutomatedSpa
+mPreventionTest.t.sol:
+9:8
+  |
+9 | import "../src/Vir
+tualLiquidityPool.sol"
+;
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+  --> test\AutomatedSp
+amPreventionTest.t.sol
+:10:8
+   |
+10 | import "../src/Sw
+apMatcherMultiChain.so
+l";
+   |        ^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^
+   |
+   = help: https://boo
+k.getfoundry.sh/refere
+nce/forge/forge-lint#u
+naliased-plain-import
+
+note[mixed-case-variab
+le]: mutable 
+variables should use 
+mixedCase
+  --> script\DeployTok
+ensAndNFTs.s.sol:26:17
+   |
+26 |         MockNFT 
+redNFT = new 
+MockNFT("Red NFT", 
+"RED");
+   |                 
+^^^^^^ help: consider 
+using: `redNft`
+   |
+   = help: https://boo
+k.getfoundry.sh/refere
+nce/forge/forge-lint#m
+ixed-case-variable
+
+note[mixed-case-variab
+le]: mutable 
+variables should use 
+mixedCase
+  --> script\DeployTok
+ensAndNFTs.s.sol:29:17
+   |
+29 |         MockNFT 
+blueNFT = new 
+MockNFT("Blue NFT", 
+"BLUE");
+   |                 
+^^^^^^^ help: 
+consider using: 
+`blueNft`
+   |
+   = help: https://boo
+k.getfoundry.sh/refere
+nce/forge/forge-lint#m
+ixed-case-variable
+
+note[mixed-case-variab
+le]: mutable 
+variables should use 
+mixedCase
+  --> src\WalletSwapMa
+in.sol:27:20
+   |
+27 |     address 
+public 
+authorizedReactiveVM;
+   |                  
+  
+^^^^^^^^^^^^^^^^^^^^ 
+help: consider using: 
+`authorizedReactiveVm`
+   |
+   = help: https://boo
+k.getfoundry.sh/refere
+nce/forge/forge-lint#m
+ixed-case-variable
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+  --> test\AutomatedSp
+amPreventionTest.t.sol
+:11:8
+   |
+11 | import "@openzepp
+elin/contracts/token/E
+RC20/ERC20.sol";
+   |        ^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+   |
+   = help: https://boo
+k.getfoundry.sh/refere
+nce/forge/forge-lint#u
+naliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\MarketSweepT
+est.t.sol:9:8
+  |
+9 | import "../src/Ass
+etVerifier.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+  --> test\MarketSweep
+Test.t.sol:10:8
+   |
+10 | import "@openzepp
+elin/contracts/token/E
+RC20/ERC20.sol";
+   |        ^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+   |
+   = help: https://boo
+k.getfoundry.sh/refere
+nce/forge/forge-lint#u
+naliased-plain-import
+
+note[unwrapped-modifie
+r-logic]: wrap 
+modifier logic to 
+reduce code size
+   --> src\SwapMatcher
+MultiChain.sol:125:5
+    |
+125 | /     modifier 
+onlyOwner() {
+126 | |         
+require(msg.sender == 
+owner, "Only owner");
+127 | |         _;
+128 | |     }
+    | |_____^
+    |
+help: wrap modifier 
+logic to reduce code 
+size
+    |
+125 ~     modifier 
+onlyOwner() {
+126 +         
+_onlyOwner();
+127 +         _;
+128 +     }
+129 + 
+130 +     function 
+_onlyOwner() internal 
+{
+131 +         
+require(msg.sender == 
+owner, "Only owner");
+132 +     }
+    |
+    = help: https://bo
+ok.getfoundry.sh/refer
+ence/forge/forge-lint#
+unwrapped-modifier-log
+ic
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployFull
+Stack.s.sol:5:8
+  |
+5 | import "../src/Vir
+tualLiquidityPool.sol"
+;
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployFull
+Stack.s.sol:6:8
+  |
+6 | import "../src/Ass
+etVerifier.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployFull
+Stack.s.sol:7:8
+  |
+7 | import "../src/Tru
+stWalletFeeDistributor
+.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[mixed-case-variab
+le]: mutable 
+variables should use 
+mixedCase
+  --> script\DeployTok
+ensAndNFTs.s.sol:32:17
+   |
+32 |         MockNFT 
+whiteNFT = new 
+MockNFT("White NFT", 
+"WHITE");
+   |                 
+^^^^^^^^ help: 
+consider using: 
+`whiteNft`
+   |
+   = help: https://boo
+k.getfoundry.sh/refere
+nce/forge/forge-lint#m
+ixed-case-variable
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployLasn
+a.s.sol:4:8
+  |
+4 | import "forge-std/
+Script.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployLasn
+a.s.sol:5:8
+  |
+5 | import "../src/Vir
+tualLiquidityPool.sol"
+;
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[mixed-case-variab
+le]: mutable 
+variables should use 
+mixedCase
+  --> test\OrderProces
+sorHandler.sol:24:20
+   |
+24 |     uint256 
+public 
+ghost_orderCount;
+   |                  
+  ^^^^^^^^^^^^^^^^ 
+help: consider using: 
+`ghostOrderCount`
+   |
+   = help: https://boo
+k.getfoundry.sh/refere
+nce/forge/forge-lint#m
+ixed-case-variable
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployFull
+Stack.s.sol:8:8
+  |
+8 | import "../src/Eul
+erLagrangeOrderProcess
+or.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployFull
+Stack.s.sol:9:8
+  |
+9 | import "../src/Wal
+letSwapMain.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[mixed-case-variab
+le]: mutable 
+variables should use 
+mixedCase
+   --> src\WalletSwapM
+ain.sol:114:21
+    |
+114 |             
+uint256 
+MAX_MATCH_ITERATIONS 
+= 20; // Cap to 
+prevent gas limit 
+issues
+    |                 
+    
+^^^^^^^^^^^^^^^^^^^^ 
+help: consider using: 
+`maxMatchIterations`
+    |
+    = help: https://bo
+ok.getfoundry.sh/refer
+ence/forge/forge-lint#
+mixed-case-variable
+
+note[mixed-case-variab
+le]: mutable 
+variables should use 
+mixedCase
+  --> test\OrderProces
+sorInvariants.t.sol:72
+:17
+   |
+72 |         uint256 
+poolLiquidityBA = liqu
+idityPool.getAvailable
+Liquidity(address(toke
+nB), address(tokenA));
+   |                 
+^^^^^^^^^^^^^^^ help: 
+consider using: 
+`poolLiquidityBa`
+   |
+   = help: https://boo
+k.getfoundry.sh/refere
+nce/forge/forge-lint#m
+ixed-case-variable
+
+note[unwrapped-modifie
+r-logic]: wrap 
+modifier logic to 
+reduce code size
+   --> src\SwapMatcher
+MultiChain.sol:131:5
+    |
+131 | /     modifier 
+onlyCallback() {
+132 | |         // In 
+the Reactive Network 
+architecture, 
+callbacks come from 
+the contract itself
+133 | |         // 
+(self-calls via the 
+callback proxy 
+system) or from 
+authorized sources
+134 | |         
+require(
+...   |
+138 | |         _;
+139 | |     }
+    | |_____^
+    |
+help: wrap modifier 
+logic to reduce code 
+size
+    |
+131 ~     modifier 
+onlyCallback() {
+132 +         
+_onlyCallback();
+133 +         _;
+134 +     }
+135 + 
+136 +     function 
+_onlyCallback() 
+internal {
+137 +         require(
+138 +             
+msg.sender == 
+address(this) || 
+msg.sender == owner,
+139 +             
+"Unauthorized: only 
+callback proxy or 
+owner"
+140 +         );
+141 +     }
+    |
+    = help: https://bo
+ok.getfoundry.sh/refer
+ence/forge/forge-lint#
+unwrapped-modifier-log
+ic
+
+note[mixed-case-variab
+le]: mutable 
+variables should use 
+mixedCase
+  --> test\AutomatedSp
+amPreventionTest.t.sol
+:82:17
+   |
+82 |         uint256 
+THRESHOLD = 
+rsc.SPAM_THRESHOLD();
+   |                 
+^^^^^^^^^ help: 
+consider using: 
+`threshold`
+   |
+   = help: https://boo
+k.getfoundry.sh/refere
+nce/forge/forge-lint#m
+ixed-case-variable
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\EconomicSimu
+lation.t.sol:4:8
+  |
+4 | import 
+"forge-std/Test.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\PartialFillT
+est.t.sol:4:8
+  |
+4 | import 
+"forge-std/Test.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[mixed-case-variab
+le]: mutable 
+variables should use 
+mixedCase
+   --> test\AutomatedS
+pamPreventionTest.t.so
+l:113:17
+    |
+113 |         uint256 
+THRESHOLD = 
+rsc.SPAM_THRESHOLD();
+    |                 
+^^^^^^^^^ help: 
+consider using: 
+`threshold`
+    |
+    = help: https://bo
+ok.getfoundry.sh/refer
+ence/forge/forge-lint#
+mixed-case-variable
+
+note[mixed-case-variab
+le]: mutable 
+variables should use 
+mixedCase
+   --> src\WalletSwapM
+ain.sol:208:17
+    |
+208 |         uint256 
+tradeAmountAtoB_byBWan
+t = remainingBWant;
+    |                 
+^^^^^^^^^^^^^^^^^^^^^^
+^ help: consider 
+using: `tradeAmountAto
+BByBWant`
+    |
+    = help: https://bo
+ok.getfoundry.sh/refer
+ence/forge/forge-lint#
+mixed-case-variable
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\CrossChainSe
+ttlementTest.t.sol:4:8
+  |
+4 | import 
+"forge-std/Test.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployWall
+etSwapFix.s.sol:4:8
+  |
+4 | import "forge-std/
+Script.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployWall
+etSwapFix.s.sol:5:8
+  |
+5 | import "../src/Wal
+letSwapMain.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployWall
+etSwapFix.s.sol:6:8
+  |
+6 | import "../src/Eul
+erLagrangeOrderProcess
+or.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployLasn
+a.s.sol:6:8
+  |
+6 | import "../src/Ass
+etVerifier.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\PartialFillT
+est.t.sol:5:8
+  |
+5 | import "../src/Wal
+letSwapMain.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\PartialFillT
+est.t.sol:6:8
+  |
+6 | import "../src/Eul
+erLagrangeOrderProcess
+or.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\PartialFillT
+est.t.sol:7:8
+  |
+7 | import "../src/Vir
+tualLiquidityPool.sol"
+;
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\PartialFillT
+est.t.sol:8:8
+  |
+8 | import "../src/Tru
+stWalletFeeDistributor
+.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\PartialFillT
+est.t.sol:9:8
+  |
+9 | import "../src/Ass
+etVerifier.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+  --> test\PartialFill
+Test.t.sol:10:8
+   |
+10 | import "../src/Mo
+ckToken.sol";
+   |        
+^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: https://boo
+k.getfoundry.sh/refere
+nce/forge/forge-lint#u
+naliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployLasn
+a.s.sol:7:8
+  |
+7 | import "../src/Tru
+stWalletFeeDistributor
+.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployLasn
+aCoreOnly.s.sol:4:8
+  |
+4 | import "forge-std/
+Script.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\FundRSC.s.
+sol:4:8
+  |
+4 | import "forge-std/
+Script.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\EconomicSimu
+lation.t.sol:5:8
+  |
+5 | import "../src/Wal
+letSwapMain.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\EconomicSimu
+lation.t.sol:6:8
+  |
+6 | import "../src/Vir
+tualLiquidityPool.sol"
+;
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\EconomicSimu
+lation.t.sol:7:8
+  |
+7 | import "../src/Ass
+etVerifier.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+warning[erc20-unchecke
+d-transfer]: ERC20 
+'transfer' and 
+'transferFrom' calls 
+should check the 
+return value
+  --> test\AutomatedSp
+amPreventionTest.t.sol
+:69:9
+   |
+69 |         testToken
+.transfer(spammer, 
+1000 * 10**18);
+   |         ^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^
+   |
+   = help: https://boo
+k.getfoundry.sh/refere
+nce/forge/forge-lint#e
+rc20-unchecked-transfe
+r
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\GetHash.s.
+sol:4:8
+  |
+4 | import "forge-std/
+Script.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployLasn
+a.s.sol:8:8
+  |
+8 | import "../src/Eul
+erLagrangeOrderProcess
+or.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployLasn
+aCoreOnly.s.sol:5:8
+  |
+5 | import "../src/Vir
+tualLiquidityPool.sol"
+;
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployLasn
+aCoreOnly.s.sol:6:8
+  |
+6 | import "../src/Ass
+etVerifier.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployLasn
+aCoreOnly.s.sol:7:8
+  |
+7 | import "../src/Tru
+stWalletFeeDistributor
+.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployLasn
+aCoreOnly.s.sol:8:8
+  |
+8 | import "../src/Eul
+erLagrangeOrderProcess
+or.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployLasn
+a.s.sol:9:8
+  |
+9 | import "../src/Wal
+letSwapMain.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\CrossChainSe
+ttlementTest.t.sol:5:8
+  |
+5 | import "../src/Wal
+letSwapMain.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\CrossChainSe
+ttlementTest.t.sol:6:8
+  |
+6 | import "../src/Vir
+tualLiquidityPool.sol"
+;
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\CrossChainSe
+ttlementTest.t.sol:7:8
+  |
+7 | import "../src/Ass
+etVerifier.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\CrossChainSe
+ttlementTest.t.sol:8:8
+  |
+8 | import "../src/Tru
+stWalletFeeDistributor
+.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+warning[erc20-unchecke
+d-transfer]: ERC20 
+'transfer' and 
+'transferFrom' calls 
+should check the 
+return value
+   --> test\AutomatedS
+pamPreventionTest.t.so
+l:118:9
+    |
+118 |         testToke
+n.transfer(aiTrader, 
+1000 * 10**18);
+    |         ^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^
+    |
+    = help: https://bo
+ok.getfoundry.sh/refer
+ence/forge/forge-lint#
+erc20-unchecked-transf
+er
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\SimulationHa
+ndler.sol:4:8
+  |
+4 | import 
+"forge-std/Test.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\SimulationHa
+ndler.sol:5:8
+  |
+5 | import "../src/Wal
+letSwapMain.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\SimulationHa
+ndler.sol:6:8
+  |
+6 | import "../src/Vir
+tualLiquidityPool.sol"
+;
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\SimulationHa
+ndler.sol:7:8
+  |
+7 | import "../src/Ass
+etVerifier.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\SimulationHa
+ndler.sol:8:8
+  |
+8 | import "../src/Eul
+erLagrangeOrderProcess
+or.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\SimulationHa
+ndler.sol:9:8
+  |
+9 | import "../src/Moc
+kToken.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\CrossChainSe
+ttlementTest.t.sol:9:8
+  |
+9 | import "../src/Eul
+erLagrangeOrderProcess
+or.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+  --> test\CrossChainS
+ettlementTest.t.sol:10
+:8
+   |
+10 | import "../src/Mo
+ckToken.sol";
+   |        
+^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: https://boo
+k.getfoundry.sh/refere
+nce/forge/forge-lint#u
+naliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\EconomicSimu
+lation.t.sol:8:8
+  |
+8 | import "../src/Eul
+erLagrangeOrderProcess
+or.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\EconomicSimu
+lation.t.sol:9:8
+  |
+9 | import "../src/Tru
+stWalletFeeDistributor
+.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+  --> test\EconomicSim
+ulation.t.sol:10:8
+   |
+10 | import "../src/Mo
+ckToken.sol";
+   |        
+^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: https://boo
+k.getfoundry.sh/refere
+nce/forge/forge-lint#u
+naliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+  --> test\EconomicSim
+ulation.t.sol:11:8
+   |
+11 | import "./Simulat
+ionHandler.sol";
+   |        ^^^^^^^^^^
+^^^^^^^^^^^^^^^
+   |
+   = help: https://boo
+k.getfoundry.sh/refere
+nce/forge/forge-lint#u
+naliased-plain-import
+
+note[mixed-case-variab
+le]: mutable 
+variables should use 
+mixedCase
+   --> src\WalletSwapM
+ain.sol:209:17
+    |
+209 |         uint256 
+tradeAmountBtoA_byBWan
+t = (tradeAmountAtoB_b
+yBWant * 
+orderB.amountIn) / 
+orderB.amountOut;
+    |                 
+^^^^^^^^^^^^^^^^^^^^^^
+^ help: consider 
+using: `tradeAmountBto
+AByBWant`
+    |
+    = help: https://bo
+ok.getfoundry.sh/refer
+ence/forge/forge-lint#
+mixed-case-variable
+
+note[mixed-case-variab
+le]: mutable 
+variables should use 
+mixedCase
+   --> src\WalletSwapM
+ain.sol:212:17
+    |
+212 |         uint256 
+tradeAmountBtoA_byBGiv
+e = remainingBGive;
+    |                 
+^^^^^^^^^^^^^^^^^^^^^^
+^ help: consider 
+using: `tradeAmountBto
+AByBGive`
+    |
+    = help: https://bo
+ok.getfoundry.sh/refer
+ence/forge/forge-lint#
+mixed-case-variable
+
+note[mixed-case-variab
+le]: mutable 
+variables should use 
+mixedCase
+   --> src\WalletSwapM
+ain.sol:213:17
+    |
+213 |         uint256 
+tradeAmountAtoB_byBGiv
+e = (tradeAmountBtoA_b
+yBGive * 
+orderB.amountOut) / 
+orderB.amountIn;
+    |                 
+^^^^^^^^^^^^^^^^^^^^^^
+^ help: consider 
+using: `tradeAmountAto
+BByBGive`
+    |
+    = help: https://bo
+ok.getfoundry.sh/refer
+ence/forge/forge-lint#
+mixed-case-variable
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployLasn
+aCore.s.sol:4:8
+  |
+4 | import "forge-std/
+Script.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+  --> script\DeployLas
+na.s.sol:10:8
+   |
+10 | import "../src/Sw
+apMatcherMultiChain.so
+l";
+   |        ^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^
+   |
+   = help: https://boo
+k.getfoundry.sh/refere
+nce/forge/forge-lint#u
+naliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> 
+test\FeeTest.t.sol:4:8
+  |
+4 | import 
+"forge-std/Test.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> 
+test\FeeTest.t.sol:5:8
+  |
+5 | import "../src/Tru
+stWalletFeeDistributor
+.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployLasn
+aCore.s.sol:5:8
+  |
+5 | import "../src/Vir
+tualLiquidityPool.sol"
+;
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[mixed-case-functi
+on]: function names 
+should use mixedCase
+   --> src\WalletSwapM
+ain.sol:558:14
+    |
+558 |     function set
+AuthorizedReactiveVM(a
+ddress _rvm) external 
+onlyOwner {
+    |              ^^^
+^^^^^^^^^^^^^^^^^^^^ 
+help: consider using: 
+`setAuthorizedReactive
+Vm`
+    |
+    = help: https://bo
+ok.getfoundry.sh/refer
+ence/forge/forge-lint#
+mixed-case-function
+
+note[mixed-case-functi
+on]: function names 
+should use mixedCase
+   --> src\WalletSwapM
+ain.sol:606:14
+    |
+606 |     function wit
+hdrawStuckETH(uint256 
+amount) external 
+onlyOwner {
+    |              
+^^^^^^^^^^^^^^^^ 
+help: consider using: 
+`withdrawStuckEth`
+    |
+    = help: https://bo
+ok.getfoundry.sh/refer
+ence/forge/forge-lint#
+mixed-case-function
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> 
+test\FeeTest.t.sol:6:8
+  |
+6 | import "../src/Moc
+kToken.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployLasn
+aCore.s.sol:6:8
+  |
+6 | import "../src/Ass
+etVerifier.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployLasn
+aCore.s.sol:7:8
+  |
+7 | import "../src/Tru
+stWalletFeeDistributor
+.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\MintTestAs
+sets.s.sol:4:8
+  |
+4 | import "forge-std/
+Script.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\MintTestAs
+sets.s.sol:5:8
+  |
+5 | import "../src/Moc
+kToken.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\MintTestAs
+sets.s.sol:6:8
+  |
+6 | import "../src/Moc
+kStablecoin.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\MintTestAs
+sets.s.sol:7:8
+  |
+7 | import 
+"../src/MockNFT.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployMain
+net.s.sol:4:8
+  |
+4 | import "forge-std/
+Script.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\SetAuthori
+zed.s.sol:4:8
+  |
+4 | import "forge-std/
+Script.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\SetAuthori
+zed.s.sol:5:8
+  |
+5 | import "../src/Wal
+letSwapMain.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployLasn
+aCore.s.sol:8:8
+  |
+8 | import "../src/Eul
+erLagrangeOrderProcess
+or.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployMain
+net.s.sol:5:8
+  |
+5 | import "../src/Vir
+tualLiquidityPool.sol"
+;
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\GasFeeDebtCo
+verage.t.sol:4:8
+  |
+4 | import 
+"forge-std/Test.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\GasFeeDebtCo
+verage.t.sol:5:8
+  |
+5 | import "../src/Wal
+letSwapMain.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\GasFeeDebtCo
+verage.t.sol:6:8
+  |
+6 | import "../src/Tru
+stWalletFeeDistributor
+.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\GasFeeDebtCo
+verage.t.sol:7:8
+  |
+7 | import "../src/Vir
+tualLiquidityPool.sol"
+;
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\GasFeeDebtCo
+verage.t.sol:8:8
+  |
+8 | import "../src/Ass
+etVerifier.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> test\GasFeeDebtCo
+verage.t.sol:9:8
+  |
+9 | import "../src/Eul
+erLagrangeOrderProcess
+or.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\ManageOrig
+inNativeFees.s.sol:4:8
+  |
+4 | import "forge-std/
+Script.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\ManageOrig
+inNativeFees.s.sol:5:8
+  |
+5 | import "../src/Tru
+stWalletFeeDistributor
+.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployMock
+sFlare.s.sol:4:8
+  |
+4 | import "forge-std/
+Script.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployMock
+sFlare.s.sol:5:8
+  |
+5 | import "forge-std/
+console.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[mixed-case-variab
+le]: mutable 
+variables should use 
+mixedCase
+   --> test\EconomicSi
+mulation.t.sol:229:17
+    |
+229 |         bytes32 
+idB_fail = walletSwap.
+createOrder{value: 1 
+ether}(
+    |                 
+^^^^^^^^ help: 
+consider using: 
+`idBFail`
+    |
+    = help: https://bo
+ok.getfoundry.sh/refer
+ence/forge/forge-lint#
+mixed-case-variable
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployMain
+net.s.sol:6:8
+  |
+6 | import "../src/Ass
+etVerifier.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployMain
+net.s.sol:7:8
+  |
+7 | import "../src/Tru
+stWalletFeeDistributor
+.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[mixed-case-variab
+le]: mutable 
+variables should use 
+mixedCase
+  --> script\DeployMoc
+ksFlare.s.sol:23:19
+   |
+23 |         
+MockToken mockUSDC = 
+new MockToken();
+   |                  
+ ^^^^^^^^ help: 
+consider using: 
+`mockUsdc`
+   |
+   = help: https://boo
+k.getfoundry.sh/refere
+nce/forge/forge-lint#m
+ixed-case-variable
+
+note[mixed-case-variab
+le]: mutable 
+variables should use 
+mixedCase
+  --> script\DeployMoc
+ksFlare.s.sol:26:19
+   |
+26 |         
+MockToken mockUSDT = 
+new MockToken();
+   |                  
+ ^^^^^^^^ help: 
+consider using: 
+`mockUsdt`
+   |
+   = help: https://boo
+k.getfoundry.sh/refere
+nce/forge/forge-lint#m
+ixed-case-variable
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployLasn
+aCore.s.sol:9:8
+  |
+9 | import "../src/Wal
+letSwapMain.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployMain
+net.s.sol:8:8
+  |
+8 | import "../src/Eul
+erLagrangeOrderProcess
+or.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployMain
+net.s.sol:9:8
+  |
+9 | import "../src/Wal
+letSwapMain.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[mixed-case-variab
+le]: mutable 
+variables should use 
+mixedCase
+   --> test\EconomicSi
+mulation.t.sol:243:17
+    |
+243 |         bytes32 
+idB_pass = walletSwap.
+createOrder{value: 1 
+ether}(
+    |                 
+^^^^^^^^ help: 
+consider using: 
+`idBPass`
+    |
+    = help: https://bo
+ok.getfoundry.sh/refer
+ence/forge/forge-lint#
+mixed-case-variable
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\ManageChai
+ns.s.sol:4:8
+  |
+4 | import "forge-std/
+Script.sol";
+  |        
+^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\DeployLasn
+aCoreOnly.s.sol:9:8
+  |
+9 | import "../src/Wal
+letSwapMain.sol";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+note[unaliased-plain-i
+mport]: use named 
+imports '{A, B}' or 
+alias 'import ".." as 
+X'
+ --> script\ManageChai
+ns.s.sol:5:8
+  |
+5 | import "../src/Swa
+pMatcherMultiChain.sol
+";
+  |        ^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^
+  |
+  = help: https://book
+.getfoundry.sh/referen
+ce/forge/forge-lint#un
+aliased-plain-import
+
+warning[unsafe-typecas
+t]: typecasts that 
+can truncate values 
+should be checked
+  --> test\EconomicSim
+ulation.t.sol:84:37
+   |
+84 |             
+address maker = 
+address(uint160(i + 
+2000));
+   |                  
+                   
+^^^^^^^^^^^^^^^^^
+   |
+   = note: consider 
+disabling this lint 
+if you're certain the 
+cast is safe
+           
+           // casting 
+to 'uint160' is safe 
+because [explain why]
+           // 
+forge-lint: disable-ne
+xt-line(unsafe-typecas
+t)
+           
+           
+   = help: https://boo
+k.getfoundry.sh/refere
+nce/forge/forge-lint#u
+nsafe-typecast
+

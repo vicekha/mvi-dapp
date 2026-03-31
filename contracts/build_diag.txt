@@ -1,0 +1,126 @@
+﻿Compiling 86 files with Solc 0.8.33
+Solc 0.8.33 finished in 1.87s
+forge : Error: Compiler 
+run failed:
+At line:1 char:1
++ forge build --force 
+2>&1 | Out-File -FilePath 
+build_diag.txt -Encodin 
+...
++ ~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo        
+      : NotSpecified: (E  
+  rror: Compiler run fa   
+ iled::String) [], Rem    
+oteException
+    + FullyQualifiedError 
+   Id : NativeCommandErr  
+  or
+ 
+Warning (2424): Natspec 
+memory-safe-assembly 
+special comment for 
+inline assembly is 
+deprecated and scheduled 
+for removal. Use the 
+memory-safe block 
+annotation instead.
+   --> lib/openzeppelin-co
+ntracts/contracts/utils/Ad
+dress.sol:236:13:
+    |
+236 |             
+assembly {
+    |             ^ 
+(Relevant source part 
+starts here and spans 
+across multiple lines).
+
+Warning (2424): Natspec 
+memory-safe-assembly 
+special comment for 
+inline assembly is 
+deprecated and scheduled 
+for removal. Use the 
+memory-safe block 
+annotation instead.
+  --> lib/openzeppelin-con
+tracts/contracts/utils/Str
+ings.sol:25:13:
+   |
+25 |             assembly 
+{
+   |             ^ 
+(Relevant source part 
+starts here and spans 
+across multiple lines).
+
+Warning (2424): Natspec 
+memory-safe-assembly 
+special comment for 
+inline assembly is 
+deprecated and scheduled 
+for removal. Use the 
+memory-safe block 
+annotation instead.
+  --> lib/openzeppelin-con
+tracts/contracts/utils/Str
+ings.sol:31:17:
+   |
+31 |                 
+assembly {
+   |                 ^ 
+(Relevant source part 
+starts here and spans 
+across multiple lines).
+
+Warning (2424): Natspec 
+memory-safe-assembly 
+special comment for 
+inline assembly is 
+deprecated and scheduled 
+for removal. Use the 
+memory-safe block 
+annotation instead.
+   --> lib/openzeppelin-co
+ntracts/contracts/token/ER
+C721/ERC721.sol:413:21:
+    |
+413 |                     
+assembly {
+    |                     
+^ (Relevant source part 
+starts here and spans 
+across multiple lines).
+
+Error (7398): Explicit 
+type conversion not 
+allowed from non-payable 
+"address" to "contract Tru
+stWalletFeeDistributor", 
+which has a payable 
+fallback function.
+  --> script/ManageOriginN
+ativeFees.s.sol:19:52:
+   |
+19 |         
+TrustWalletFeeDistributor 
+feeDistributor = TrustWall
+etFeeDistributor(feeDistri
+butorAddress);
+   |                      
+                          
+    ^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+Note: Did you mean to 
+declare this variable as 
+"address payable"?
+  --> script/ManageOriginN
+ativeFees.s.sol:18:9:
+   |
+18 |         address 
+feeDistributorAddress = vm
+.envAddress("FEE_DISTRIBUT
+OR_ADDRESS");
+   |         ^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^

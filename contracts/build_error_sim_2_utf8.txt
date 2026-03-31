@@ -1,0 +1,75 @@
+﻿Compiling 2 files with Solc 0.8.33
+Solc 0.8.33 finished in 1.19s
+forge : Error: 
+Compiler run failed:
+At line:1 char:1
++ forge build > 
+build_error_sim_2.txt 
+2>&1
++ ~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo    
+          : 
+NotSpecified: (E    
+rror: Compiler run fa 
+   iled::String) [], 
+Rem    oteException
+    + 
+FullyQualifiedError   
+ Id : 
+NativeCommandErr    or
+ 
+Warning (2424): 
+Natspec 
+memory-safe-assembly 
+special comment for 
+inline assembly is 
+deprecated and 
+scheduled for 
+removal. Use the 
+memory-safe block 
+annotation instead.
+   --> lib/openzeppeli
+n-contracts/contracts/
+utils/Address.sol:236:
+13:
+    |
+236 |             
+assembly {
+    |             ^ 
+(Relevant source part 
+starts here and spans 
+across multiple 
+lines).
+
+Error (6160): Wrong 
+argument count for 
+function call: 2 
+arguments given but 
+expected 0.
+  --> test/EconomicSim
+ulation.t.sol:48:18:
+   |
+48 |         tokenA = 
+new 
+MockToken("TokenA", 
+"TKA");
+   |                  
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^
+
+Error (6160): Wrong 
+argument count for 
+function call: 2 
+arguments given but 
+expected 0.
+  --> test/EconomicSim
+ulation.t.sol:49:18:
+   |
+49 |         tokenB = 
+new 
+MockToken("TokenB", 
+"TKB");
+   |                  
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^

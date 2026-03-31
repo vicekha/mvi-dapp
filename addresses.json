@@ -1,18 +1,32 @@
 {
   "5318007": {
-    "VirtualLiquidityPool": "0xaba1b9666a41af9ff1370096275edc7f4d5ccc69",
-    "AssetVerifier": "0x9c60104D899491618c642b2577F5620e2ff73677",
-    "TrustWalletFeeDistributor": "0x5bB267C064C857117c19Dd9c9806e14090d0E923",
-    "EulerLagrangeOrderProcessor": "0x7863d9A976cdE792d788f6cf82B5a8bEdeE174E5",
-    "WalletSwapMain": "0xaad187fb424d1114dcc7a2b83aaf38417cbf25af",
-    "SwapMatcherRSC": "0x1a30447397f9a2db4f8cef61f584051a3bb86016"
+    "VirtualLiquidityPool": "0x11edbab8ea8474444e0682d8864d8807099d0023",
+    "AssetVerifier": "0x89affd6dbad29b81d301035bd4677664fb70f56a",
+    "TrustWalletFeeDistributor": "0xc38c30c55b35e255c94c7116698472f4d286f33d",
+    "EulerLagrangeOrderProcessor": "0x2302c11c5741bec4a63bf31f758728f165f7e58c",
+    "WalletSwapMain": "0x0a0b1f2a0ff48a20b068dc99456ccf9b423910b8",
+    "SwapMatcherMultiChain": "0xa898b390cdbe7ee3816342c0195517e983dc8a52"
+  },
+  "14601": {
+    "VirtualLiquidityPool": "0xe75740b10c959fbeb222d91c4e4b5f60ec019daa",
+    "AssetVerifier": "0x750b6ab0c38bdb756f597b022b5493e8a6ea9206",
+    "TrustWalletFeeDistributor": "0xe0e519a97137533f8175c9df431fdced31b1ac2f",
+    "EulerLagrangeOrderProcessor": "0x4b922f96db372ae728dece93c453c4cba67f0bdb",
+    "WalletSwapMain": "0x1714292ea28b6975fca98760f01fedc1254d53eb",
+    "SwapMatcherMultiChain": "0x4169ec57278614ad2dc4f437f567284c0b188b59"
   },
   "11155111": {
-    "VirtualLiquidityPool": "0x568f1eed1b968689a33c9ff37732728b6250f1c2",
-    "AssetVerifier": "0xd23C71B5125e2aAAD5f71edA91F7bd8693F8fC94",
-    "TrustWalletFeeDistributor": "0xefa7920a7725824E77646A8d42c00dFd343aF011",
-    "EulerLagrangeOrderProcessor": "0xb8896C0EffAbE9B04DFFe705665F7C83c08EB9a5",
-    "WalletSwapMain": "0xa25fb0103d5806b4455279fc380b7534ff2fa5f6",
-    "ReactiveHyperlaneBridge": "0x18034556142a8D34258E64419420766eF5A2AbEa"
+    "VirtualLiquidityPool": "0x8c82a4fd3769d3d8e07bf281f6f08aa9ea9904c7",
+    "AssetVerifier": "0x2170c42e65f2286adcf2231a84626be74cb275ee",
+    "TrustWalletFeeDistributor": "0xe305fabd8f5f97b0cff0c4bd5af4a6dea0e4bbca",
+    "EulerLagrangeOrderProcessor": "0xaa7d02d01a52d567a205032982ff28850d19c7ac",
+    "WalletSwapMain": "0xc2e34b7600ea683dc6d53eb3b10f4548449f9b4c"
+  },
+  "84532": {
+    "VirtualLiquidityPool": "0xe197da19b23baebb91d15476152a7607e2361234",
+    "AssetVerifier": "0x2bdbbe732c00786073e94f9e6bc4756f2d32173a",
+    "TrustWalletFeeDistributor": "0x1ae91f4f76e37e7aa67751933c52f634db9d8705",
+    "EulerLagrangeOrderProcessor": "0x2de226b8fd5935e3bdec0e113444eee64a69a242",
+    "WalletSwapMain": "0x55ed2321aad341929efa1059017c287fd1272b44"
   }
 }

@@ -29,7 +29,8 @@ contract TrustWalletFeeDistributor is Ownable {
 
     // Fee parameters
     uint256 public feeRate = 5; // 0.05% (in basis points) - configurable
-    uint256 public constant MIN_FEE_MINUTES = 0; // No minimum fee - allows testing with zero fees
+    uint256 public minFeeMinutes = 10; // L-4: Non-zero minimum fee in minutes units
+    uint256 public minNftFeeWei = 0.0005 ether; // H-4: Minimum flat fee for NFT orders in wei
 
     // Events for fee rate changes
     event FeeRateUpdated(uint256 oldRate, uint256 newRate);
@@ -51,6 +52,9 @@ contract TrustWalletFeeDistributor is Ownable {
     address[] public contractsWithDebt; // Contracts that had debt covered
 
     // Configuration
+    // If true, native fees are forwarded instantly to Trust Wallet (for Origin chains)
+    // If false, native fees accumulate to auto-cover cross-chain debts (for Lasna/Reactive Network)
+    bool public autoRouteNativeToken = false; 
     uint256 public debtCoverageThreshold = 0.01 ether; // Minimum fee accumulation before covering debt
     mapping(address => bool) public isReactiveContract; // Track which contracts are on Reactive Network
 
@@ -64,6 +68,7 @@ contract TrustWalletFeeDistributor is Ownable {
     event DebtCovered(address indexed reactiveContract, uint256 amount, uint256 timestamp);
     event DebtCoverageThresholdUpdated(uint256 newThreshold);
     event ReactiveContractRegistered(address indexed contractAddr, bool isReactive);
+    event AccumulatedFeesWithdrawn(address indexed owner, address indexed recipient, uint256 amount);
 
     constructor(address _defaultTrustWallet) {
         require(_defaultTrustWallet != address(0), "Invalid default wallet");
@@ -108,6 +113,24 @@ contract TrustWalletFeeDistributor is Ownable {
     }
 
     /**
+     * @dev Set whether native tokens bypass debt accumulation and stream directly to Trust Wallet
+     */
+    function setAutoRouteNativeToken(bool _autoRoute) external onlyOwner {
+        autoRouteNativeToken = _autoRoute;
+    }
+
+    /**
+     * @dev Set minimum fee parameters
+     */
+    function setMinFeeMinutes(uint256 _minFeeMinutes) external onlyOwner {
+        minFeeMinutes = _minFeeMinutes;
+    }
+
+    function setMinNftFeeWei(uint256 _minNftFeeWei) external onlyOwner {
+        minNftFeeWei = _minNftFeeWei;
+    }
+
+    /**
      * @dev Bulk set Trust Wallet addresses
      * @param tokens Array of token addresses
      * @param wallets Array of Trust Wallet addresses
@@ -141,14 +164,16 @@ contract TrustWalletFeeDistributor is Ownable {
         view
         returns (uint256)
     {
-        // For NFTs, the fee is always based on minutes valuation
+        // H-4: For NFTs, the fee is based on minutes valuation with a minimum flat fee
         if (assetType == AssetType.ERC721) {
             uint256 nftFeeInMinutes = (minutesValuation * feeRate) / 10000;
-            if (nftFeeInMinutes < MIN_FEE_MINUTES) {
-                nftFeeInMinutes = MIN_FEE_MINUTES;
+            if (nftFeeInMinutes < minFeeMinutes) {
+                nftFeeInMinutes = minFeeMinutes;
             }
-            // Conver minutes to native units (assuming 1:1 for simplicity or as base unit)
-            // In a real system, this would use an oracle.
+            // Enforce minimum flat fee in wei for NFT orders
+            if (nftFeeInMinutes < minNftFeeWei) {
+                return minNftFeeWei;
+            }
             return nftFeeInMinutes;
         }
 
@@ -159,9 +184,9 @@ contract TrustWalletFeeDistributor is Ownable {
         uint256 feeInMinutes = (minutesValuation * feeRate) / 10000;
 
         // Ensure minimum fee in minutes
-        if (minutesValuation > 0 && feeInMinutes < MIN_FEE_MINUTES) {
+        if (minutesValuation > 0 && feeInMinutes < minFeeMinutes) {
             // Need to convert minimum minutes fee to token amount
-            uint256 minFeeRatio = (MIN_FEE_MINUTES * 10 ** 18) / minutesValuation;
+            uint256 minFeeRatio = (minFeeMinutes * 10 ** 18) / minutesValuation;
             uint256 minFeeAmount = (amount * minFeeRatio) / 10 ** 18;
 
             // Handle non-fractional tokens
@@ -208,17 +233,23 @@ contract TrustWalletFeeDistributor is Ownable {
             if (token == address(0) || assetType == AssetType.ERC721) {
                 require(msg.value >= fee, "Insufficient native fee sent");
                 
-                // Accumulate Native Fee for Debt Coverage under address(0)
-                accumulatedFees[address(0)] += fee;
+                if (autoRouteNativeToken) {
+                    // Instantly forward to Trust Wallet (Origin Chain configuration)
+                    (bool success, ) = payable(trustWallet).call{value: fee}("");
+                    require(success, "Native fee transfer failed");
+                } else {
+                    // Accumulate Native Fee for Debt Coverage under address(0) (Reactive Network configuration)
+                    accumulatedFees[address(0)] += fee;
 
-                // Auto-cover debt
-                _tryCoverDebt(msg.sender, address(0));
-                
-                if (contractsWithDebt.length > 0) {
-                     for(uint i=0; i<contractsWithDebt.length; i++) {
-                         if (accumulatedFees[address(0)] < 0.001 ether) break; 
-                         _tryCoverDebt(contractsWithDebt[i], address(0));
-                     }
+                    // Auto-cover debt using REACT (native)
+                    _tryCoverDebt(msg.sender);
+                    
+                    if (contractsWithDebt.length > 0) {
+                         for(uint i=0; i<contractsWithDebt.length; i++) {
+                             if (accumulatedFees[address(0)] < 0.001 ether) break; 
+                             _tryCoverDebt(contractsWithDebt[i]);
+                         }
+                    }
                 }
             } else {
                 // ERC20: Send DIRECTLY to Trust Wallet
@@ -240,8 +271,15 @@ contract TrustWalletFeeDistributor is Ownable {
         return fee;
     }
 
-    function _tryCoverDebt(address reactiveContract, address token) internal {
+    /**
+     * @dev Internal function to settle debt for a contract using accumulated REACT (native) fees
+     * @param reactiveContract Address of the Reactive Network contract
+     */
+    function _tryCoverDebt(address reactiveContract) internal {
         if (!isReactiveContract[reactiveContract]) return;
+
+        // Debt coverage is STRICTLY REACT-only (native address(0))
+        address token = address(0);
 
         (bool success, bytes memory data) = SYSTEM_CONTRACT.staticcall(abi.encodeWithSignature("debts(address)", reactiveContract));
         if (success && data.length > 0) {
@@ -292,18 +330,18 @@ contract TrustWalletFeeDistributor is Ownable {
     }
 
     /**
-     * @dev Cover debt for a Reactive Network contract using accumulated fees
+     * @dev Cover debt for a Reactive Network contract using accumulated REACT (native) fees
      * @param reactiveContract Address of the Reactive Network contract
-     * @param token Token to use for debt coverage (must be address(0) for native)
      */
-    function coverReactiveDebt(address reactiveContract, address token) external payable {
+    function coverReactiveDebt(address reactiveContract) external payable {
         require(reactiveContract != address(0), "Invalid contract");
         require(isReactiveContract[reactiveContract], "Contract not registered");
 
-        // Can only cover debt with NATIVE tokens (ETH/REACT)
-        if (msg.value == 0) {
-            require(token == address(0), "Only native tokens can cover debt");
-        }
+        // Debt coverage is strictly REACT-only (native address(0))
+        address token = address(0);
+
+        // Can only cover debt with native tokens (ETH/REACT)
+        // If msg.value is provided, it's used as a direct deposit
 
         uint256 debtAmount = 0;
 
@@ -317,22 +355,44 @@ contract TrustWalletFeeDistributor is Ownable {
 
         require(debtAmount > 0, "No outstanding debt");
 
-        // Use accumulated fees or msg.value
-        uint256 coverAmount = msg.value > 0 ? msg.value : accumulatedFees[token];
-        require(coverAmount >= debtAmount, "Insufficient funds to cover debt");
+        // Determine cover amount
+        uint256 coverAmount = msg.value > 0 ? msg.value : debtAmount;
+        
+        if (msg.value == 0) {
+            require(accumulatedFees[token] >= coverAmount, "Insufficient funds to cover debt");
+            accumulatedFees[token] -= coverAmount;
+        } else {
+            require(coverAmount >= debtAmount, "Insufficient funds to cover debt");
+        }
+
+        debtsCovered[reactiveContract] += coverAmount;
 
         // Deposit to system contract to cover debt
         (bool depositSuccess,) =
             SYSTEM_CONTRACT.call{value: coverAmount}(abi.encodeWithSignature("depositTo(address)", reactiveContract));
         require(depositSuccess, "Deposit failed");
 
-        // Update tracking
-        if (msg.value == 0) {
-            accumulatedFees[token] -= coverAmount;
-        }
-        debtsCovered[reactiveContract] += coverAmount;
-
         emit DebtCovered(reactiveContract, coverAmount, block.timestamp);
+    }
+
+    /**
+     * @dev Withdraw accumulated native fees. Necessary for Origin networks (e.g. Base, Arbitrum)
+     * where the Reactive SYSTEM_CONTRACT does not exist, allowing admins to manually bridge 
+     * funds to Lasna to fund the RSC with REACT tokens.
+     * @param amount Amount of native token to withdraw
+     * @param to Destination address
+     */
+    function withdrawAccumulatedFees(uint256 amount, address payable to) external onlyOwner {
+        require(to != address(0), "Invalid address");
+        require(amount > 0, "Amount must be greater than 0");
+        require(accumulatedFees[address(0)] >= amount, "Insufficient accumulated native fees");
+
+        accumulatedFees[address(0)] -= amount;
+        
+        (bool success, ) = to.call{value: amount}("");
+        require(success, "ETH transfer failed");
+
+        emit AccumulatedFeesWithdrawn(msg.sender, to, amount);
     }
 
     /**
@@ -469,8 +529,8 @@ contract TrustWalletFeeDistributor is Ownable {
     function depositGasForDebt(bytes32 orderId) external payable {
         require(msg.value > 0, "No gas fee sent");
         accumulatedFees[address(0)] += msg.value;
-        // Optionally try to cover debt immediately
-        _tryCoverDebt(msg.sender, address(0)); 
+        // Optionally try to cover debt immediately using REACT (native)
+        _tryCoverDebt(msg.sender); 
     }
 
     receive() external payable virtual {}
