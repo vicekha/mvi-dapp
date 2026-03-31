@@ -32,11 +32,19 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 *.log
+contracts/*.log
+contracts/*.txt
+!contracts/addresses.json
+!contracts/package.json
+!contracts/foundry.toml
 
 # Temporary files
 temp/
 tmp/
 *.tmp
+contracts/out/
+contracts/cache/
+contracts/broadcast/
 debug_wallet.ps1
 deploy_temp.ps1
 remotes.txt
