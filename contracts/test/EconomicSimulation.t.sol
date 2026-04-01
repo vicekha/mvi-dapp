@@ -39,7 +39,8 @@ contract EconomicSimulation is Test {
             address(liquidityPool),
             address(orderProcessor),
             address(feeDistributor),
-            address(assetVerifier)
+            address(assetVerifier),
+            address(0x1337)
         );
         
         orderProcessor.setWalletSwapMain(address(walletSwap));

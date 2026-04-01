@@ -12,6 +12,7 @@ contract DeployFullStack is Script {
     function run() external {
         uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
         address trustWallet = 0x0dB12aAC15a63303d1363b8C862332C699Cca561;
+        address callbackProxy = vm.envOr("CALLBACK_PROXY", address(0));
 
         vm.startBroadcast(deployerPrivateKey);
 
@@ -38,7 +39,8 @@ contract DeployFullStack is Script {
             address(liquidityPool),
             address(orderProcessor),
             address(feeDistributor),
-            address(assetVerifier)
+            address(assetVerifier),
+            callbackProxy
         );
         console.log("WalletSwapMain deployed at:", address(walletSwap));
 

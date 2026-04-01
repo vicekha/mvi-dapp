@@ -39,7 +39,8 @@ contract DeploySonicMainnet is Script {
             address(liquidityPool),
             address(orderProcessor),
             address(feeDistributor),
-            address(assetVerifier)
+            address(assetVerifier),
+            address(0) // Set later
         );
         console.log("WalletSwapMain deployed at:", address(walletSwap));
 

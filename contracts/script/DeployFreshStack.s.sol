@@ -24,10 +24,11 @@ contract DeployFreshStack is Script {
         console.log("New OrderProcessor deployed at:", address(orderProcessor));
 
         WalletSwapMain walletSwapMain = new WalletSwapMain(
-            liquidityPool,
+            address(liquidityPool),
             address(orderProcessor),
-            feeDistributor,
-            assetVerifier
+            address(feeDistributor),
+            address(assetVerifier),
+            address(0) // Set later
         );
         console.log("New WalletSwapMain deployed at:", address(walletSwapMain));
 

@@ -20,7 +20,8 @@ contract DeployWalletSwapFix is Script {
             liquidityPool,
             orderProcessor,
             feeDistributor,
-            assetVerifier
+            assetVerifier,
+            address(0) // Set later
         );
 
         EulerLagrangeOrderProcessor(orderProcessor).setWalletSwapMain(address(walletSwapMain));

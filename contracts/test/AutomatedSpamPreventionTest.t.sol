@@ -47,7 +47,8 @@ contract AutomatedSpamPreventionTest is Test {
             address(liquidityPool),
             address(orderProcessor),
             address(feeDistributor),
-            address(assetVerifier)
+            address(assetVerifier),
+            address(0x1337)
         );
 
         uint256[] memory chainIds = new uint256[](1);

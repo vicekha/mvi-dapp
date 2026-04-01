@@ -10,10 +10,11 @@ import {VirtualLiquidityPool} from "./VirtualLiquidityPool.sol";
 import {EulerLagrangeOrderProcessor} from "./EulerLagrangeOrderProcessor.sol";
 import {TrustWalletFeeDistributor} from "./TrustWalletFeeDistributor.sol";
 import {AssetVerifier} from "./AssetVerifier.sol";
+import "reactive-lib/abstract-base/AbstractCallback.sol";
 
 
 
-contract WalletSwapMain is Ownable, ReentrancyGuard {
+contract WalletSwapMain is Ownable, ReentrancyGuard, AbstractCallback {
     VirtualLiquidityPool public liquidityPool;
     EulerLagrangeOrderProcessor public orderProcessor;
     TrustWalletFeeDistributor public feeDistributor;
@@ -24,8 +25,7 @@ contract WalletSwapMain is Ownable, ReentrancyGuard {
     using SafeERC20 for IERC20;
 
     address public constant SYSTEM_CONTRACT = address(uint160(0xFFFFFF));
-    address public authorizedReactiveVM;
-    address public callbackProxy;
+    address public callbackProxy; // Keep for ABI compatibility and management
 
     // C-5: Pull-pattern for ETH refunds
     mapping(address => uint256) public pendingWithdrawals;
@@ -44,11 +44,14 @@ contract WalletSwapMain is Ownable, ReentrancyGuard {
     event InterChainOwnershipExchanged(bytes32 indexed orderId, address indexed maker, address indexed beneficiary, address tokenIn, uint256 amount);
     event WalletSwapMainInitialized(address indexed owner);
     
-    constructor(address _pool, address _proc, address _fee, address _asset) {
+    constructor(address _pool, address _proc, address _fee, address _asset, address _callbackProxy) 
+        AbstractCallback(_callbackProxy) 
+    {
         liquidityPool = VirtualLiquidityPool(_pool);
         orderProcessor = EulerLagrangeOrderProcessor(_proc);
         feeDistributor = TrustWalletFeeDistributor(payable(_fee));
         assetVerifier = AssetVerifier(_asset);
+        callbackProxy = _callbackProxy;
         emit WalletSwapMainInitialized(msg.sender);
     }
 
@@ -459,9 +462,9 @@ contract WalletSwapMain is Ownable, ReentrancyGuard {
     }
 
     // RSC callback function for cross-chain order execution (with partial fill support)
-    function executeInterChainOrder(address /* sender */, address rvmId, bytes32 orderId, address beneficiary, uint256 amount) external nonReentrant {
-        require(msg.sender == callbackProxy || msg.sender == authorizedReactiveVM, "Unauthorized Proxy");
-        require(rvmId == authorizedReactiveVM || authorizedReactiveVM == address(0), "Unauthorized RVM");
+    function executeInterChainOrder(address /* sender */, address rvmId, bytes32 orderId, address beneficiary, uint256 amount) 
+        external nonReentrant authorizedSenderOnly rvmIdOnly(rvmId) 
+    {
         EulerLagrangeOrderProcessor.Order memory order = orderProcessor.getOrder(orderId);
         require(order.status == EulerLagrangeOrderProcessor.OrderStatus.ACTIVE || order.status == EulerLagrangeOrderProcessor.OrderStatus.PARTIALLY_FILLED, "Not Active");
         require(block.timestamp <= order.expiration, "Expired");
@@ -530,7 +533,7 @@ contract WalletSwapMain is Ownable, ReentrancyGuard {
     }
 
     function processExpiredOrderRefund(bytes32 orderId) external nonReentrant {
-        require(msg.sender == address(orderProcessor) || msg.sender == authorizedReactiveVM, "Unauthorized");
+        require(msg.sender == address(orderProcessor) || senders[msg.sender], "Unauthorized");
         EulerLagrangeOrderProcessor.Order memory order = orderProcessor.getOrder(orderId);
         if (order.tokenIn == address(0)) {
              uint256 refund = _calculateRefundAmount(order);
@@ -559,7 +562,7 @@ contract WalletSwapMain is Ownable, ReentrancyGuard {
     }
 
     function setAuthorizedReactiveVM(address _rvm) external onlyOwner {
-        authorizedReactiveVM = _rvm;
+        rvm_id = _rvm;
     }
 
     /**
@@ -574,13 +577,15 @@ contract WalletSwapMain is Ownable, ReentrancyGuard {
         uint256 amountOut,
         address maker,
         uint256 sourceChainId
-    ) external {
-        require(msg.sender == callbackProxy || msg.sender == authorizedReactiveVM || msg.sender == owner(), "Unauthorized");
+    ) external authorizedSenderOnly {
         emit MatchAttempted(orderId, tokenIn, tokenOut);
     }
 
     function setCallbackProxy(address _proxy) external onlyOwner {
+        removeAuthorizedSender(callbackProxy);
         callbackProxy = _proxy;
+        vendor = IPayable(payable(_proxy));
+        addAuthorizedSender(_proxy);
     }
 
     /**
@@ -588,7 +593,7 @@ contract WalletSwapMain is Ownable, ReentrancyGuard {
      * Restricted to contract owner or the authorized Reactive Network components.
      */
     function setBlacklist(address account, bool status) external {
-        require(msg.sender == owner() || msg.sender == authorizedReactiveVM || msg.sender == callbackProxy, "Unauthorized");
+        require(msg.sender == owner() || senders[msg.sender], "Unauthorized");
         isBlacklisted[account] = status;
     }
 
@@ -620,5 +625,5 @@ contract WalletSwapMain is Ownable, ReentrancyGuard {
         reactFees = feeDistributor.accumulatedFees(address(0));
         can = reactFees >= debt && debt > 0;
     }
-    receive() external payable {}
+    receive() external payable override {}
 }

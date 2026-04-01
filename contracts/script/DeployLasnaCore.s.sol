@@ -12,6 +12,7 @@ contract DeployLasnaCore is Script {
     function run() external {
         uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
         address trustWallet = 0x0dB12aAC15a63303d1363b8C862332C699Cca561;
+        address callbackProxy = vm.envOr("CALLBACK_PROXY", address(uint160(0xFFFFFF)));
 
         vm.startBroadcast(deployerPrivateKey);
 
@@ -35,7 +36,8 @@ contract DeployLasnaCore is Script {
             address(liquidityPool),
             address(orderProcessor),
             address(feeDistributor),
-            address(assetVerifier)
+            address(assetVerifier),
+            callbackProxy
         );
         console.log("LASNA_WALLET_SWAP_MAIN=", address(walletSwap));
 

@@ -33,7 +33,8 @@ contract CrossChainSettlementTest is Test {
             address(liquidityPool),
             address(orderProcessor),
             address(feeDistributor),
-            address(assetVerifier)
+            address(assetVerifier),
+            rvm // Use rvm address as callback proxy for testing
         );
 
         orderProcessor.setWalletSwapMain(address(walletSwap));

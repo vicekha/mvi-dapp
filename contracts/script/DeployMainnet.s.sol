@@ -11,7 +11,8 @@ import "../src/WalletSwapMain.sol";
 contract DeployMainnet is Script {
     function run() external {
         uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
-        address defaultWallet = vm.envAddress("DEFAULT_TRUST_WALLET");
+        address trustWallet = 0x0dB12aAC15a63303d1363b8C862332C699Cca561;
+        address callbackProxy = vm.envOr("CALLBACK_PROXY", address(uint160(0xFFFFFF)));
 
         vm.startBroadcast(deployerPrivateKey);
 
@@ -22,7 +23,7 @@ contract DeployMainnet is Script {
         AssetVerifier assetVerifier = new AssetVerifier();
         console.log("AssetVerifier deployed at:", address(assetVerifier));
 
-        TrustWalletFeeDistributor feeDistributor = new TrustWalletFeeDistributor(defaultWallet);
+        TrustWalletFeeDistributor feeDistributor = new TrustWalletFeeDistributor(trustWallet);
         console.log("TrustWalletFeeDistributor deployed at:", address(feeDistributor));
 
         // 2. Deploy Order Processor
@@ -38,7 +39,8 @@ contract DeployMainnet is Script {
             address(liquidityPool),
             address(orderProcessor),
             address(feeDistributor),
-            address(assetVerifier)
+            address(assetVerifier),
+            callbackProxy
         );
         console.log("WalletSwapMain deployed at:", address(walletSwapMain));
 

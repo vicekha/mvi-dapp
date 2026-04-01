@@ -49,7 +49,8 @@ contract MarketSweepTest is Test {
             address(pool),
             address(processor),
             address(feeDistributor),
-            address(assetVerifier)
+            address(assetVerifier),
+            address(0x1337)
         );
 
         processor.setWalletSwapMain(address(walletSwap));

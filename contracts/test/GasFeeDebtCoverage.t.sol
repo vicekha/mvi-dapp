@@ -50,8 +50,13 @@ contract GasFeeDebtCoverageTest is Test {
         assetVerifier = new AssetVerifier();
         feeDistributor = new TrustWalletFeeDistributor(address(0x999)); // Default trust wallet
         orderProcessor = new EulerLagrangeOrderProcessor(address(liquidityPool), address(feeDistributor), address(assetVerifier));
-        walletSwap = new WalletSwapMain(address(liquidityPool), address(orderProcessor), address(feeDistributor), address(assetVerifier));
-
+        walletSwap = new WalletSwapMain(
+            address(liquidityPool),
+            address(orderProcessor),
+            address(feeDistributor),
+            address(assetVerifier),
+            address(0x1337)
+        );
         orderProcessor.setWalletSwapMain(address(walletSwap));
 
         // Authorize contracts in VirtualLiquidityPool

@@ -31,7 +31,8 @@ contract DeploySonic is Script {
             address(liquidityPool),
             address(orderProcessor),
             address(feeDistributor),
-            address(assetVerifier)
+            address(assetVerifier),
+            address(0) // RSC is set later via setCallbackProxy
         );
 
         orderProcessor.setWalletSwapMain(address(walletSwap));
