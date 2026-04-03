@@ -130,6 +130,42 @@
       "decimals": 6,
       "basePrice": 1,
       "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xdAC17F958D2ee523a2206206994597C13D831ec7/logo.png"
+    },
+    {
+      "chainId": 11155111,
+      "address": "0x0000000000000000000000000000000000000000",
+      "symbol": "ETH",
+      "name": "Ether",
+      "decimals": 18,
+      "basePrice": 3500,
+      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/info/logo.png"
+    },
+    {
+      "chainId": 84532,
+      "address": "0x0000000000000000000000000000000000000000",
+      "symbol": "ETH",
+      "name": "Ether",
+      "decimals": 18,
+      "basePrice": 3500,
+      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/info/logo.png"
+    },
+    {
+      "chainId": 114,
+      "address": "0x0000000000000000000000000000000000000000",
+      "symbol": "FLR",
+      "name": "Coston Flare",
+      "decimals": 18,
+      "basePrice": 0.03,
+      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/flare/info/logo.png"
+    },
+    {
+      "chainId": 1597,
+      "address": "0x0000000000000000000000000000000000000000",
+      "symbol": "FLR",
+      "name": "Coston2 Flare",
+      "decimals": 18,
+      "basePrice": 0.03,
+      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/flare/info/logo.png"
     }
   ]
 }

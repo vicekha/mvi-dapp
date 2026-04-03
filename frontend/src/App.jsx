@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import { ethers } from 'ethers';
 import {
   ArrowDownUp,
+  ArrowRight,
   Wallet,
   Layers,
   Settings,
@@ -63,6 +64,38 @@ const lasna = {
   rpcUrl: 'https://lasna-rpc.rnk.dev/'
 };
 
+const sepolia = {
+  chainId: 11155111,
+  name: 'Sepolia',
+  currency: 'ETH',
+  explorerUrl: 'https://sepolia.etherscan.io',
+  rpcUrl: 'https://rpc.ankr.com/eth_sepolia'
+};
+
+const baseSepolia = {
+  chainId: 84532,
+  name: 'Base Sepolia',
+  currency: 'ETH',
+  explorerUrl: 'https://sepolia.basescan.org',
+  rpcUrl: 'https://rpc.ankr.com/base_sepolia'
+};
+
+const coston = {
+  chainId: 114,
+  name: 'Coston',
+  currency: 'FLR',
+  explorerUrl: 'https://coston-explorer.flare.network',
+  rpcUrl: 'https://coston-api.flare.network/ext/bc/C/rpc'
+};
+
+const coston2 = {
+  chainId: 1597,
+  name: 'Coston2',
+  currency: 'FLR',
+  explorerUrl: 'https://coston2-explorer.flare.network',
+  rpcUrl: 'https://coston2-api.flare.network/ext/bc/C/rpc'
+};
+
 // 3. Create a metadata object
 const metadata = {
   name: 'AutoSwap DApp',
@@ -83,7 +116,7 @@ const ethersConfig = defaultConfig({
 // 5. Create Web3Modal
 createWeb3Modal({
   ethersConfig,
-  chains: [sonicMainnet, sonicTestnet, lasna],
+  chains: [sonicMainnet, sonicTestnet, lasna, sepolia, baseSepolia, coston, coston2],
   projectId,
   enableAnalytics: true,
   allWallets: 'SHOW', // Ensure all wallets are shown in the explorer
@@ -104,7 +137,11 @@ const BUILD_VERSION = "2026-03-04.2045";
 const NETWORKS = [
   { id: 146, name: 'Sonic Mainnet', icon: '⚡', color: '#B300FF', chainIdHex: '0x92', rpcUrl: sonicMainnet.rpcUrl },
   { id: 14601, name: 'Sonic Testnet', icon: '⚡', color: '#B300FF', chainIdHex: '0x3909', rpcUrl: sonicTestnet.rpcUrl },
-  { id: 5318007, name: 'Lasna', icon: '🔵', color: '#00B3FF', chainIdHex: '0x512577', rpcUrl: lasna.rpcUrl }
+  { id: 5318007, name: 'Lasna', icon: '🔵', color: '#00B3FF', chainIdHex: '0x512577', rpcUrl: lasna.rpcUrl },
+  { id: 11155111, name: 'Sepolia', icon: '💎', color: '#627EEA', chainIdHex: '0xaa36a7', rpcUrl: sepolia.rpcUrl },
+  { id: 84532, name: 'Base Sepolia', icon: '🔵', color: '#0052FF', chainIdHex: '0x14a34', rpcUrl: baseSepolia.rpcUrl },
+  { id: 114, name: 'Coston', icon: '🛡️', color: '#E12D3A', chainIdHex: '0x72', rpcUrl: coston.rpcUrl },
+  { id: 1597, name: 'Coston2', icon: '🛡️', color: '#E12D3A', chainIdHex: '0x63d', rpcUrl: coston2.rpcUrl }
 ];
 
 import TOKEN_LIST from './tokenlist.json';
@@ -126,9 +163,15 @@ function App() {
   useEffect(() => {
     if (chainId) {
       const matched = NETWORKS.find(n => BigInt(n.id) === BigInt(chainId));
-      if (matched) setActiveNetwork(matched);
+      if (matched) {
+        setActiveNetwork(matched);
+        setTargetNetwork(matched); // Default target to active network
+      }
     }
   }, [chainId]);
+
+  const [targetNetwork, setTargetNetwork] = useState(NETWORKS[0]);
+  const [showTargetNetworkDropdown, setShowTargetNetworkDropdown] = useState(false);
 
   const [currentView, setCurrentView] = useState('intents'); // intents, history, security, settings
   const [showNetworkDropdown, setShowNetworkDropdown] = useState(false);
@@ -218,6 +261,32 @@ function App() {
     return merged;
   }, [activeNetwork, externalTokens, customTokens]);
 
+  const destAssets = useMemo(() => {
+    const chainFilter = (t) => BigInt(t.chainId) === BigInt(targetNetwork.id);
+
+    const local = TOKEN_LIST?.tokens?.filter(chainFilter) || [];
+    const external = externalTokens.filter(chainFilter);
+    const custom = customTokens.filter(chainFilter);
+
+    // Merge and deduplicate by address
+    const seen = new Set();
+    const merged = [];
+
+    const addToken = (t) => {
+      const key = t.address.toLowerCase();
+      if (!seen.has(key)) {
+        merged.push(t);
+        seen.add(key);
+      }
+    };
+
+    local.forEach(addToken);
+    external.forEach(addToken);
+    custom.forEach(addToken);
+
+    return merged;
+  }, [targetNetwork, externalTokens, customTokens]);
+
   const filteredSellAssets = useMemo(() => {
     if (!sellSearch) return activeAssets;
     const s = sellSearch.toLowerCase();
@@ -229,14 +298,14 @@ function App() {
   }, [activeAssets, sellSearch]);
 
   const filteredBuyAssets = useMemo(() => {
-    if (!buySearch) return activeAssets;
+    if (!buySearch) return destAssets;
     const s = buySearch.toLowerCase();
-    return activeAssets.filter(a =>
+    return destAssets.filter(a =>
       a.symbol.toLowerCase().includes(s) ||
       a.name.toLowerCase().includes(s) ||
       a.address.toLowerCase() === s
     );
-  }, [activeAssets, buySearch]);
+  }, [destAssets, buySearch]);
 
   // Intent-Based State
   const [sellAsset, setSellAsset] = useState(activeAssets[0] || { symbol: '?', address: '0x0', decimals: 18 });
@@ -246,9 +315,14 @@ function App() {
   useEffect(() => {
     if (activeAssets.length > 0) {
       setSellAsset(activeAssets[0]);
-      setBuyAsset(activeAssets[1] || activeAssets[0]);
     }
-  }, [activeNetwork.id]); // Only run when chain changes, not every asset refetch
+  }, [activeNetwork.id, activeAssets]);
+
+  useEffect(() => {
+    if (destAssets.length > 0) {
+      setBuyAsset(destAssets[0] || destAssets[0]);
+    }
+  }, [targetNetwork.id, destAssets]);
   const [sellAmount, setSellAmount] = useState('');
   const [buyAmount, setBuyAmount] = useState('');
   const [tokenBalances, setTokenBalances] = useState({});
@@ -371,12 +445,15 @@ function App() {
         const orderId = event.args.orderId;
         try {
           const order = await processor.getOrder(orderId);
-          const sellAssetData = activeAssets.find(a => a.address.toLowerCase() === order.tokenIn.toLowerCase()) || { symbol: '???', decimals: 18, icon: '❓' };
-          const buyAssetData = activeAssets.find(a => a.address.toLowerCase() === order.tokenOut.toLowerCase()) || { symbol: '???', decimals: 18, icon: '❓' };
+          const sellAssetData = TOKEN_LIST.tokens.find(a => a.address.toLowerCase() === order.tokenIn.toLowerCase() && BigInt(a.chainId) === BigInt(activeNetwork.id)) || { symbol: '???', decimals: 18, icon: '❓', chainId: activeNetwork.id };
+          const buyAssetData = TOKEN_LIST.tokens.find(a => a.address.toLowerCase() === order.tokenOut.toLowerCase() && BigInt(a.chainId) === BigInt(order.targetChainId)) || { symbol: '???', decimals: 18, icon: '❓', chainId: order.targetChainId.toString() };
+
+          const targetNet = NETWORKS.find(n => BigInt(n.id) === BigInt(order.targetChainId)) || { name: 'Unknown', icon: '❓', color: '#888' };
 
             return {
               id: orderId.toString(),
               network: activeNetwork,
+              targetNetwork: targetNet,
               sellAsset: sellAssetData,
               buyAsset: buyAssetData,
               maker: order.maker,
@@ -395,11 +472,14 @@ function App() {
             };
         } catch (orderErr) {
           console.error(`Failed to fetch details for order ${orderId}:`, orderErr);
-          const sAsset = activeAssets.find(a => a.address.toLowerCase() === event.args.tokenIn.toLowerCase()) || { symbol: '???', decimals: 18 };
-          const bAsset = activeAssets.find(a => a.address.toLowerCase() === event.args.tokenOut.toLowerCase()) || { symbol: '???', decimals: 18 };
+          const sAsset = TOKEN_LIST.tokens.find(a => a.address.toLowerCase() === (event.args.tokenIn || '').toLowerCase() && BigInt(a.chainId) === BigInt(activeNetwork.id)) || { symbol: '???', decimals: 18 };
+          const bAsset = TOKEN_LIST.tokens.find(a => a.address.toLowerCase() === (event.args.tokenOut || '').toLowerCase()) || { symbol: '???', decimals: 18 }; // fallback search chain might not be known yet
+          const targetNet = NETWORKS.find(n => BigInt(n.id) === BigInt(event.args.targetChainId || activeNetwork.id)) || { name: 'Unknown', icon: '❓' };
+
           return {
             id: orderId.toString(),
             network: activeNetwork,
+            targetNetwork: targetNet,
             sellAsset: sAsset,
             buyAsset: bAsset,
             maker: event.args.maker,
@@ -548,7 +628,7 @@ function App() {
       const signer = await provider.getSigner();
 
       const chainId = activeNetwork.id.toString();
-      const contractAddress = ADDRESSES[chainId]?.WalletSwapMain;
+      const contractAddress = ADDRESSES[chainId]?.WalletSwapCallback || ADDRESSES[chainId]?.WalletSwapMain;
 
       if (!contractAddress) {
         alert(`Contract not deployed on ${activeNetwork.name}`);
@@ -627,7 +707,7 @@ function App() {
         50, // 0.5% slippage (50 bps)
         expiryDuration, // Selected duration from settings
         true, // enableRebooking
-        activeNetwork.id, // targetChainId (intra-chain for now)
+        targetNetwork.id, // targetChainId (cross-chain support)
         { value: valueToSend }
       );
 
@@ -785,7 +865,7 @@ function App() {
       const provider = new ethers.BrowserProvider(walletProvider);
       const signer = await provider.getSigner();
       const chainId = activeNetwork.id.toString();
-      const contractAddress = ADDRESSES[chainId]?.WalletSwapMain;
+      const contractAddress = ADDRESSES[chainId]?.WalletSwapCallback || ADDRESSES[chainId]?.WalletSwapMain;
       if (!contractAddress) return;
 
       const walletSwap = new ethers.Contract(contractAddress, WALLET_SWAP_ABI.abi, signer);
@@ -1273,7 +1353,35 @@ function App() {
 
                 <div className="input-container mb-4 pt-4">
                   <div className="flex justify-between text-xs text-white/40 mb-3">
-                    <span>You Expect</span>
+                    <div className="flex items-center gap-2">
+                       <span>You Expect on</span>
+                       <div className="relative">
+                         <div 
+                           className="flex items-center gap-1 px-1.5 py-0.5 rounded bg-white/5 cursor-pointer hover:bg-white/10 text-[10px] font-bold border border-white/5"
+                           onClick={() => setShowTargetNetworkDropdown(!showTargetNetworkDropdown)}
+                         >
+                           <span>{targetNetwork.icon}</span>
+                           <span>{targetNetwork.name}</span>
+                           <ChevronDown size={10} />
+                         </div>
+                         <AnimatePresence>
+                           {showTargetNetworkDropdown && (
+                             <motion.div initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -5 }} className="dropdown-content left-0 top-full mt-1 border border-white/10" style={{ zIndex: 100, minWidth: '160px' }}>
+                               {NETWORKS.map(network => (
+                                 <div 
+                                   key={network.id} className="dropdown-item py-1.5 px-3"
+                                   onClick={() => { setTargetNetwork(network); setShowTargetNetworkDropdown(false); }}
+                                 >
+                                   <span className="text-sm">{network.icon}</span>
+                                   <span className="text-[11px] font-medium">{network.name}</span>
+                                   {targetNetwork.id === network.id && <CheckCircle2 size={12} className="ml-auto text-indigo-400" />}
+                                 </div>
+                               ))}
+                             </motion.div>
+                           )}
+                         </AnimatePresence>
+                       </div>
+                    </div>
                     <span>Balance: {tokenBalances[`${buyAsset.chainId}-${buyAsset.address.toLowerCase()}`] ? parseFloat(tokenBalances[`${buyAsset.chainId}-${buyAsset.address.toLowerCase()}`]).toFixed(4) : "0.00"} {buyAsset.symbol}</span>
                   </div>
                   <div className="flex justify-between items-center relative" ref={buyDropdownRef}>
@@ -1362,9 +1470,19 @@ function App() {
                 </div>
 
                 {effectiveRate && (
-                  <div className="mb-6 px-2 flex justify-between items-center text-xs">
+                  <div className="mb-2 px-2 flex justify-between items-center text-xs">
                     <span className="text-white/40">Effective Rate</span>
                     <span className="font-bold text-indigo-400">1 {sellAsset.symbol} = {effectiveRate} {buyAsset.symbol}</span>
+                  </div>
+                )}
+
+                {activeNetwork.id !== targetNetwork.id && (
+                  <div className="mb-6 px-2 flex justify-between items-center text-xs">
+                    <div className="flex items-center gap-1 text-white/40">
+                      <Zap size={12} className="text-amber-400" />
+                      <span>Reactive Network Fee</span>
+                    </div>
+                    <span className="font-bold text-amber-400">0.002 {activeNetwork.currency}</span>
                   </div>
                 )}
 
@@ -1468,10 +1586,20 @@ function App() {
                               {order.status === 'cancelled' ? <X size={18} /> : <CheckCircle2 size={18} />}
                             </div>
                             <div>
-                              <p className="font-bold text-sm">
-                                Intent: {isUnknownSell ? `${order.tokenInAddr?.substring(0, 6)}...` : order.sellAsset.symbol}
-                                → {isUnknownBuy ? `${order.tokenOutAddr?.substring(0, 6)}...` : order.buyAsset.symbol}
-                              </p>
+                              <div className="flex items-center gap-2">
+                                <p className="font-bold text-sm">
+                                  {isUnknownSell ? `${order.tokenInAddr?.substring(0, 6)}...` : order.sellAsset.symbol}
+                                  <span className="mx-1 text-white/40">on</span>
+                                  <span title={activeNetwork.name}>{activeNetwork.icon}</span>
+                                  <ArrowRight size={12} className="mx-1 text-white/20 inline" />
+                                  {isUnknownBuy ? `${order.tokenOutAddr?.substring(0, 6)}...` : order.buyAsset.symbol}
+                                  <span className="mx-1 text-white/40">on</span>
+                                  <span title={order.targetNetwork?.name || 'Unknown'}>{order.targetNetwork?.icon || '❓'}</span>
+                                </p>
+                                {activeNetwork.id !== order.targetNetwork?.id && (
+                                  <span className="px-1.5 py-0.5 rounded-full bg-amber-500/10 text-amber-500 text-[8px] font-bold uppercase tracking-widest border border-amber-500/20">Cross-Chain</span>
+                                )}
+                              </div>
 
                                 <div className="flex items-center gap-2 text-[10px] text-white/20 font-mono">
                                   <span>ID: {isTemp ? 'Syncing...' : order.id.toString().substring(0, 10)}</span>
