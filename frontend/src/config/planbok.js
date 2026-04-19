@@ -220,13 +220,17 @@ export function connectAgentWS(onMessage, onOpen, onClose) {
 const AGENT_API = import.meta.env.VITE_AGENT_API_URL || 'http://localhost:4000/api';
 
 async function fetchAgent(path, options = {}) {
+  // Agent creation involves Planbok MPC wallet DKG (20-40s) + funding tx
+  // (10-30s). Railway cold starts add ~5s. Use a 90s timeout for writes,
+  // 15s for reads.
+  const defaultTimeout = (options.method && options.method !== 'GET') ? 90_000 : 15_000;
   const res = await fetch(`${AGENT_API}${path}`, {
     ...options,
     headers: {
       'Content-Type': 'application/json',
       ...options.headers,
     },
-    signal: options.signal || AbortSignal.timeout(30000),
+    signal: options.signal || AbortSignal.timeout(defaultTimeout),
   });
   if (!res.ok) {
     const err = await res.json().catch(() => ({ error: res.statusText }));

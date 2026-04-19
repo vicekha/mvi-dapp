@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoSwap | P2P Intent-Based Swap</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-base:      #080C10;
+      --bg-surface:   #0E1419;
+      --bg-raised:    #151D24;
+      --border:       #1E2A34;
+      --text-primary: #E8EDF2;
+      --text-secondary: #6B7F8E;
+      --text-muted:   #3D5060;
+      --accent:       #00E5FF;
+      --accent-dim:   rgba(0, 229, 255, 0.12);
+      --accent-glow:  rgba(0, 229, 255, 0.06);
+      --success:      #00C896;
+      --warning:      #F5A623;
+      --danger:       #FF4D6A;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      font-family: 'DM Mono', monospace;
+      overflow-x: hidden;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before {
+      content: ""; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none; z-index: 9999; opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    h1, h2, h3, h4, .syne { font-family: 'Syne', sans-serif; }
+    
+    .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 10; }
+    .flex { display: flex; } .flex-col { flex-direction: column; }
+    .items-center { align-items: center; } .justify-between { justify-content: space-between; } .justify-center { justify-content: center; }
+    
+    /* Views */
+    #view-landing { display: block; } #view-swap { display: none; }
+    body.show-swap #view-landing { display: none; } body.show-swap #view-swap { display: block; }
+
+    /* Buttons & Cards */
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 12px 24px; font-size: 14px; font-weight: 700; border-radius: 4px; cursor: pointer; transition: all 0.2s; border: 1px solid transparent; text-decoration: none; font-family: 'Syne', sans-serif; }
+    .btn-outline { border-color: var(--accent); color: var(--accent); background: transparent; }
+    .btn-outline:hover { background: var(--accent-dim); box-shadow: 0 0 12px var(--accent-glow); }
+    .btn-primary { background: var(--accent); color: var(--bg-base); }
+    .btn-primary:hover { box-shadow: 0 0 16px var(--accent-glow); transform: translateY(-1px); }
+    .card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 8px; padding: 24px; transition: border-color 0.3s; }
+    .card:hover { border-color: rgba(0, 229, 255, 0.3); box-shadow: 0 0 20px var(--accent-glow); }
+
+    /* Animations */
+    .anim-up { opacity: 0; transform: translateY(20px); transition: 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+    .anim-up.visible { opacity: 1; transform: translateY(0); }
+    .delay-1 { transition-delay: 100ms; } .delay-2 { transition-delay: 200ms; } .delay-3 { transition-delay: 300ms; }
+
+    /* Navbar */
+    .navbar { position: fixed; top: 0; left: 0; right: 0; height: 56px; background: var(--bg-base); border-bottom: 1px solid var(--border); z-index: 100; display: flex; align-items: center; padding: 0 24px; justify-content: space-between; }
+    .brand { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 20px; color: var(--text-primary); }
+
+    /* Hero */
+    .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding-top: 56px; }
+    #canvas-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+    .hero-content { z-index: 2; text-align: center; max-width: 800px; display: flex; flex-direction: column; align-items: center; }
+    .tag-chip { font-size: 11px; text-transform: uppercase; color: var(--text-secondary); border: 1px solid var(--border); padding: 4px 12px; border-radius: 4px; margin-bottom: 24px; background: var(--bg-surface); }
+    .hero h1 { font-size: clamp(2.4rem, 6vw, 5rem); font-weight: 800; line-height: 1.1; margin-bottom: 24px; }
+    .hero h1 span { color: var(--accent); }
+    .hero p { color: var(--text-secondary); font-size: 16px; line-height: 1.5; max-width: 540px; margin-bottom: 40px; }
+    
+    .flow-diagram { margin-bottom: 40px; display: flex; flex-direction: column; align-items: center; width: 100%; }
+    .diagram-svg { width: 100%; max-width: 460px; height: 40px; margin-bottom: 8px; }
+    .dashed-line { stroke: var(--text-muted); stroke-width: 2; stroke-dasharray: 4; animation: dashAnim 1s linear infinite; }
+    @keyframes dashAnim { to { stroke-dashoffset: -8; } }
+    .node-rect { fill: var(--bg-raised); stroke: var(--border); }
+    .node-txt { font-family: 'DM Mono', monospace; font-size: 10px; fill: var(--text-primary); text-anchor: middle; dominant-baseline: middle; }
+    .flow-sub { font-size: 10px; color: var(--text-muted); }
+    .scroll-hint { margin-top: 80px; font-size: 12px; color: var(--text-muted); animation: float 2s infinite ease-in-out; }
+    @keyframes float { 50% { transform: translateY(5px); } }
+
+    /* Sections */
+    .section { padding: 80px 24px; max-width: 1200px; margin: 0 auto; position: relative; z-index: 2; }
+    .section-title { font-size: 32px; font-weight: 700; text-align: center; margin-bottom: 48px; }
+
+    /* Differentiators */
+    .grid-3 { display: grid; grid-template-columns: 1fr; gap: 24px; }
+    @media(min-width: 900px) { .grid-3 { grid-template-columns: repeat(3, 1fr); } }
+    .diff-card svg { width: 32px; height: 32px; color: var(--accent); margin-bottom: 16px; display: block; }
+    .diff-card h3 { font-size: 18px; margin-bottom: 12px; font-weight: 700; }
+    .diff-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+
+    /* Step Rail */
+    .step-rail-container { position: relative; display: flex; flex-direction: column; gap: 32px; }
+    .step-line-bg { position: absolute; background: var(--border); }
+    .step-line-fill { position: absolute; background: var(--accent); transition: all 1s ease; }
+    .step-node { position: relative; z-index: 2; background: var(--bg-base); padding-left: 24px; }
+    .step-node::before { content: ""; position: absolute; left: -5px; top: 4px; width: 10px; height: 10px; border-radius: 50%; background: var(--bg-raised); border: 2px solid var(--border); transition: all 0.3s; }
+    .step-node.active::before { background: var(--accent); border-color: var(--bg-base); box-shadow: 0 0 10px var(--accent-glow); }
+    @media(min-width: 900px) {
+      .step-rail-container { flex-direction: row; gap: 24px; }
+      .step-line-bg { top: 16px; left: 0; width: 100%; height: 2px; }
+      .step-line-fill { top: 16px; left: 0; width: 0; height: 2px; }
+      .step-node { flex: 1; padding-left: 0; padding-top: 32px; }
+      .step-node::before { left: 0; top: 12px; }
+    }
+    .step-node h4 { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--accent); margin-bottom: 8px; }
+    .step-node p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+
+    /* Cross-Chain Explainer */
+    .cross-chain { display: flex; flex-direction: column; gap: 48px; }
+    @media(min-width: 900px) { .cross-chain { flex-direction: row; align-items: center; } .cross-chain > div { flex: 1; } }
+    .cc-diagram svg { width: 100%; height: auto; max-width: 500px; }
+    #cc-dot { animation: arcMove 2s infinite ease-in-out alternate; }
+    @keyframes arcMove { 0% { offset-distance: 0%; } 100% { offset-distance: 100%; } }
+    .cc-content h3 { font-size: 24px; margin-bottom: 16px; }
+    .cc-content p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 24px; }
+    .cc-table { display: grid; grid-template-columns: 2fr 1fr 1fr; border: 1px solid var(--border); border-radius: 6px; padding: 16px; }
+    .cc-cell { font-size: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); display: flex; align-items: center; }
+    .cc-row:last-child .cc-cell { border-bottom: none; padding-bottom: 0; }
+    .cc-row:first-child .cc-cell { padding-top: 0; }
+    .cc-header { color: var(--text-muted); font-weight: 500; }
+    .cc-auto { color: var(--accent); } .cc-bridge { color: var(--danger); opacity: 0.8; text-decoration: line-through; }
+
+    /* Matrix */
+    .matrix-box { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 6px; padding: 24px; font-size: 13px; }
+    .m-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border); transition: color 0.3s; }
+    .m-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .m-row:first-child { padding-top: 0; }
+    .m-col-1 { width: 160px; } .m-label { color: var(--success); margin-right: 8px; }
+
+    /* Footer */
+    .footer { background: var(--bg-surface); border-top: 1px solid var(--border); padding: 48px 24px 24px; margin-top: 60px; z-index: 2; position: relative; }
+    .footer-top { display: flex; flex-direction: column; gap: 24px; margin-bottom: 40px; max-width: 1200px; margin-left: auto; margin-right: auto; }
+    @media(min-width: 900px) { .footer-top { flex-direction: row; justify-content: space-between; align-items: center; } }
+    .f-logo { font-size: 20px; font-weight: 700; font-family: 'Syne', sans-serif; margin-bottom: 4px; }
+    .f-tag { font-size: 11px; color: var(--text-muted); }
+    .f-socials { display: flex; gap: 16px; }
+    .f-socials svg { width: 20px; height: 20px; fill: var(--text-secondary); cursor: pointer; transition: fill 0.2s; } .f-socials svg:hover { fill: var(--accent); }
+    .f-bot { text-align: center; font-size: 11px; color: var(--text-muted); padding-top: 24px; border-top: 1px solid var(--border); max-width: 1200px; margin: 0 auto; }
+
+    /* --- VIEW B: SWAP APP --- */
+    .swap-topbar { height: 48px; display: flex; align-items: center; padding: 0 24px; justify-content: space-between; border-bottom: 1px solid var(--border); background: var(--bg-base); }
+    .back-btn { font-size: 13px; color: var(--text-secondary); cursor: pointer; text-decoration: none; }
+    .back-btn:hover { color: var(--text-primary); }
+    .chain-pills { display: flex; gap: 16px; font-size: 11px; }
+    .chain-status { color: var(--text-muted); display: flex; align-items: center; gap: 6px; }
+    .chain-status.live { color: var(--text-primary); }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--text-muted); }
+    .dot.green { background: var(--success); box-shadow: 0 0 6px var(--success); }
+
+    .app-layout { min-height: calc(100vh - 48px - 40px); display: flex; justify-content: center; padding: 32px 24px; }
+    .app-center { width: 100%; max-width: 460px; display: flex; flex-direction: column; position: relative; z-index: 2; }
+    .flank-panel { display: none; width: 220px; flex-shrink: 0; flex-direction: column; gap: 24px; z-index: 2; }
+    @media(min-width: 900px) { .app-layout { gap: 32px; align-items: flex-start; } .flank-panel { display: flex; } }
+
+    .flank-title { font-size: 11px; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 12px; }
+    .f-row { display: flex; gap: 12px; margin-bottom: 16px; } .f-row:last-child { margin-bottom: 0; }
+    .f-icon { font-size: 14px; color: var(--text-secondary); margin-top: 2px; }
+    .f-body h4 { font-size: 12px; font-family: 'DM Mono', monospace; font-weight: 500; margin-bottom: 4px; }
+    .f-body p { font-size: 10px; color: var(--text-muted); line-height: 1.4; }
+    .f-div { border-top: 1px solid var(--border); margin: 16px 0; }
+    .f-note { font-size: 10px; color: var(--text-muted); line-height: 1.5; }
+    .net-row { display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 8px; }
+    .net-val { display: flex; align-items: center; gap: 6px; color: var(--text-secondary); }
+    .net-active { color: var(--text-primary); }
+
+    /* Swap Card UI */
+    .scard { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 6px; padding: 24px; position: relative;}
+    .scard-header { font-size: 18px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+    
+    .field-label { font-size: 10px; color: var(--text-secondary); display: block; margin-bottom: 8px; }
+    .toggle-group { display: flex; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin-bottom: 12px; }
+    .tg-btn { flex: 1; text-align: center; padding: 8px 0; font-size: 11px; cursor: pointer; color: var(--text-muted); border-right: 1px solid var(--border); transition: 0.2s; background: var(--bg-surface); }
+    .tg-btn:last-child { border-right: none; }
+    .tg-btn.active { background: var(--accent-dim); color: var(--accent); }
+    .chain-note { font-size: 10px; color: var(--text-muted); text-align: center; margin-top: -4px; margin-bottom: 12px; }
+
+    .input-wrap { display: flex; gap: 8px; }
+    .input-el { flex: 1; background: var(--bg-base); border: 1px solid var(--border); border-radius: 4px; padding: 10px 12px; font-family: 'DM Mono', monospace; font-size: 13px; color: var(--text-primary); outline: none; }
+    .input-el:focus { border-color: var(--accent); }
+    .select-el { background: var(--bg-base); border: 1px solid var(--border); border-radius: 4px; padding: 10px; font-family: 'DM Mono', monospace; font-size: 13px; color: var(--text-primary); outline: none; flex: 1; }
+    .bal-row { text-align: right; font-size: 10px; color: var(--text-muted); margin-top: 6px; }
+    .flex-input { display: flex; align-items: center; gap: 6px; font-size: 10px; color: var(--text-muted); margin-top: 8px; cursor: pointer; }
+    
+    .custody-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 8px; font-size: 9px; border-radius: 3px; margin-top: 12px; }
+    .badge-yellow { color: var(--warning); background: rgba(245, 166, 35, 0.08); border: 1px solid rgba(245, 166, 35, 0.2); }
+    .badge-green { color: var(--success); background: rgba(0, 200, 150, 0.08); border: 1px solid rgba(0, 200, 150, 0.2); }
+
+    .swap-btn-row { display: flex; justify-content: center; margin: 16px 0; }
+    .swap-icon { background: var(--bg-raised); border: 1px solid var(--border); padding: 8px; border-radius: 4px; cursor: pointer; color: var(--text-secondary); transition: 0.3s transform, 0.2s color; }
+    .swap-icon:hover { color: var(--accent); }
+
+    .desc-text { font-size: 10px; color: var(--text-muted); text-align: center; margin-bottom: 24px; min-height: 14px; }
+    .countdown-val { font-size: 12px; text-align: center; margin-bottom: 24px; color: var(--text-primary); }
+    
+    .submit-main { width: 100%; border-radius: 4px; padding: 16px; font-size: 15px; }
+
+    /* Tracking State */
+    #card-form { transition: opacity 0.3s; }
+    #card-tracking { display: none; position: absolute; inset: 0; padding: 24px; background: var(--bg-surface); border-radius: 6px; }
+    .track-title { font-size: 20px; color: var(--accent); text-align: center; margin-bottom: 24px; }
+    .summary-box { background: var(--bg-base); border: 1px solid var(--border); border-radius: 4px; padding: 16px; margin-bottom: 32px; }
+    .s-row { display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 10px; }
+    .s-row:last-child { margin-bottom: 0; }
+    .s-lbl { color: var(--text-secondary); } .s-val { color: var(--text-primary); }
+    
+    .tracker { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; margin-bottom: 40px; }
+    .pulsing-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: dpulse 1.2s infinite; }
+    @keyframes dpulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+    
+    .track-btns { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+    .btn-full { width: 100%; padding: 12px; }
+    .danger-out { border-color: var(--danger); color: var(--danger); text-align: center; } .danger-out:hover { background: rgba(255, 77, 106, 0.05); }
+    .muted-out { border-color: var(--border); color: var(--text-secondary); text-align: center; } .muted-out:hover { border-color: var(--text-primary); color: var(--text-primary); }
+    .track-subnotes { font-size: 10px; color: var(--text-muted); text-align: center; line-height: 1.6; }
+
+    /* Bottom Info Strip */
+    .bottom-bar { position: fixed; bottom: 0; left: 0; right: 0; height: 40px; border-top: 1px solid var(--border); background: var(--bg-raised); display: flex; align-items: center; justify-content: center; gap: 32px; z-index: 100; }
+    .b-item { display: flex; align-items: center; gap: 8px; font-size: 10px; color: var(--text-secondary); }
+    @media(max-width: 600px) { .bottom-bar { gap: 12px; } .b-item { font-size: 8px; gap: 4px; } }
+  </style>
+</head>
+<body>
+  
+  <canvas id="particle-canvas"></canvas>
+
+  <!-- VIEW A: LANDING PAGE -->
+  <div id="view-landing">
+    <nav class="navbar">
+      <div class="brand">AutoSwap</div>
+      <button class="btn btn-outline" onclick="toggleView()">Launch App</button>
+    </nav>
+
+    <section class="hero px-4">
+      <div class="hero-content">
+        <div class="tag-chip anim-up">P2P · Intent-Based · Non-Custodial</div>
+        <h1 class="anim-up delay-1">Swap Anything.<br><span>Own Everything.</span></h1>
+        <p class="anim-up delay-2">Wallet-to-wallet swaps with no pools, no slippage, and no MEV. Set your intent. AutoSwap finds your match.</p>
+        
+        <div class="flow-diagram anim-up delay-3">
+          <svg class="diagram-svg" viewBox="0 0 400 40">
+            <line x1="60" y1="20" x2="160" y2="20" class="dashed-line" />
+            <line x1="240" y1="20" x2="340" y2="20" class="dashed-line" />
+            <rect x="0" y="0" width="80" height="40" rx="4" class="node-rect" />
+            <text x="40" y="22" class="node-txt">Your Wallet</text>
+            <rect x="150" y="0" width="100" height="40" rx="4" class="node-rect" />
+            <text x="200" y="22" class="node-txt" fill="#00E5FF">AutoSwap Matcher</text>
+            <rect x="320" y="0" width="80" height="40" rx="4" class="node-rect" />
+            <text x="360" y="22" class="node-txt">Counterparty</text>
+          </svg>
+          <div class="flow-sub">no pool · no AMM · no MEV · no wrapped tokens</div>
+        </div>
+
+        <button class="btn btn-primary anim-up delay-3" style="padding: 16px 32px;" onclick="toggleView()">Open Swap Interface &rarr;</button>
+        <div class="scroll-hint anim-up delay-3">&darr; learn how it works</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title syne anim-up">Why AutoSwap</h2>
+      <div class="grid-3">
+        <div class="card diff-card anim-up">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          <h3 class="syne">No Liquidity Pool</h3>
+          <p>Your swap never touches a pool. Intents match directly between wallets. No slippage. No pool fees. No liquidity to drain.</p>
+        </div>
+        <div class="card diff-card anim-up delay-1">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+          <h3 class="syne">Non-Custodial ERC-20 & NFTs</h3>
+          <p>ERC-20 tokens and NFTs are never deposited. The contract holds approval only &mdash; transfer executes atomically on match.</p>
+        </div>
+        <div class="card diff-card anim-up delay-2">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/><rect x="17" y="17" width="5" height="5" rx="1"/></svg>
+          <h3 class="syne">Native Token Escrow</h3>
+          <p>Native tokens (ETH, AVAX, S, FLR) are held in escrow from submission. Returned instantly on cancel or expiry.</p>
+        </div>
+        <div class="card diff-card anim-up">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          <h3 class="syne">Cross-Chain, No Bridge</h3>
+          <p>Swap Sonic &harr; Flare without bridges or wrapped tokens. Reactive Network coordinates atomic release on both chains.</p>
+        </div>
+        <div class="card diff-card anim-up delay-1">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="19" r="3"/><path d="M10.5 7.5l-3 8.5M13.5 7.5l3 8.5"/></svg>
+          <h3 class="syne">1-to-Many & Many-to-1</h3>
+          <p>Aggregate multiple counterparty orders or split a single order across many fulfillers. Batch execution in one transaction.</p>
+        </div>
+        <div class="card diff-card anim-up delay-2">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          <h3 class="syne">Any Asset Class</h3>
+          <p>Token&harr;Token, Token&harr;NFT, NFT&harr;NFT. Any ERC-20, ERC-721, or ERC-1155 asset. You define the terms.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title syne anim-up">How a Swap Works</h2>
+      <div class="step-rail-container" id="rail-trigger">
+        <div class="step-line-bg"></div>
+        <div class="step-line-fill" id="rail-line"></div>
+        
+        <div class="step-node anim-up">
+          <h4>STEP 1: Set Your Intent</h4>
+          <p>Choose what you're sending, what you want in return, and your expiry window. All asset types supported.</p>
+        </div>
+        <div class="step-node anim-up delay-1">
+          <h4>STEP 2: Submit On-Chain</h4>
+          <p>Your intent is recorded on-chain. Native tokens enter escrow. ERC-20 and NFT approvals are set &mdash; nothing is deposited.</p>
+        </div>
+        <div class="step-node anim-up delay-2">
+          <h4>STEP 3: Matching Begins</h4>
+          <p>Reactive Network's event-driven contracts scan for a counterparty intent that satisfies your order.</p>
+        </div>
+        <div class="step-node anim-up delay-3">
+          <h4>STEP 4: Atomic Execution</h4>
+          <p>Match found. Both wallets receive simultaneously. If either side fails, neither transfer happens. Mathematically trustless.</p>
+        </div>
+        <div class="step-node anim-up delay-4">
+          <h4>STEP 5: No Match?</h4>
+          <p>Cancel anytime before a match. Order expiry returns your escrowed tokens automatically. Zero penalties.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section cross-chain anim-up">
+      <div class="cc-diagram">
+        <svg viewBox="0 0 500 200">
+          <rect x="20" y="80" width="120" height="40" rx="4" fill="#151D24" stroke="#1E2A34"/>
+          <text x="80" y="104" font-family="DM Mono" font-size="12" fill="#E8EDF2" text-anchor="middle">Sonic Mainnet</text>
+          
+          <rect x="360" y="80" width="120" height="40" rx="4" fill="#151D24" stroke="#1E2A34"/>
+          <text x="420" y="104" font-family="DM Mono" font-size="12" fill="#E8EDF2" text-anchor="middle">Flare Network</text>
+          
+          <path id="ccPath" d="M100 80 Q250 -40 400 80" fill="none" stroke="#6B7F8E" stroke-dasharray="4" stroke-width="2"/>
+          <text x="250" y="30" font-family="DM Mono" font-size="12" fill="#00E5FF" text-anchor="middle">Reactive Network</text>
+          <text x="250" y="160" font-family="DM Mono" font-size="10" fill="#3D5060" text-anchor="middle">No bridge. No wrapped tokens. Assets stay native.</text>
+          
+          <circle r="4" fill="#00E5FF" style="offset-path: path('M100 80 Q250 -40 400 80');" id="cc-dot"/>
+        </svg>
+      </div>
+      <div class="cc-content">
+        <h3 class="syne">Cross-chain without compromise.</h3>
+        <p>Your AVAX stays on Sonic. Their FLR stays on Flare. AutoSwap's Reactive Network contracts coordinate atomic release on both ends. Neither party receives without the other sending.</p>
+        <div class="cc-table">
+          <div class="cc-row" style="display:contents">
+            <div class="cc-cell cc-header">Feature</div><div class="cc-cell cc-header">AutoSwap</div><div class="cc-cell cc-header">Bridge</div>
+          </div>
+          <div class="cc-row" style="display:contents">
+            <div class="cc-cell">Custody</div><div class="cc-cell cc-auto">Non-custodial</div><div class="cc-cell cc-bridge">Custodial</div>
+          </div>
+          <div class="cc-row" style="display:contents">
+            <div class="cc-cell">Slippage</div><div class="cc-cell cc-auto">None</div><div class="cc-cell cc-bridge">Yes</div>
+          </div>
+          <div class="cc-row" style="display:contents">
+            <div class="cc-cell">MEV exposure</div><div class="cc-cell cc-auto">None</div><div class="cc-cell cc-bridge">Yes</div>
+          </div>
+          <div class="cc-row" style="display:contents">
+            <div class="cc-cell">Wrapped token</div><div class="cc-cell cc-auto">No</div><div class="cc-cell cc-bridge">Yes</div>
+          </div>
+          <div class="cc-row" style="display:contents">
+            <div class="cc-cell">Trust</div><div class="cc-cell cc-auto">Zero</div><div class="cc-cell cc-bridge">Operator</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section anim-up" id="matrix-section">
+      <h2 class="section-title syne">What You Can Swap</h2>
+      <div class="matrix-box">
+        <div class="m-row"><div class="m-col-1">TOKEN &rarr; TOKEN</div><div><span class="m-label">&check;</span>In-chain</div><div><span class="m-label">&check;</span>Cross-chain</div></div>
+        <div class="m-row"><div class="m-col-1">TOKEN &rarr; NFT</div><div><span class="m-label">&check;</span>In-chain</div><div><span class="m-label">&check;</span>Cross-chain</div></div>
+        <div class="m-row"><div class="m-col-1">NFT &rarr; NFT</div><div><span class="m-label">&check;</span>In-chain</div><div><span class="m-label">&check;</span>Cross-chain</div></div>
+        <div class="m-row"><div class="m-col-1">1 &rarr; MANY</div><div style="flex:1;text-align:right"><span class="m-label">&check;</span>Batch fulfill</div></div>
+        <div class="m-row"><div class="m-col-1">MANY &rarr; 1</div><div style="flex:1;text-align:right"><span class="m-label">&check;</span>Aggregate orders</div></div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer-top">
+        <div>
+          <div class="f-logo">AutoSwap</div>
+          <div class="f-tag">P2P &middot; Non-custodial &middot; Intent-based</div>
+        </div>
+        <div class="f-socials">
+          <svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        </div>
+      </div>
+      <div class="f-bot">Built on Reactive Network &middot; Deployed on Sonic Mainnet</div>
+    </footer>
+  </div>
+
+
+  <!-- VIEW B: SWAP INTERFACE -->
+  <div id="view-swap">
+    <div class="swap-topbar">
+      <a class="back-btn" onclick="toggleView()">&larr; AutoSwap</a>
+      <div class="chain-pills">
+        <div class="chain-status live">Sonic <span class="dot green"></span></div>
+        <div class="chain-status live">Flare <span class="dot green"></span></div>
+        <div class="chain-status">Songbird <span class="dot"></span></div>
+      </div>
+    </div>
+    
+    <div class="app-layout">
+      <!-- Left Panel -->
+      <div class="flank-panel">
+        <h3 class="flank-title">What the contract holds</h3>
+        <div class="f-row">
+          <div class="f-icon">🔒</div>
+          <div class="f-body"><h4>Native Tokens</h4><p>Escrowed from submission.<br>Returned on cancel or expiry.</p></div>
+        </div>
+        <div class="f-row">
+          <div class="f-icon">✓</div>
+          <div class="f-body"><h4>ERC-20 Tokens</h4><p>Non-custodial.<br>Approval only. No deposit.</p></div>
+        </div>
+        <div class="f-row">
+          <div class="f-icon">✓</div>
+          <div class="f-body"><h4>NFTs (721 / 1155)</h4><p>Non-custodial.<br>Approval only. No deposit.</p></div>
+        </div>
+        <div class="f-div"></div>
+        <div class="f-note">Atomic execution: both wallets receive simultaneously, or neither transfer occurs.</div>
+      </div>
+
+      <!-- Center Card -->
+      <div class="app-center">
+        <div class="scard shadow-box" id="card-main">
+          
+          <!-- State 1: Form -->
+          <div id="card-form">
+            <h2 class="scard-header syne">New Swap Intent</h2>
+            
+            <div style="margin-bottom:24px">
+              <span class="field-label uppercase">Chain Selector</span>
+              <div class="toggle-group">
+                <div class="tg-btn active" onclick="activateBtn(this)">Sonic</div>
+                <div class="tg-btn" onclick="activateBtn(this); document.getElementById('chain-note-1').innerText='Cross-chain via Reactive Network'">Flare</div>
+                <div class="tg-btn" onclick="activateBtn(this); document.getElementById('chain-note-1').innerText='Cross-chain via Reactive Network'">Songbird</div>
+              </div>
+              <div class="chain-note" id="chain-note-1">&nbsp;</div>
+            </div>
+
+            <!-- You Send -->
+            <div>
+              <span class="field-label uppercase">You Send</span>
+              <div class="toggle-group select-type" data-target="send">
+                <div class="tg-btn" onclick="toggleAsset('send', 'token', this)">Token</div>
+                <div class="tg-btn" onclick="toggleAsset('send', 'nft', this)">NFT</div>
+                <div class="tg-btn active" onclick="toggleAsset('send', 'native', this)">Native</div>
+              </div>
+              
+              <div id="send-inputs">
+                <!-- dynamically updated by JS. Initial is Native -->
+                <div class="input-wrap">
+                  <select class="select-el"><option>S (Sonic)</option></select>
+                  <input type="text" class="input-el" placeholder="Amount">
+                </div>
+              </div>
+              <div class="bal-row">Balance: 14.50</div>
+              <div class="custody-badge badge-yellow" id="badge-send">⚠ Escrowed on submit</div>
+            </div>
+
+            <div class="swap-btn-row">
+              <div class="swap-icon" onclick="swapSides(this)">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/></svg>
+              </div>
+            </div>
+
+            <!-- You Receive -->
+            <div>
+              <span class="field-label uppercase">You Want</span>
+              <div class="toggle-group select-type" data-target="recv">
+                <div class="tg-btn active" onclick="toggleAsset('recv', 'token', this)">Token</div>
+                <div class="tg-btn" onclick="toggleAsset('recv', 'nft', this)">NFT</div>
+                <div class="tg-btn" onclick="toggleAsset('recv', 'native', this)">Native</div>
+              </div>
+              
+              <div id="recv-inputs">
+                <div class="input-wrap"><input type="text" class="input-el" placeholder="Contract Address"><input type="text" class="input-el" placeholder="Amount"></div>
+              </div>
+              <label class="flex-input"><input type="checkbox"> Any amount</label>
+              <div class="custody-badge badge-green" id="badge-recv">✓ Non-custodial &middot; approval only</div>
+            </div>
+
+            <div style="margin:24px 0">
+              <span class="field-label uppercase">Fulfillment Type</span>
+              <div class="toggle-group">
+                <div class="tg-btn active" onclick="updateFulfill('1-to-1', this)">1-to-1</div>
+                <div class="tg-btn" onclick="updateFulfill('1-to-Many', this)">1-to-Many</div>
+                <div class="tg-btn" onclick="updateFulfill('Many-to-1', this)">Many-to-1</div>
+              </div>
+              <div class="type-desc" id="fulfill-desc">Single counterparty fills your entire order</div>
+            </div>
+
+            <div style="margin-bottom:32px">
+              <span class="field-label uppercase">Order Expiry</span>
+              <div class="toggle-group">
+                <div class="tg-btn" onclick="activateBtn(this)">1H</div>
+                <div class="tg-btn" onclick="activateBtn(this)">6H</div>
+                <div class="tg-btn active" onclick="activateBtn(this)">24H</div>
+                <div class="tg-btn" onclick="activateBtn(this)">Custom</div>
+              </div>
+              <div class="countdown">Expires in 24h 00m 00s</div>
+            </div>
+
+            <button class="btn btn-primary submit-main" onclick="submitIntent()">Submit Intent &rarr;</button>
+          </div>
+
+          <!-- State 2: Tracking -->
+          <div id="card-tracking">
+            <h2 class="track-title syne">Intent Submitted</h2>
+            <div class="summary-box">
+              <div class="s-row"><span class="s-lbl">Sending</span><span class="s-val">100 S (Sonic)</span></div>
+              <div class="s-row"><span class="s-lbl">Receiving</span><span class="s-val">2500 FLR (Flare)</span></div>
+              <div class="s-row"><span class="s-lbl">Type</span><span class="s-val">1-to-1 &middot; Cross-chain</span></div>
+              <div class="s-row"><span class="s-lbl">Expires</span><span class="s-val">23h 59m 50s</span></div>
+            </div>
+            
+            <div class="tracker dm-mono">
+              <div class="pulsing-dot"></div>
+              <span>Searching for counterparty intent...</span>
+            </div>
+            
+            <div class="track-btns">
+              <button class="btn btn-outline danger-out btn-full" onclick="cancelOrder()">Cancel Order</button>
+              <button class="btn btn-outline muted-out btn-full">View on Explorer &nearr;</button>
+            </div>
+            
+            <div class="track-subnotes">
+              Native tokens held in escrow until match, cancel, or expiry.<br>
+              ERC-20 and NFT approvals active. No funds deposited.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Panel -->
+      <div class="flank-panel">
+        <h3 class="flank-title">Network Status</h3>
+        <div class="net-row"><span class="net-val">Sonic Mainnet</span><span class="net-active">&bull; Live</span></div>
+        <div class="net-row"><span class="net-val">Flare Network</span><span class="net-active">&bull; Live</span></div>
+        <div class="net-row"><span class="net-val">Songbird</span><span class="net-val">&circ; Soon</span></div>
+        <div class="net-row"><span class="net-val">Reactive Net</span><span class="net-active">&bull; Active</span></div>
+        
+        <div class="f-div"></div>
+        <h3 class="flank-title">Active Intents <span class="mock-data">[demo]</span></h3>
+        <div class="net-row"><span class="net-val">Token &rarr; Token</span><span class="net-active">1,204</span></div>
+        <div class="net-row"><span class="net-val">Token &rarr; NFT</span><span class="net-active">87</span></div>
+        <div class="net-row"><span class="net-val">NFT &rarr; NFT</span><span class="net-active">43</span></div>
+
+        <div class="f-div"></div>
+        <h3 class="flank-title">Your Orders</h3>
+        <div class="net-row"><span class="net-val">Active</span><span class="net-active">&mdash;</span></div>
+        <div class="net-row"><span class="net-val">Filled</span><span class="net-active">&mdash;</span></div>
+        <div class="net-row"><span class="net-val">Expired</span><span class="net-active">&mdash;</span></div>
+      </div>
+    </div>
+
+    <!-- Bottom Strip -->
+    <div class="bottom-bar">
+      <div class="b-item"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> Zero Slippage &middot; No pool routing</div>
+      <div class="b-item"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.92-10.45l5.66 5.66"/></svg> Atomic Execution &middot; Both sides or neither</div>
+      <div class="b-item"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Cancel Anytime &middot; Until matched</div>
+    </div>
+  </div>
+
+  <script>
+    // Toggle Views
+    function toggleView() {
+      document.body.classList.toggle('show-swap');
+      window.scrollTo(0, 0);
+    }
+
+    // Intersection Observer for scroll triggers
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          
+          // Step rail line anim
+          if (entry.target.id === 'rail-trigger') {
+            setTimeout(() => {
+              document.getElementById('rail-line').style.width = '100%';
+              document.getElementById('rail-line').style.height = '100%';
+              const nodes = entry.target.querySelectorAll('.step-node');
+              nodes.forEach((n, i) => { setTimeout(() => n.classList.add('active'), (i+1)*200); });
+            }, 200);
+          }
+          
+          if (entry.target.id === 'matrix-section') {
+            const rows = entry.target.querySelectorAll('.m-row');
+            rows.forEach((r, i) => { setTimeout(() => { r.classList.add('glow'); setTimeout(()=>r.classList.remove('glow'),300); }, i*80); });
+          }
+          
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    document.querySelectorAll('.anim-up, #rail-trigger, #matrix-section').forEach(el => observer.observe(el));
+
+    // Particle Canvas Animation
+    const canvas = document.getElementById('particle-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let particles = [];
+    
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    for(let i=0; i<40; i++) {
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: 0.2 + Math.random() * 0.5,
+        size: Math.random() * 2,
+        opacity: 0.1 + Math.random() * 0.4
+      });
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = '#00E5FF';
+      for(let p of particles) {
+        p.x += p.vx;
+        if(p.x > width) p.x = 0;
+        ctx.globalAlpha = p.opacity;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalAlpha = 1;
+      }
+      requestAnimationFrame(draw);
+    }
+    draw();
+
+    // DApp Logic Mock
+    function activateBtn(el) {
+      let siblings = el.parentNode.children;
+      for(let s of siblings) s.classList.remove('active');
+      el.classList.add('active');
+    }
+
+    function toggleAsset(target, type, btnElement) {
+      activateBtn(btnElement);
+      let container = document.getElementById(target + '-inputs');
+      let badge = document.getElementById('badge-' + target);
+      if(type === 'token') {
+        container.innerHTML = '<div class="input-wrap"><input type="text" class="input-el" placeholder="Contract Address"><input type="text" class="input-el" placeholder="Amount"></div>';
+        badge.className = 'custody-badge badge-green'; badge.innerText = '✓ Non-custodial · approval only';
+      } else if(type === 'nft') {
+        container.innerHTML = '<div class="input-wrap"><input type="text" class="input-el" placeholder="Contract Address"><input type="text" class="input-el" placeholder="Token ID"></div>';
+        badge.className = 'custody-badge badge-green'; badge.innerText = '✓ Non-custodial · approval only';
+      } else {
+        container.innerHTML = '<div class="input-wrap"><select class="select-el"><option>S (Sonic)</option><option>ETH</option></select><input type="text" class="input-el" placeholder="Amount"></div>';
+        badge.className = 'custody-badge badge-yellow'; badge.innerText = '⚠ Escrowed on submit';
+      }
+    }
+
+    function swapSides(el) {
+      el.classList.toggle('rotated');
+      // basic visual swap mock
+    }
+
+    function updateFulfill(type, el) {
+      activateBtn(el);
+      let d = document.getElementById('fulfill-desc');
+      if(type === '1-to-1') d.innerText = "Single counterparty fills your entire order";
+      if(type === '1-to-Many') d.innerText = "Multiple counterparties fill portions of your order";
+      if(type === 'Many-to-1') d.innerText = "Your order aggregates multiple matching intents";
+    }
+
+    function submitIntent() {
+      document.getElementById('card-form').style.display = 'none';
+      document.getElementById('card-tracking').style.display = 'block';
+    }
+
+    function cancelOrder() {
+      document.getElementById('card-tracking').style.display = 'none';
+      document.getElementById('card-form').style.display = 'block';
+    }
+
+  </script>
+</body>
+</html>

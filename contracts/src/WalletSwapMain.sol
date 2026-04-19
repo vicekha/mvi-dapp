@@ -65,27 +65,31 @@ contract WalletSwapMain is Ownable, ReentrancyGuard, AbstractCallback {
 
         require(amountIn > 0, "Invalid amount");
         
-        // Enforce Minimum Gas Fee for Debt Coverage
+        uint256 gasToForward = 0;
+        
         if (tokenIn == address(0)) {
-            require(msg.value >= amountIn + fee + MIN_GAS_FEE, "Insufficient native sent (Amount + Fee + Gas)");
+            require(msg.value >= amountIn + fee + MIN_GAS_FEE, "Insufficient native sent");
+            gasToForward = MIN_GAS_FEE;
+        } else if (typeIn == AssetType.ERC721) {
+            require(msg.value >= fee + MIN_GAS_FEE, "Insufficient native sent (Fee + Gas)");
+            gasToForward = MIN_GAS_FEE;
         } else {
-             require(msg.value >= MIN_GAS_FEE, "Insufficient gas fee sent");
+            // ERC20: Token swap covers the debt automatically, manual native gas attachment is optional
+            gasToForward = msg.value; 
         }
 
-        // Forward Gas Fee to Distributor
-        feeDistributor.depositGasForDebt{value: MIN_GAS_FEE}(bytes32(0));
+        // Forward Gas Fee to Distributor if present
+        if (gasToForward > 0) {
+            feeDistributor.depositGasForDebt{value: gasToForward}(bytes32(0));
+        }
 
         if (typeIn == AssetType.ERC20 && tokenIn != address(0)) {
             // ERC20: Pull fee from user to this contract first
-            // This allows user to ONLY approve WalletSwapMain, not FeeDistributor
             if (fee > 0) {
                 IERC20(tokenIn).safeTransferFrom(msg.sender, address(this), fee);
-                // Safe approval pattern: reset to 0 then set value
                 IERC20(tokenIn).safeApprove(address(feeDistributor), 0);
                 IERC20(tokenIn).safeApprove(address(feeDistributor), fee);
             }
-        } else if (typeIn == AssetType.ERC721) {
-            require(msg.value >= fee, "Insufficient fee for NFT");
         }
         
         // Distribute fee
@@ -617,7 +621,7 @@ contract WalletSwapMain is Ownable, ReentrancyGuard, AbstractCallback {
         require(success, "ETH transfer failed");
     }
 
-    function registerForDebtCoverage() external onlyOwner { feeDistributor.registerReactiveContract(address(this)); }
+
     function manualCoverDebt() external onlyOwner { _attemptDebtCoverage(); }
     function getDebtStatus() external view returns (uint256 debt, uint256 reactFees, bool can) {
         (bool s, bytes memory d) = SYSTEM_CONTRACT.staticcall(abi.encodeWithSignature("debts(address)", address(this)));

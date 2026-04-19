@@ -6,7 +6,7 @@ import "../src/VirtualLiquidityPool.sol";
 import "../src/AssetVerifier.sol";
 import "../src/TrustWalletFeeDistributor.sol";
 import "../src/EulerLagrangeOrderProcessor.sol";
-import "../src/WalletSwapMain.sol";
+import "../src/WalletSwapCallback.sol";
 
 contract DeploySonicMainnet is Script {
     function run() external {
@@ -34,19 +34,19 @@ contract DeploySonicMainnet is Script {
         );
         console.log("EulerLagrangeOrderProcessor deployed at:", address(orderProcessor));
 
-        // 3. Deploy WalletSwapMain
-        WalletSwapMain walletSwap = new WalletSwapMain(
+        // 3. Deploy WalletSwapCallback
+        WalletSwapCallback walletSwap = new WalletSwapCallback(
             address(liquidityPool),
             address(orderProcessor),
             address(feeDistributor),
             address(assetVerifier),
             address(0) // Set later
         );
-        console.log("WalletSwapMain deployed at:", address(walletSwap));
+        console.log("WalletSwapCallback deployed at:", address(walletSwap));
 
         // 4. Configuration
         orderProcessor.setWalletSwapMain(address(walletSwap));
-        console.log("Linked OrderProcessor to WalletSwapMain");
+        console.log("Linked OrderProcessor to WalletSwapCallback");
         
         // Security Configuration
         liquidityPool.setAuthorizedCaller(address(orderProcessor), true);
@@ -61,9 +61,9 @@ contract DeploySonicMainnet is Script {
         feeDistributor.setAutoRouteNativeToken(true); // Sonic is an origin chain
         console.log("Configured FeeDistributor minimums and auto-routing");
 
-        // Register WalletSwapMain for automated debt coverage
+        // Register WalletSwapCallback for automated debt coverage
         feeDistributor.registerReactiveContract(address(walletSwap));
-        console.log("Registered WalletSwapMain with FeeDistributor");
+        console.log("Registered WalletSwapCallback with FeeDistributor");
 
         vm.stopBroadcast();
     }

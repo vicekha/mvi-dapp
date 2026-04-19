@@ -108,6 +108,14 @@ contract WalletSwapCallback is Ownable, ReentrancyGuard, AbstractCallback {
         emit WalletSwapCallbackInitialized(msg.sender);
     }
 
+    /**
+     * @notice Set the authorized RVM ID for callbacks.
+     */
+    function setCallbackProxy(address _proxy) external onlyOwner {
+        vendor = IPayable(payable(_proxy));
+        addAuthorizedSender(_proxy);
+    }
+
     // ═══════════════════════════════════════════════════════════════════════
     //  Order Creation (user-facing, same chain)
     // ═══════════════════════════════════════════════════════════════════════

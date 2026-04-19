@@ -1,55 +1,231 @@
-﻿forge : Error: 
-Compiler run failed:
+﻿Compiling 98 files with Solc 0.8.33
+Solc 0.8.33 finished in 11.23s
+forge : Error: Compiler 
+run failed:
 At line:1 char:1
-+ forge build 2> 
-build_error.txt
-+ ~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~
-    + CategoryInfo    
-          : NotSpeci  
-  fied: (Error: Com   
- piler run failed:    
-:String) [], Remo    
-teException
-    + FullyQualifiedE 
-   rrorId : NativeCo  
-  mmandError
++ forge build --contracts 
+"src/miviSwapReactive(upda
+ted).sol" > build_e ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo        
+      : NotSpecified: (E  
+  rror: Compiler run fa   
+ iled::String) [], Rem    
+oteException
+    + FullyQualifiedError 
+   Id : NativeCommandErr  
+  or
  
-Warning (2424): 
-Natspec 
+Warning (2424): Natspec 
 memory-safe-assembly 
 special comment for 
 inline assembly is 
-deprecated and 
-scheduled for 
-removal. Use the 
+deprecated and scheduled 
+for removal. Use the 
 memory-safe block 
 annotation instead.
-   --> lib/openzeppeli
-n-contracts/contracts/
-utils/Address.sol:236:
-13:
+   --> lib/openzeppelin-co
+ntracts/contracts/utils/Ad
+dress.sol:236:13:
     |
 236 |             
 assembly {
     |             ^ 
 (Relevant source part 
 starts here and spans 
-across multiple 
+across multiple lines).
+
+Warning (2424): Natspec 
+memory-safe-assembly 
+special comment for 
+inline assembly is 
+deprecated and scheduled 
+for removal. Use the 
+memory-safe block 
+annotation instead.
+  --> lib/openzeppelin-con
+tracts/contracts/utils/Str
+ings.sol:25:13:
+   |
+25 |             assembly 
+{
+   |             ^ 
+(Relevant source part 
+starts here and spans 
+across multiple lines).
+
+Warning (2424): Natspec 
+memory-safe-assembly 
+special comment for 
+inline assembly is 
+deprecated and scheduled 
+for removal. Use the 
+memory-safe block 
+annotation instead.
+  --> lib/openzeppelin-con
+tracts/contracts/utils/Str
+ings.sol:31:17:
+   |
+31 |                 
+assembly {
+   |                 ^ 
+(Relevant source part 
+starts here and spans 
+across multiple lines).
+
+Warning (2424): Natspec 
+memory-safe-assembly 
+special comment for 
+inline assembly is 
+deprecated and scheduled 
+for removal. Use the 
+memory-safe block 
+annotation instead.
+   --> lib/openzeppelin-co
+ntracts/contracts/token/ER
+C721/ERC721.sol:413:21:
+    |
+413 |                     
+assembly {
+    |                     
+^ (Relevant source part 
+starts here and spans 
+across multiple lines).
+
+Error (1686): Function 
+with same name and 
+parameter types defined 
+twice.
+   --> src/WalletSwapCallb
+ack.sol:114:5:
+    |
+114 |     function setAuth
+orizedReactiveVM(address 
+_rvmId) external 
+onlyOwner {
+    |     ^ (Relevant 
+source part starts here 
+and spans across multiple 
+lines).
+Note: Other declaration 
+is here:
+   --> src/WalletSwapCallb
+ack.sol:439:5:
+    |
+439 |     function setAuth
+orizedReactiveVM(address 
+_rvm) external onlyOwner {
+    |     ^ (Relevant 
+source part starts here 
+and spans across multiple 
 lines).
 
-Error (6160): Wrong 
-argument count for 
-function call: 2 
-arguments given but 
-expected 1.
-   --> src/TrustWallet
-FeeDistributor.sol:533
-:9:
+Error (1686): Function 
+with same name and 
+parameter types defined 
+twice.
+   --> src/miviSwapReactiv
+e(updated).sol:232:5:
     |
-533 |         _tryCove
-rDebt(msg.sender, 
-address(0)); 
-    |         ^^^^^^^^
-^^^^^^^^^^^^^^^^^^^^^^
-^^^^^^^
+232 |     function _onOrde
+rCancelled(LogRecord 
+calldata log) internal {
+    |     ^ (Relevant 
+source part starts here 
+and spans across multiple 
+lines).
+Note: Other declaration 
+is here:
+   --> src/miviSwapReactiv
+e(updated).sol:322:5:
+    |
+322 |     function _onOrde
+rCancelled(LogRecord 
+calldata log) internal {
+    |     ^ (Relevant 
+source part starts here 
+and spans across multiple 
+lines).
+
+Error (1686): Function 
+with same name and 
+parameter types defined 
+twice.
+   --> src/miviSwapReactiv
+e(updated).sol:259:5:
+    |
+259 |     function 
+_onOrderExpired(LogRecord 
+calldata log) internal {
+    |     ^ (Relevant 
+source part starts here 
+and spans across multiple 
+lines).
+Note: Other declaration 
+is here:
+   --> src/miviSwapReactiv
+e(updated).sol:332:5:
+    |
+332 |     function 
+_onOrderExpired(LogRecord 
+calldata log) internal {
+    |     ^ (Relevant 
+source part starts here 
+and spans across multiple 
+lines).
+
+Error (1686): Function 
+with same name and 
+parameter types defined 
+twice.
+   --> src/miviSwapReactiv
+e(updated).sol:243:5:
+    |
+243 |     function 
+_onOrderFilled(LogRecord 
+calldata log) internal {
+    |     ^ (Relevant 
+source part starts here 
+and spans across multiple 
+lines).
+Note: Other declaration 
+is here:
+   --> src/miviSwapReactiv
+e(updated).sol:327:5:
+    |
+327 |     function 
+_onOrderFilled(LogRecord 
+calldata log) internal {
+    |     ^ (Relevant 
+source part starts here 
+and spans across multiple 
+lines).
+
+Error (1686): Function 
+with same name and 
+parameter types defined 
+twice.
+   --> src/miviSwapReactiv
+e(updated).sol:270:5:
+    |
+270 |     function _onOrde
+rRebooked(LogRecord 
+calldata log) internal {
+    |     ^ (Relevant 
+source part starts here 
+and spans across multiple 
+lines).
+Note: Other declaration 
+is here:
+   --> src/miviSwapReactiv
+e(updated).sol:337:5:
+    |
+337 |     function _onOrde
+rRebooked(LogRecord 
+calldata log) internal {
+    |     ^ (Relevant 
+source part starts here 
+and spans across multiple 
+lines).

@@ -205,12 +205,15 @@ app.post('/api/negotiations/:id/settle', async (req, res) => {
 
 function isCompatiblePair(a, b) {
   if (!a || !b || a.id === b.id) return false;
-  if (a.sellToken.chainId !== b.sellToken.chainId) return false;
-  const aSell = (a.sellToken.address || '').toLowerCase();
-  const aBuy  = (a.buyToken.address  || '').toLowerCase();
-  const bSell = (b.sellToken.address || '').toLowerCase();
-  const bBuy  = (b.buyToken.address  || '').toLowerCase();
-  if (aSell !== bBuy || aBuy !== bSell) return false;
+  // Cross-chain aware: match on (address + chainId) tuple. A's sell leg must be
+  // B's buy leg on the same chain, and vice versa. Same-chain swaps are just
+  // the special case where a.sellToken.chainId === a.buyToken.chainId.
+  const sameToken = (x, y) =>
+    x && y &&
+    (x.address || '').toLowerCase() === (y.address || '').toLowerCase() &&
+    Number(x.chainId) === Number(y.chainId);
+  if (!sameToken(a.sellToken, b.buyToken)) return false;
+  if (!sameToken(a.buyToken, b.sellToken)) return false;
   // Price overlap in A's unit (buyToken per sellToken)
   const aMin = a.priceMin, aMax = a.priceMax;
   const bMinInA = 1 / b.priceMax;

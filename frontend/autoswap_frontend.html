@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
+
+:root {
+  --bg: #080C10;
+  --surface: #0D1117;
+  --card: #111820;
+  --elevated: #161D27;
+  --cyan: #00E5FF;
+  --cyan-dim: rgba(0, 229, 255, 0.12);
+  --cyan-glow: rgba(0, 229, 255, 0.06);
+  --text: #E8EDF2;
+  --text-sec: #8B949E;
+  --text-muted: #484F58;
+  --border: rgba(255, 255, 255, 0.08);
+  --success: #00C896;
+  --danger: #FF4D6A;
+  --warning: #F5A623;
+  --r: 12px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+.nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 32px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(8,12,16,0.85);
+  backdrop-filter: blur(12px);
+  position: sticky; top: 0; z-index: 100;
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 10px;
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; letter-spacing: -0.5px;
+}
+.logo-hex {
+  width: 32px; height: 32px; background: var(--cyan);
+  clip-path: polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+  display: flex; align-items: center; justify-content: center;
+}
+.logo-hex svg { width: 14px; height: 14px; fill: var(--bg); }
+.nav-tabs { display: flex; gap: 2px; background: var(--surface); border-radius: 8px; padding: 3px; }
+.nav-tab {
+  padding: 6px 16px; border-radius: 6px; border: none; background: transparent;
+  font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500;
+  cursor: pointer; color: var(--muted); transition: all .2s;
+}
+.nav-tab.active { background: var(--cyan); color: var(--bg); }
+.nav-tab:hover:not(.active) { color: var(--text); }
+.nav-right { display: flex; align-items: center; gap: 10px; }
+.connect-btn {
+  padding: 8px 20px; border-radius: 8px; border: 1.5px solid var(--cyan);
+  background: transparent; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500;
+  cursor: pointer; color: var(--cyan); transition: all .2s;
+}
+.connect-btn:hover { background: var(--cyan); color: var(--bg); }
+.connect-btn.connected {
+  background: var(--cyan); color: var(--bg);
+  display: flex; align-items: center; gap: 8px;
+}
+.wallet-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--success); animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.6;transform:scale(1.3)} }
+
+/* ── PAGE SYSTEM ── */
+.page { display: none; }
+.page.active { display: block; }
+
+/* ══════════════════════════════════════════════
+   LANDING PAGE
+══════════════════════════════════════════════ */
+
+/* Hero */
+.hero {
+  min-height: calc(100vh - 65px);
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0; overflow: hidden; position: relative;
+}
+.hero-left {
+  padding: 80px 48px 80px 48px;
+  display: flex; flex-direction: column; justify-content: center;
+  border-right: 1px solid var(--border);
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 100px; padding: 5px 14px 5px 8px;
+  font-size: 11px; font-weight: 500; letter-spacing: .5px; text-transform: uppercase;
+  color: var(--text-sec); margin-bottom: 32px;
+}
+.eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); }
+.hero-h1 {
+  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-size: clamp(44px, 5vw, 68px); line-height: 1.0; letter-spacing: -2px;
+  margin-bottom: 24px;
+}
+.hero-h1 .accent-rust { color: var(--danger); }
+.hero-h1 .accent-teal { color: var(--cyan); }
+.hero-sub {
+  font-size: 16px; line-height: 1.7; color: var(--text-sec);
+  max-width: 420px; margin-bottom: 40px;
+}
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 56px; }
+.btn-primary {
+  padding: 14px 28px; border-radius: 10px; border: none;
+  background: var(--cyan); color: var(--bg);
+  font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500;
+  cursor: pointer; transition: all .2s; display: flex; align-items: center; gap: 8px;
+}
+.btn-primary:hover { background: #00B1C4; transform: translateY(-1px); }
+.btn-secondary {
+  padding: 14px 28px; border-radius: 10px; border: 1.5px solid var(--border);
+  background: transparent; color: var(--text);
+  font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500;
+  cursor: pointer; transition: all .2s;
+}
+.btn-secondary:hover { border-color: var(--cyan); color: var(--cyan); }
+.hero-stats { display: flex; gap: 40px; }
+.stat-item { flex: 1; }
+.stat-num { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 28px; letter-spacing: -1px; }
+.stat-lbl { font-size: 12px; color: var(--text-sec); margin-top: 2px; }
+
+/* Hero right — animated swap demo */
+.hero-right {
+  padding: 48px; display: flex; align-items: center; justify-content: center;
+  background: var(--bg); position: relative; overflow: hidden;
+}
+.hero-bg-grid {
+  position: absolute; inset: 0;
+  background-image: linear-gradient(var(--border) 1px, transparent 1px),
+                    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: .15;
+}
+.swap-demo {
+  position: relative; z-index: 1; width: 100%; max-width: 380px;
+}
+.demo-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 16px; padding: 20px; backdrop-filter: blur(8px);
+}
+.demo-label { font-size: 11px; font-weight: 500; letter-spacing: .5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; }
+.demo-row { display: flex; align-items: center; justify-content: space-between; }
+.demo-token { display: flex; align-items: center; gap: 10px; }
+.token-icon {
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; letter-spacing: -.3px;
+}
+.ti-eth { background: linear-gradient(135deg,#627eea,#8fa4f3); color: white; }
+.ti-usdc { background: linear-gradient(135deg,#2775ca,#5a9de6); color: white; }
+.ti-matic { background: linear-gradient(135deg,#7b3fe4,#9b68f5); color: white; }
+.ti-nft { background: linear-gradient(135deg,#c94f2c,#f0855f); color: white; }
+.ti-op { background: linear-gradient(135deg,#ff0420,#ff6b80); color: white; }
+.token-info .t-name { color: var(--text); font-weight: 500; font-size: 14px; }
+.token-info .t-sub { color: var(--text-sec); font-size: 11px; margin-top: 1px; }
+.demo-amount { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 22px; color: var(--text); }
+.demo-arrow {
+  text-align: center; padding: 10px 0;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.arrow-line { flex: 1; height: 1px; background: rgba(245,243,238,0.15); }
+.arrow-icon {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--elevated); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-sec); font-size: 14px;
+}
+.demo-divider { height: 1px; background: rgba(245,243,238,0.08); margin: 16px 0; }
+.demo-meta { display: flex; justify-content: space-between; font-size: 11px; }
+.meta-k { color: var(--text-muted); }
+.meta-v { color: var(--text-sec); font-weight: 500; }
+.match-indicator {
+  margin-top: 12px; padding: 10px 14px; border-radius: 8px;
+  background: var(--cyan-dim); border: 1px solid rgba(0,229,255,0.3);
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px; color: var(--cyan);
+}
+.match-pulse { width: 7px; height: 7px; border-radius: 50%; background: var(--cyan); animation: pulse 1.5s infinite; }
+
+/* Floating chain badges */
+.chain-badge {
+  position: absolute;
+  background: rgba(245,243,238,0.06); border: 1px solid rgba(245,243,238,0.15);
+  border-radius: 8px; padding: 8px 12px;
+  font-size: 11px; color: rgba(245,243,238,0.6); font-weight: 500;
+}
+.cb1 { top: 60px; left: 30px; }
+.cb2 { top: 80px; right: 24px; }
+.cb3 { bottom: 80px; left: 20px; }
+.cb4 { bottom: 60px; right: 30px; }
+
+/* ── FEATURES STRIP ── */
+.features-strip {
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  background: var(--surface); overflow: hidden;
+}
+.strip-scroll {
+  display: flex; gap: 0; white-space: nowrap;
+  animation: scrollStrip 22s linear infinite;
+}
+@keyframes scrollStrip {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.strip-item {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 14px 32px; border-right: 1px solid var(--border);
+  font-size: 13px; font-weight: 500; color: var(--text-sec); flex-shrink: 0;
+}
+.strip-pip { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+
+/* ── HOW IT WORKS ── */
+.section { padding: 96px 48px; }
+.section-eyebrow {
+  font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--cyan); margin-bottom: 16px;
+}
+.section-h2 {
+  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-size: clamp(32px, 4vw, 48px); letter-spacing: -1.5px; line-height: 1.1;
+  margin-bottom: 16px;
+}
+.section-sub { font-size: 16px; color: var(--text-sec); line-height: 1.7; max-width: 480px; }
+
+.how-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; margin-top: 64px; background: var(--border); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+.how-cell { background: var(--surface); padding: 40px; position: relative; }
+.how-cell:hover { background: var(--elevated); }
+.how-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 64px; line-height: 1; color: var(--border); margin-bottom: 24px; letter-spacing: -3px; }
+.how-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+.hi-rust { background: rgba(0, 229, 255, 0.1); }
+.hi-teal { background: rgba(0, 229, 255, 0.1); }
+.hi-violet { background: rgba(0, 229, 255, 0.1); }
+.hi-gold { background: rgba(0, 229, 255, 0.1); }
+.how-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 20px; letter-spacing: -.5px; margin-bottom: 10px; }
+.how-body { font-size: 14px; color: var(--text-sec); line-height: 1.7; }
+
+/* ── ASSET EXPLAINER ── */
+.asset-section { background: var(--bg); padding: 96px 48px; }
+.asset-section .section-eyebrow { color: var(--cyan); }
+.asset-section .section-h2 { color: var(--text); }
+.asset-section .section-sub { color: var(--text-sec); }
+
+.asset-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 56px; }
+.asset-card {
+  border-radius: 16px; padding: 28px; border: 1px solid rgba(245,243,238,0.1);
+  position: relative; overflow: hidden;
+}
+.ac-eth { background: linear-gradient(135deg, rgba(98,126,234,0.15), rgba(98,126,234,0.05)); }
+.ac-erc20 { background: linear-gradient(135deg, rgba(26,143,122,0.15), rgba(26,143,122,0.05)); }
+.ac-nft { background: linear-gradient(135deg, rgba(201,79,44,0.15), rgba(201,79,44,0.05)); }
+.ac-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  border-radius: 6px; padding: 4px 10px;
+  font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; margin-bottom: 20px;
+}
+.acb-eth { background: rgba(98,126,234,0.2); color: #8fa4f3; }
+.acb-erc20 { background: rgba(77,191,168,0.2); color: var(--teal-light); }
+.acb-nft { background: rgba(240,133,95,0.2); color: var(--rust-light); }
+.ac-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 20px; color: var(--text); letter-spacing: -.5px; margin-bottom: 10px; }
+.ac-body { font-size: 13px; color: var(--text-sec); line-height: 1.7; margin-bottom: 20px; }
+.ac-status {
+  display: flex; align-items: flex-start; gap: 10px; padding: 12px;
+  border-radius: 8px; background: var(--surface);
+}
+.acs-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.acs-text { font-size: 12px; color: var(--text-sec); line-height: 1.5; }
+.acs-text strong { color: var(--text); font-weight: 500; }
+
+/* ── FEATURES GRID ── */
+.features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-top: 64px; }
+.feat-card { background: var(--surface); padding: 32px; transition: background .2s; }
+.feat-card:hover { background: var(--elevated); }
+.feat-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; font-size: 18px; }
+.feat-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; letter-spacing: -.3px; margin-bottom: 8px; }
+.feat-body { font-size: 13px; color: var(--text-sec); line-height: 1.6; }
+
+/* ── CTA SECTION ── */
+.cta-section {
+  padding: 96px 48px; text-align: center;
+  background: var(--surface); border-top: 1px solid var(--border);
+}
+
+/* ══════════════════════════════════════════════
+   SWAP PAGE
+══════════════════════════════════════════════ */
+.swap-page { padding: 24px 24px; min-height: calc(100vh - 65px); }
+
+.swap-layout { display: grid; grid-template-columns: 340px 1fr 280px; gap: 16px; align-items: start; }
+
+/* Left panel — swap form */
+.swap-panel {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden;
+}
+.swap-panel-header {
+  padding: 18px 20px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.sp-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; letter-spacing: -.3px; }
+.sp-badge {
+  font-size: 10px; font-weight: 600; letter-spacing: .5px; text-transform: uppercase;
+  background: rgba(26,143,122,0.1); color: var(--teal); border-radius: 5px; padding: 3px 8px;
+}
+.swap-body { padding: 16px; }
+
+.type-toggle { display: flex; gap: 4px; background: var(--elevated); border-radius: 8px; padding: 3px; margin-bottom: 14px; }
+.type-btn {
+  flex: 1; padding: 7px 0; border-radius: 6px; border: none; background: transparent;
+  font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500;
+  cursor: pointer; color: var(--text-muted); transition: all .2s;
+}
+.type-btn.active { background: var(--surface); color: var(--cyan); box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+
+.swap-field {
+  background: var(--elevated); border-radius: 10px; padding: 14px;
+  margin-bottom: 6px; position: relative;
+}
+.sf-label { font-size: 11px; font-weight: 500; color: var(--text-sec); text-transform: uppercase; letter-spacing: .4px; margin-bottom: 8px; }
+.sf-row { display: flex; align-items: center; gap: 10px; }
+.sf-amount {
+  flex: 1; background: transparent; border: none; outline: none;
+  font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 700; letter-spacing: -1px;
+  color: var(--text); min-width: 0;
+}
+.sf-amount::placeholder { color: rgba(10,10,15,.2); }
+.sf-token-btn {
+  display: flex; align-items: center; gap: 6px; padding: 6px 10px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+  font-size: 13px; font-weight: 500; cursor: pointer; white-space: nowrap;
+  color: var(--text); flex-shrink: 0; transition: border-color .15s;
+}
+.sf-token-btn:hover { border-color: var(--cyan); }
+.sf-usd { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+
+.swap-mid { display: flex; align-items: center; justify-content: center; position: relative; margin: 4px 0; }
+.swap-mid-line { flex: 1; height: 1px; background: var(--border); }
+.swap-flip {
+  width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border);
+  background: var(--surface); cursor: pointer; display: flex; align-items: center; justify-content: center;
+  font-size: 14px; transition: all .2s; color: var(--text-sec); flex-shrink: 0; margin: 0 8px;
+}
+.swap-flip:hover { background: var(--cyan); color: var(--bg); border-color: var(--cyan); }
+
+.chain-row { display: flex; gap: 6px; margin: 10px 0; }
+.chain-sel {
+  flex: 1; padding: 9px 12px; border-radius: 8px; border: 1px solid var(--border);
+  background: var(--elevated); font-family: 'DM Sans', sans-serif; font-size: 12px;
+  font-weight: 500; color: var(--text); cursor: pointer; display: flex; align-items: center; gap: 6px;
+}
+.chain-dot-sm { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+
+.swap-params { margin: 12px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.param-box { background: var(--elevated); border-radius: 8px; padding: 10px 12px; }
+.param-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; color: var(--text-muted); margin-bottom: 4px; }
+.param-value { font-size: 14px; font-weight: 600; color: var(--text); }
+
+.submit-btn {
+  width: 100%; padding: 14px; border-radius: 10px; border: none;
+  background: var(--cyan); color: var(--bg);
+  font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: -.2px;
+  cursor: pointer; transition: all .2s; margin-top: 12px;
+}
+.submit-btn:hover { background: #00B1C4; }
+.submit-btn:disabled { opacity: .4; cursor: not-allowed; background: var(--cyan); }
+
+/* Center panel — infographics */
+.info-panel { display: flex; flex-direction: column; gap: 16px; }
+
+/* Custody infographic */
+.custody-card {
+  background: var(--ink); border-radius: 16px; padding: 22px; color: var(--paper);
+}
+.cc-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: -.3px; margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
+.cc-title span { font-size: 11px; font-weight: 400; color: rgba(245,243,238,.4); letter-spacing: 0; font-family: 'DM Sans', sans-serif; }
+.custody-rows { display: flex; flex-direction: column; gap: 0; }
+.custody-row {
+  display: grid; grid-template-columns: 120px 1fr auto;
+  align-items: center; gap: 12px;
+  padding: 12px 0; border-bottom: 1px solid rgba(245,243,238,.08);
+}
+.custody-row:last-child { border: none; }
+.cr-asset { display: flex; align-items: center; gap: 8px; }
+.cr-name { font-size: 13px; font-weight: 500; }
+.cr-bar { flex: 1; height: 6px; border-radius: 3px; background: rgba(245,243,238,.08); overflow: hidden; position: relative; }
+.cr-fill { height: 100%; border-radius: 3px; transition: width .5s; }
+.cr-label {
+  font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .4px;
+  border-radius: 4px; padding: 3px 7px; white-space: nowrap;
+}
+.lbl-escrowed { background: rgba(212,168,75,0.2); color: var(--warning); }
+.lbl-wallet   { background: var(--cyan-dim); color: var(--cyan); }
+
+/* Order flow diagram */
+.flow-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 22px; }
+.flow-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: -.3px; margin-bottom: 18px; }
+.flow-steps { display: flex; align-items: center; gap: 0; }
+.flow-step { text-align: center; flex: 1; }
+.fs-circle {
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; margin: 0 auto 6px;
+  font-family: 'Syne', sans-serif;
+}
+.fsc-active { background: var(--cyan); color: var(--bg); }
+.fsc-done { background: var(--cyan-dim); color: var(--cyan); border: 1.5px solid var(--cyan); }
+.fsc-pending { background: var(--elevated); color: var(--text-muted); border: 1.5px solid var(--border); }
+.fs-label { font-size: 10px; color: var(--text-sec); font-weight: 500; }
+.flow-connector { flex: none; width: 20px; height: 2px; background: var(--border); margin-bottom: 24px; }
+.flow-connector.done { background: var(--cyan); }
+
+/* Fee breakdown */
+.fee-card { background: var(--elevated); border-radius: 16px; padding: 20px; border: 1px solid var(--border); }
+.fee-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); margin-bottom: 14px; }
+.fee-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+.fee-row:last-child { border: none; }
+.fee-k { color: var(--muted); }
+.fee-v { font-weight: 600; color: var(--ink); }
+.fee-total { background: var(--cyan); color: var(--bg); border-radius: 10px; padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; margin-top: 12px; }
+.ft-label { font-size: 12px; opacity: .7; }
+.ft-value { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 18px; letter-spacing: -.5px; color: var(--bg); }
+
+/* Live market */
+.market-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px; }
+.market-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: -.3px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; }
+.live-badge { font-size: 10px; font-weight: 600; background: var(--cyan-dim); color: var(--cyan); border-radius: 4px; padding: 2px 7px; display: flex; align-items: center; gap: 4px; }
+.market-row { display: flex; align-items: center; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid var(--border); }
+.market-row:last-child { border: none; }
+.mr-pair { display: flex; align-items: center; gap: 8px; }
+.mr-icons { display: flex; }
+.mr-icon { width: 22px; height: 22px; border-radius: 50%; font-size: 8px; font-weight: 700; display: flex; align-items: center; justify-content: center; border: 1.5px solid var(--paper); }
+.mr-icon:nth-child(2) { margin-left: -6px; }
+.mr-name { font-size: 13px; font-weight: 500; }
+.mr-info { text-align: right; }
+.mr-depth { font-size: 13px; font-weight: 600; }
+.mr-change { font-size: 11px; color: var(--success); margin-top: 1px; }
+.mr-change.neg { color: var(--danger); }
+
+/* Right panel — order book + status */
+.right-panel { display: flex; flex-direction: column; gap: 16px; }
+.ob-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+.ob-header { padding: 14px 16px; border-bottom: 1px solid var(--border); font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: -.2px; display: flex; justify-content: space-between; }
+.ob-cols { display: grid; grid-template-columns: 1fr 1fr 1fr; padding: 8px 16px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .4px; color: var(--text-sec); border-bottom: 1px solid var(--border); }
+.ob-row { display: grid; grid-template-columns: 1fr 1fr 1fr; padding: 7px 16px; font-size: 12px; position: relative; }
+.ob-row.sell::after { content:''; position:absolute; left:0; top:0; bottom:0; background: rgba(255, 77, 106, 0.08); border-radius: 0; }
+.ob-row.buy::after  { content:''; position:absolute; left:0; top:0; bottom:0; background: rgba(0, 200, 150, 0.08); border-radius: 0; }
+.ob-price-sell { color: var(--danger); font-weight: 600; }
+.ob-price-buy  { color: var(--success); font-weight: 600; }
+.ob-spread { text-align: center; padding: 6px 16px; font-size: 11px; color: var(--text-sec); border-bottom: 1px solid var(--border); background: var(--elevated); }
+
+/* Escrow status */
+.escrow-card { background: var(--surface); border: 1px solid var(--warning); border-radius: 16px; padding: 18px; }
+.escrow-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; color: var(--warning); margin-bottom: 12px; }
+.escrow-row { display: flex; justify-content: space-between; padding: 7px 0; font-size: 12px; border-bottom: 1px solid var(--border); }
+.escrow-row:last-child { border: none; }
+.er-k { color: var(--text-sec); }
+.er-v { font-weight: 600; color: var(--text); }
+.escrow-timeline { margin-top: 12px; }
+.et-bar { height: 5px; background: var(--elevated); border-radius: 3px; overflow: hidden; }
+.et-fill { height: 100%; width: 65%; background: linear-gradient(90deg, var(--warning), #FFD966); border-radius: 3px; }
+.et-labels { display: flex; justify-content: space-between; font-size: 10px; color: var(--text-sec); margin-top: 4px; }
+
+/* Tooltip-style info boxes */
+.info-tip {
+  background: var(--elevated); border-radius: 8px; padding: 10px 12px;
+  font-size: 11px; color: var(--text-sec); line-height: 1.5; border-left: 3px solid var(--cyan);
+  border-radius: 0 8px 8px 0; margin-top: 8px;
+}
+</style>
+
+<div class="nav">
+  <div class="nav-logo">
+    <div class="logo-hex">
+      <svg viewBox="0 0 14 14"><path d="M7 1L13 4V10L7 13L1 10V4L7 1Z"/></svg>
+    </div>
+    AutoSwap
+  </div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage('landing')">Home</button>
+    <button class="nav-tab" onclick="showPage('swap')">Swap</button>
+    <button class="nav-tab" onclick="showPage('swap')">Marketplace</button>
+    <button class="nav-tab" onclick="showPage('swap')">Orders</button>
+  </div>
+  <div class="nav-right">
+    <button class="connect-btn" id="connectBtn" onclick="toggleWallet()">Connect wallet</button>
+  </div>
+</div>
+
+<!-- ══ LANDING PAGE ══ -->
+<div class="page active" id="page-landing">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow">
+        <div class="eyebrow-dot"></div>
+        Peer-to-peer · Cross-chain · Trustless
+      </div>
+      <h1 class="hero-h1">
+        Swap anything.<br>
+        <span class="accent-rust">Wallet</span> to<br>
+        <span class="accent-teal">wallet.</span>
+      </h1>
+      <p class="hero-sub">AutoSwap matches buyers and sellers directly. Tokens, NFTs, and cross-chain assets — no pools, no slippage, no intermediaries. Your assets stay in your wallet until a match is found.</p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="showPage('swap')">
+          Start swapping
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7H11M11 7L7.5 3.5M11 7L7.5 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="btn-secondary" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">How it works</button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-num">$24M+</div>
+          <div class="stat-lbl">Total volume</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">4</div>
+          <div class="stat-lbl">Chains supported</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">0.05%</div>
+          <div class="stat-lbl">Base fee</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-bg-grid"></div>
+      <div class="chain-badge cb1">Base mainnet</div>
+      <div class="chain-badge cb2">Arbitrum One</div>
+      <div class="chain-badge cb3">Ethereum</div>
+      <div class="chain-badge cb4">Lasna testnet</div>
+
+      <div class="swap-demo">
+        <div class="demo-card">
+          <div class="demo-label">You offer</div>
+          <div class="demo-row">
+            <div class="demo-token">
+              <div class="token-icon ti-eth">ETH</div>
+              <div class="token-info">
+                <div class="t-name">Ethereum</div>
+                <div class="t-sub">Base mainnet</div>
+              </div>
+            </div>
+            <div class="demo-amount">1.5</div>
+          </div>
+          <div class="demo-divider"></div>
+          <div class="demo-meta">
+            <span class="meta-k">Custody</span>
+            <span class="meta-v" style="color:#d4a84b">Escrowed on order</span>
+          </div>
+        </div>
+
+        <div class="demo-arrow" style="padding:10px 0">
+          <div class="arrow-line"></div>
+          <div class="arrow-icon">⇅</div>
+          <div class="arrow-line"></div>
+        </div>
+
+        <div class="demo-card">
+          <div class="demo-label">You receive</div>
+          <div class="demo-row">
+            <div class="demo-token">
+              <div class="token-icon ti-usdc">USDC</div>
+              <div class="token-info">
+                <div class="t-name">USD Coin</div>
+                <div class="t-sub">Arbitrum One</div>
+              </div>
+            </div>
+            <div class="demo-amount">2,840</div>
+          </div>
+          <div class="demo-divider"></div>
+          <div class="demo-meta">
+            <span class="meta-k">Custody</span>
+            <span class="meta-v" style="color:#4dbfa8">Stays in their wallet</span>
+          </div>
+        </div>
+
+        <div class="match-indicator">
+          <div class="match-pulse"></div>
+          Reactive Network matching across chains…
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Features strip -->
+  <div class="features-strip">
+    <div class="strip-scroll" id="stripScroll"></div>
+  </div>
+
+  <!-- How it works -->
+  <div class="section" id="how">
+    <div class="section-eyebrow">How it works</div>
+    <h2 class="section-h2">Four steps to a trustless swap</h2>
+    <p class="section-sub">No liquidity pools. No AMMs. Direct wallet-to-wallet settlement powered by on-chain order matching.</p>
+    <div class="how-grid">
+      <div class="how-cell">
+        <div class="how-num">01</div>
+        <div class="how-icon hi-rust">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 3V11M11 11L7 8M11 11L15 8M4 15H18M6 18H16" stroke="#c94f2c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="how-title">Create an order</div>
+        <div class="how-body">Specify what you have and what you want. Set amounts, target chain, and expiry. ETH and native tokens are held in escrow during the order lifetime — ERC-20s and NFTs stay in your wallet.</div>
+      </div>
+      <div class="how-cell">
+        <div class="how-num">02</div>
+        <div class="how-icon hi-teal">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="8" stroke="#1a8f7a" stroke-width="1.5"/><path d="M8 11L10.5 13.5L14.5 8.5" stroke="#1a8f7a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="how-title">Reactive matching</div>
+        <div class="how-body">The Euler-Lagrange order processor instantly scans for opposing orders. For cross-chain swaps, the Reactive Network RSC listens for events on every registered chain simultaneously.</div>
+      </div>
+      <div class="how-cell">
+        <div class="how-num">03</div>
+        <div class="how-icon hi-violet">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M4 11H18M14 7L18 11L14 15" stroke="#6b4fbb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="how-title">Atomic settlement</div>
+        <div class="how-body">When a match is found, both sides execute atomically. On same-chain swaps this is a single transaction. Cross-chain swaps use the RSC to trigger callbacks on each chain independently.</div>
+      </div>
+      <div class="how-cell">
+        <div class="how-num">04</div>
+        <div class="how-icon hi-gold">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="4" y="8" width="14" height="10" rx="2" stroke="#d4a84b" stroke-width="1.5"/><path d="M8 8V6a3 3 0 016 0v2" stroke="#d4a84b" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="how-title">Expiry &amp; refunds</div>
+        <div class="how-body">Unmatched orders expire automatically. Escrowed native tokens are refunded to your wallet. Partial fills are supported — get what's available, rebook the rest up to 3 times automatically.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Asset custody explainer -->
+  <div class="asset-section">
+    <div class="section-eyebrow">Asset custody</div>
+    <h2 class="section-h2">Your assets, your terms.</h2>
+    <p class="section-sub">Different asset types have different custody models. Understanding this is key to using AutoSwap confidently.</p>
+
+    <div class="asset-cards">
+      <div class="asset-card ac-eth">
+        <div class="ac-badge acb-eth">Native tokens</div>
+        <div class="ac-title">ETH &amp; native gas</div>
+        <div class="ac-body">When you place an order offering native ETH (or MATIC, etc.), the contract holds it in escrow for the duration of your order. You cannot spend it elsewhere until the order resolves.</div>
+        <div class="ac-status">
+          <div class="acs-icon">⚠</div>
+          <div class="acs-text"><strong>Escrowed immediately.</strong> Held by WalletSwapMain until matched, cancelled, or expired. Then automatically refunded.</div>
+        </div>
+      </div>
+      <div class="asset-card ac-erc20">
+        <div class="ac-badge acb-erc20">ERC-20 tokens</div>
+        <div class="ac-title">USDC, WETH &amp; more</div>
+        <div class="ac-body">ERC-20 tokens never leave your wallet until the moment of settlement. You grant an approval, and the contract only pulls tokens when a match executes — not before.</div>
+        <div class="ac-status">
+          <div class="acs-icon">✓</div>
+          <div class="acs-text"><strong>Stays in your wallet.</strong> The contract checks your balance and allowance at match time. No lockup, no capital inefficiency.</div>
+        </div>
+      </div>
+      <div class="asset-card ac-nft">
+        <div class="ac-badge acb-nft">NFTs (ERC-721)</div>
+        <div class="ac-title">NFT swaps</div>
+        <div class="ac-body">Like ERC-20s, NFTs remain in your wallet with an approval granted to the contract. The transfer executes atomically at match time. Partial fills are not supported for NFTs — it's all-or-nothing.</div>
+        <div class="ac-status">
+          <div class="acs-icon">✓</div>
+          <div class="acs-text"><strong>Stays in your wallet.</strong> Full-amount match required. Approval-based transfer at settlement only.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Features grid -->
+  <div class="section">
+    <div class="section-eyebrow">Features</div>
+    <h2 class="section-h2">Everything on-chain, nothing trusted.</h2>
+    <div class="features-grid">
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(201,79,44,0.1)">🔀</div>
+        <div class="feat-title">Market sweep matching</div>
+        <div class="feat-body">When you place an order, the contract immediately sweeps the order book for up to 20 matching orders in the same transaction. Instant fills at the best available rate.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(26,143,122,0.1)">⛓</div>
+        <div class="feat-title">Cross-chain orders</div>
+        <div class="feat-body">Offer ETH on Base, receive USDC on Arbitrum. The Reactive Network RSC listens for OrderInitiated events across all registered chains and matches them automatically.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(107,79,187,0.1)">📊</div>
+        <div class="feat-title">Euler-Lagrange fill optimization</div>
+        <div class="feat-body">The VirtualLiquidityPool uses an adaptive Euler-Lagrange algorithm to calculate optimal fill amounts based on historical liquidity rate-of-change. Smoother fills, less impact.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(212,168,75,0.1)">🔁</div>
+        <div class="feat-title">Automatic rebooking</div>
+        <div class="feat-body">Large orders that expire partially filled can rebook up to 3 times automatically with a shortened duration. Mega orders rebook at just 10% fill threshold — protecting your capital.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(201,79,44,0.1)">🖼</div>
+        <div class="feat-title">NFT ↔ token swaps</div>
+        <div class="feat-body">Swap ERC-721 NFTs for tokens, tokens for NFTs, or NFTs for NFTs. The matcher handles all four asset-type permutations with exact tokenId matching for NFT orders.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(26,143,122,0.1)">⏱</div>
+        <div class="feat-title">Partial fills</div>
+        <div class="feat-body">ERC-20 orders fill incrementally as matching liquidity arrives. Track your filled amount in real time. Orders stay active and searchable until fully matched or expired.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <div class="section-eyebrow" style="margin-bottom:16px">Get started</div>
+    <h2 class="section-h2" style="margin-bottom:16px">Ready to swap?</h2>
+    <p style="font-size:16px;color:var(--muted);margin-bottom:36px;max-width:440px;margin-left:auto;margin-right:auto">Connect your wallet and place your first order. Native tokens are escrowed. ERC-20s stay put. Everything settles on-chain.</p>
+    <button class="btn-primary" style="margin:0 auto" onclick="showPage('swap')">
+      Open the swap
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7H11M11 7L7.5 3.5M11 7L7.5 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- ══ SWAP PAGE ══ -->
+<div class="page" id="page-swap">
+<div class="swap-page">
+<div class="swap-layout">
+
+  <!-- Left: Swap form -->
+  <div>
+    <div class="swap-panel">
+      <div class="swap-panel-header">
+        <div class="sp-title">Place order</div>
+        <div class="sp-badge">Instant match</div>
+      </div>
+      <div class="swap-body">
+        <div class="type-toggle">
+          <button class="type-btn active" onclick="setType(this,'erc20')">ERC-20</button>
+          <button class="type-btn" onclick="setType(this,'nft')">NFT</button>
+          <button class="type-btn" onclick="setType(this,'native')">Native</button>
+          <button class="type-btn" onclick="setType(this,'cross')">Cross-chain</button>
+        </div>
+
+        <div class="swap-field">
+          <div class="sf-label">You offer</div>
+          <div class="sf-row">
+            <input class="sf-amount" id="amtIn" type="number" placeholder="0.00" oninput="updateFee()">
+            <button class="sf-token-btn">
+              <div class="token-icon ti-eth" style="width:20px;height:20px;font-size:8px">ETH</div>
+              ETH ▾
+            </button>
+          </div>
+          <div class="sf-usd" id="usdIn">≈ $0.00</div>
+        </div>
+
+        <div class="swap-mid">
+          <div class="swap-mid-line"></div>
+          <button class="swap-flip" onclick="flipTokens()">⇅</button>
+          <div class="swap-mid-line"></div>
+        </div>
+
+        <div class="swap-field">
+          <div class="sf-label">You receive</div>
+          <div class="sf-row">
+            <input class="sf-amount" id="amtOut" type="number" placeholder="0.00">
+            <button class="sf-token-btn">
+              <div class="token-icon ti-usdc" style="width:20px;height:20px;font-size:8px">USDC</div>
+              USDC ▾
+            </button>
+          </div>
+          <div class="sf-usd">≈ $0.00</div>
+        </div>
+
+        <div class="chain-row">
+          <div class="chain-sel">
+            <div class="chain-dot-sm" style="background:#627eea"></div>
+            Base mainnet
+          </div>
+          <div style="display:flex;align-items:center;color:var(--muted);font-size:13px;padding:0 4px">→</div>
+          <div class="chain-sel">
+            <div class="chain-dot-sm" style="background:#28a0f0"></div>
+            Arbitrum
+          </div>
+        </div>
+
+        <div class="swap-params">
+          <div class="param-box">
+            <div class="param-label">Expiry</div>
+            <div class="param-value">24 h</div>
+          </div>
+          <div class="param-box">
+            <div class="param-label">Slippage</div>
+            <div class="param-value">0.5%</div>
+          </div>
+          <div class="param-box">
+            <div class="param-label">Base fee</div>
+            <div class="param-value" id="feeDisplay">0.05%</div>
+          </div>
+          <div class="param-box">
+            <div class="param-label">Min gas</div>
+            <div class="param-value">0.002 ETH</div>
+          </div>
+        </div>
+
+        <div class="info-tip" id="custodyTip">
+          ETH will be escrowed in WalletSwapMain until your order matches, expires, or is cancelled.
+        </div>
+
+        <button class="submit-btn" id="submitBtn" onclick="placeOrder()">
+          Place order
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Center: Infographics -->
+  <div class="info-panel">
+
+    <!-- Custody model -->
+    <div class="custody-card">
+      <div class="cc-title">
+        Asset custody during order
+        <span>What happens to your assets right now</span>
+      </div>
+      <div class="custody-rows">
+        <div class="custody-row">
+          <div class="cr-asset">
+            <div class="token-icon ti-eth" style="width:24px;height:24px;font-size:8px">ETH</div>
+            <div class="cr-name" style="font-size:12px;color:rgba(245,243,238,.8)">Native ETH</div>
+          </div>
+          <div class="cr-bar"><div class="cr-fill" style="width:100%;background:#d4a84b"></div></div>
+          <div class="cr-label lbl-escrowed">Escrowed</div>
+        </div>
+        <div class="custody-row">
+          <div class="cr-asset">
+            <div class="token-icon ti-usdc" style="width:24px;height:24px;font-size:8px">USDC</div>
+            <div class="cr-name" style="font-size:12px;color:rgba(245,243,238,.8)">ERC-20</div>
+          </div>
+          <div class="cr-bar"><div class="cr-fill" style="width:100%;background:#4dbfa8"></div></div>
+          <div class="cr-label lbl-wallet">In wallet</div>
+        </div>
+        <div class="custody-row">
+          <div class="cr-asset">
+            <div class="token-icon ti-nft" style="width:24px;height:24px;font-size:9px;color:white">NFT</div>
+            <div class="cr-name" style="font-size:12px;color:rgba(245,243,238,.8)">ERC-721</div>
+          </div>
+          <div class="cr-bar"><div class="cr-fill" style="width:100%;background:#4dbfa8"></div></div>
+          <div class="cr-label lbl-wallet">In wallet</div>
+        </div>
+        <div class="custody-row">
+          <div class="cr-asset">
+            <div class="token-icon" style="width:24px;height:24px;font-size:8px;background:rgba(212,168,75,.2);color:#d4a84b">GAS</div>
+            <div class="cr-name" style="font-size:12px;color:rgba(245,243,238,.8)">Gas fee</div>
+          </div>
+          <div class="cr-bar"><div class="cr-fill" style="width:100%;background:#d4a84b"></div></div>
+          <div class="cr-label lbl-escrowed">Escrowed</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Order lifecycle -->
+    <div class="flow-card">
+      <div class="flow-title">Order lifecycle</div>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="fs-circle fsc-done">✓</div>
+          <div class="fs-label">Created</div>
+        </div>
+        <div class="flow-connector done"></div>
+        <div class="flow-step">
+          <div class="fs-circle fsc-active">2</div>
+          <div class="fs-label">Matching</div>
+        </div>
+        <div class="flow-connector"></div>
+        <div class="flow-step">
+          <div class="fs-circle fsc-pending">3</div>
+          <div class="fs-label">Verifying</div>
+        </div>
+        <div class="flow-connector"></div>
+        <div class="flow-step">
+          <div class="fs-circle fsc-pending">4</div>
+          <div class="fs-label">Settling</div>
+        </div>
+        <div class="flow-connector"></div>
+        <div class="flow-step">
+          <div class="fs-circle fsc-pending">5</div>
+          <div class="fs-label">Done</div>
+        </div>
+      </div>
+      <div style="margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <div style="background:rgba(26,143,122,0.08);border-radius:8px;padding:10px;font-size:11px;color:var(--teal);line-height:1.5">
+          <strong style="display:block;margin-bottom:2px;color:var(--teal)">On match</strong>
+          ERC-20 + NFT pulled from wallet instantly. Native ETH released from escrow to counterparty.
+        </div>
+        <div style="background:rgba(201,79,44,0.08);border-radius:8px;padding:10px;font-size:11px;color:var(--rust);line-height:1.5">
+          <strong style="display:block;margin-bottom:2px;color:var(--rust)">On expiry</strong>
+          Escrowed native ETH automatically refunded. Approvals revoked by cancelling. Up to 3 rebooks.
+        </div>
+      </div>
+    </div>
+
+    <!-- Fee breakdown -->
+    <div class="fee-card">
+      <div class="fee-title">Fee breakdown</div>
+      <div class="fee-row">
+        <span class="fee-k">Protocol fee (0.05%)</span>
+        <span class="fee-v" id="feeAmt">$0.00</span>
+      </div>
+      <div class="fee-row">
+        <span class="fee-k">Min gas deposit</span>
+        <span class="fee-v">0.002 ETH</span>
+      </div>
+      <div class="fee-row">
+        <span class="fee-k">Network gas</span>
+        <span class="fee-v">~$0.08</span>
+      </div>
+      <div class="fee-row">
+        <span class="fee-k">RSC callback gas</span>
+        <span class="fee-v" id="cbGas">Covered by deposit</span>
+      </div>
+      <div class="fee-total">
+        <span class="ft-label">Estimated total</span>
+        <span class="ft-value" id="totalFee">0.002 ETH + fee</span>
+      </div>
+    </div>
+
+    <!-- Live market depth -->
+    <div class="market-card">
+      <div class="market-title">
+        Market depth
+        <div class="live-badge">
+          <div style="width:5px;height:5px;border-radius:50%;background:var(--teal);animation:pulse 1.5s infinite"></div>
+          Live
+        </div>
+      </div>
+      <div class="market-row">
+        <div class="mr-pair">
+          <div class="mr-icons">
+            <div class="mr-icon ti-eth">E</div>
+            <div class="mr-icon ti-usdc">U</div>
+          </div>
+          <div class="mr-name">ETH / USDC</div>
+        </div>
+        <div class="mr-info">
+          <div class="mr-depth">$2.4M</div>
+          <div class="mr-change">+12.4%</div>
+        </div>
+      </div>
+      <div class="market-row">
+        <div class="mr-pair">
+          <div class="mr-icons">
+            <div class="mr-icon ti-matic">M</div>
+            <div class="mr-icon ti-usdc">U</div>
+          </div>
+          <div class="mr-name">MATIC / USDC</div>
+        </div>
+        <div class="mr-info">
+          <div class="mr-depth">$840K</div>
+          <div class="mr-change neg">-2.1%</div>
+        </div>
+      </div>
+      <div class="market-row">
+        <div class="mr-pair">
+          <div class="mr-icons">
+            <div class="mr-icon ti-op">O</div>
+            <div class="mr-icon ti-eth">E</div>
+          </div>
+          <div class="mr-name">OP / ETH</div>
+        </div>
+        <div class="mr-info">
+          <div class="mr-depth">$520K</div>
+          <div class="mr-change">+5.7%</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Right: Order book + escrow status -->
+  <div class="right-panel">
+
+    <div class="ob-card">
+      <div class="ob-header">
+        Order book
+        <span style="font-size:11px;color:var(--muted);font-family:'DM Sans',sans-serif;font-weight:400">ETH / USDC</span>
+      </div>
+      <div class="ob-cols">
+        <span>Price</span><span style="text-align:right">Size</span><span style="text-align:right">Total</span>
+      </div>
+      <div id="asks"></div>
+      <div class="ob-spread">Spread: $1.20 · 0.042%</div>
+      <div id="bids"></div>
+    </div>
+
+    <div class="escrow-card">
+      <div class="escrow-title">Your escrow status</div>
+      <div class="escrow-row"><span class="er-k">Locked ETH</span><span class="er-v">1.5 ETH</span></div>
+      <div class="escrow-row"><span class="er-k">Gas deposit</span><span class="er-v">0.002 ETH</span></div>
+      <div class="escrow-row"><span class="er-k">Order expires</span><span class="er-v" id="expiryCountdown">23h 58m</span></div>
+      <div class="escrow-row"><span class="er-k">Status</span><span class="er-v" style="color:var(--teal)">Matching</span></div>
+      <div class="escrow-timeline">
+        <div class="et-bar"><div class="et-fill"></div></div>
+        <div class="et-labels"><span>Created</span><span>Expires in 24h</span></div>
+      </div>
+    </div>
+
+    <div style="background:var(--elevated);border-radius:12px;padding:16px;border:1px solid var(--border)">
+      <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--text-sec);margin-bottom:10px">Partial fill progress</div>
+      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:22px;letter-spacing:-1px;margin-bottom:6px">65<span style="font-size:14px;opacity:.4">%</span></div>
+      <div style="height:7px;background:var(--surface);border-radius:4px;overflow:hidden;margin-bottom:8px">
+        <div style="height:100%;width:65%;background:linear-gradient(90deg,var(--cyan),#00B1C4);border-radius:4px"></div>
+      </div>
+      <div style="font-size:11px;color:var(--text-sec)">975 USDC filled of 1,500 USDC target</div>
+    </div>
+
+  </div>
+
+</div>
+</div>
+</div>
+
+<script>
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.nav-tab').forEach(t => {
+    t.classList.toggle('active', t.textContent.trim().toLowerCase() === id || (id==='swap' && ['swap','marketplace','orders'].includes(t.textContent.trim().toLowerCase())));
+  });
+  if(id==='landing') document.querySelector('.nav-tab').classList.add('active');
+  else {
+    document.querySelector('.nav-tab').classList.remove('active');
+    document.querySelectorAll('.nav-tab')[1].classList.add('active');
+  }
+}
+
+var walletConnected = false;
+function toggleWallet() {
+  walletConnected = !walletConnected;
+  var btn = document.getElementById('connectBtn');
+  if(walletConnected) {
+    btn.className = 'connect-btn connected';
+    btn.innerHTML = '<div class="wallet-dot"></div>0x4f…3a2e';
+    document.getElementById('submitBtn').disabled = false;
+  } else {
+    btn.className = 'connect-btn';
+    btn.innerHTML = 'Connect wallet';
+  }
+}
+
+function setType(el, type) {
+  document.querySelectorAll('.type-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  var tip = document.getElementById('custodyTip');
+  var tips = {
+    native: 'ETH will be escrowed in WalletSwapMain until your order matches, expires, or is cancelled.',
+    erc20: 'USDC stays in your wallet. The contract holds an approval and pulls tokens only when a match executes.',
+    nft: 'Your NFT stays in your wallet. The contract holds an approval and transfers the exact tokenId only on settlement. Full fills only — no partials.',
+    cross: 'ETH is escrowed on the origin chain. The Reactive Network RSC matches your order cross-chain and triggers settlement callbacks on both sides.'
+  };
+  tip.textContent = tips[type] || tips.native;
+}
+
+function updateFee() {
+  var amt = parseFloat(document.getElementById('amtIn').value) || 0;
+  var ethPrice = 2847;
+  var usdVal = amt * ethPrice;
+  document.getElementById('usdIn').textContent = '≈ $' + usdVal.toLocaleString('en',{maximumFractionDigits:2});
+  var fee = usdVal * 0.0005;
+  document.getElementById('feeAmt').textContent = '$' + fee.toFixed(4);
+  document.getElementById('feeDisplay').textContent = (usdVal > 0 ? '$' + fee.toFixed(3) : '0.05%');
+  document.getElementById('totalFee').textContent = (0.002 + (amt > 0 ? (fee / ethPrice) : 0)).toFixed(4) + ' ETH + fee';
+}
+
+function flipTokens() {
+  var a = document.getElementById('amtIn').value;
+  var b = document.getElementById('amtOut').value;
+  document.getElementById('amtIn').value = b;
+  document.getElementById('amtOut').value = a;
+  updateFee();
+}
+
+function placeOrder() {
+  if(!walletConnected) { toggleWallet(); return; }
+  var btn = document.getElementById('submitBtn');
+  btn.textContent = 'Placing order…';
+  btn.disabled = true;
+  setTimeout(()=>{ btn.textContent = 'Order placed — matching…'; btn.style.background='var(--teal)'; }, 1200);
+}
+
+// Strip items
+var stripItems = [
+  {color:'var(--cyan)', text:'ERC-20 stays in wallet'},
+  {color:'var(--warning)', text:'Native ETH escrowed'},
+  {color:'var(--cyan)', text:'Cross-chain matching'},
+  {color:'var(--cyan)', text:'NFT swaps supported'},
+  {color:'var(--cyan)', text:'Partial fills'},
+  {color:'var(--warning)', text:'0.05% base fee'},
+  {color:'var(--danger)', text:'Auto-rebook expired orders'},
+  {color:'var(--cyan)', text:'Atomic settlement'},
+  {color:'var(--cyan)', text:'Reactive Network powered'},
+  {color:'var(--warning)', text:'No AMM slippage'},
+];
+var strip = document.getElementById('stripScroll');
+var html = '';
+[...stripItems,...stripItems].forEach(function(item){
+  html += '<div class="strip-item"><div class="strip-pip" style="background:'+item.color+'"></div>'+item.text+'</div>';
+});
+strip.innerHTML = html;
+
+// Order book
+function makeOB() {
+  var basePrice = 2847.20;
+  var askHtml='', bidHtml='';
+  for(var i=7;i>=1;i--){
+    var p = (basePrice + i*0.3 + Math.random()*0.1).toFixed(2);
+    var s = (Math.random()*3+0.5).toFixed(3);
+    var t = (p*s).toFixed(0);
+    askHtml += '<div class="ob-row sell" style="--w:'+(100-i*10)+'%"><span class="ob-price-sell">'+p+'</span><span style="text-align:right;font-size:12px">'+s+'</span><span style="text-align:right;font-size:12px;color:var(--muted)">$'+parseInt(t).toLocaleString()+'</span></div>';
+  }
+  for(var i=1;i<=7;i++){
+    var p2 = (basePrice - i*0.3 - Math.random()*0.1).toFixed(2);
+    var s2 = (Math.random()*3+0.5).toFixed(3);
+    var t2 = (p2*s2).toFixed(0);
+    bidHtml += '<div class="ob-row buy"><span class="ob-price-buy">'+p2+'</span><span style="text-align:right;font-size:12px">'+s2+'</span><span style="text-align:right;font-size:12px;color:var(--muted)">$'+parseInt(t2).toLocaleString()+'</span></div>';
+  }
+  document.getElementById('asks').innerHTML = askHtml;
+  document.getElementById('bids').innerHTML = bidHtml;
+}
+makeOB();
+setInterval(makeOB, 3000);
+
+// Countdown
+function tick(){
+  var el = document.getElementById('expiryCountdown');
+  if(!el) return;
+  var parts = el.textContent.match(/(\d+)h (\d+)m/);
+  if(!parts) return;
+  var h=parseInt(parts[1]),m=parseInt(parts[2]);
+  if(m>0) m--; else if(h>0){h--;m=59;}
+  el.textContent = h+'h '+m+'m';
+}
+setInterval(tick, 60000);
+</script>

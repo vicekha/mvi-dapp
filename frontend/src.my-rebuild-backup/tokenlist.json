@@ -1,0 +1,225 @@
+{
+  "name": "AutoSwap Core List",
+  "timestamp": "2026-03-20T16:00:00Z",
+  "version": {
+    "major": 1,
+    "minor": 1,
+    "patch": 0
+  },
+  "logoURI": "https://autoswap.pages.dev/logo.png",
+  "keywords": [
+    "autoswap",
+    "defi",
+    "intent",
+    "reactive"
+  ],
+  "tokens": [
+    {
+      "chainId": 146,
+      "address": "0x0000000000000000000000000000000000000000",
+      "symbol": "S",
+      "name": "Sonic",
+      "decimals": 18,
+      "basePrice": 0.5,
+      "logoURI": "https://soniclabs.com/favicon.ico"
+    },
+    {
+      "chainId": 14601,
+      "address": "0x0000000000000000000000000000000000000000",
+      "symbol": "S",
+      "name": "Sonic",
+      "decimals": 18,
+      "basePrice": 0.5,
+      "logoURI": "https://soniclabs.com/favicon.ico"
+    },
+    {
+      "chainId": 5318007,
+      "address": "0x0000000000000000000000000000000000000000",
+      "symbol": "REACT",
+      "name": "Reactive",
+      "decimals": 18,
+      "basePrice": 1.0,
+      "logoURI": "https://autoswap.pages.dev/logo.png"
+    },
+    {
+      "chainId": 146,
+      "address": "0x039e2fb66102314ce7b64ce5ce3e5183bc94ad38",
+      "symbol": "wS",
+      "name": "Wrapped Sonic",
+      "decimals": 18,
+      "basePrice": 0.5,
+      "logoURI": "https://soniclabs.com/favicon.ico"
+    },
+    {
+      "chainId": 146,
+      "address": "0x50c42deacd8fc9773493ed674b675be577f2634b",
+      "symbol": "WETH",
+      "name": "Wrapped Ether",
+      "decimals": 18,
+      "basePrice": 3450,
+      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/info/logo.png"
+    },
+    {
+      "chainId": 146,
+      "address": "0x29219dd400f2bf60e5a23d13be72b486d4038894",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "decimals": 6,
+      "basePrice": 1,
+      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48/logo.png"
+    },
+    {
+      "chainId": 146,
+      "address": "0x6047828dc181963ba44974801ff68e538da5eaf9",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "decimals": 6,
+      "basePrice": 1,
+      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xdAC17F958D2ee523a2206206994597C13D831ec7/logo.png"
+    },
+    {
+      "chainId": 14601,
+      "address": "0x5b5eabf48591e87ff83df2099826c09931ce55ef",
+      "symbol": "MOCK",
+      "name": "Mock Token",
+      "decimals": 18,
+      "basePrice": 1.5,
+      "logoURI": "https://autoswap.pages.dev/logo.png"
+    },
+    {
+      "chainId": 14601,
+      "address": "0x4e063fd125d32b79f2563bc70e73d2975e2aacd8",
+      "symbol": "USDC",
+      "name": "Mock USD Coin",
+      "decimals": 6,
+      "basePrice": 1,
+      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48/logo.png"
+    },
+    {
+      "chainId": 14601,
+      "address": "0xb31f4cafa2947e1f7f2d735a93401ab8ffcb4265",
+      "symbol": "USDT",
+      "name": "Mock Tether USD",
+      "decimals": 6,
+      "basePrice": 1,
+      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xdAC17F958D2ee523a2206206994597C13D831ec7/logo.png"
+    },
+    {
+      "chainId": 5318007,
+      "address": "0x06d1599888b9e14aaad35e9654e000f51fb462d6",
+      "symbol": "MOCK",
+      "name": "Mock Token",
+      "decimals": 18,
+      "basePrice": 1.5,
+      "logoURI": "https://autoswap.pages.dev/logo.png"
+    },
+    {
+      "chainId": 5318007,
+      "address": "0x30e032bf9c0556815e1bb081b34362fc28d4d924",
+      "symbol": "USDC",
+      "name": "Mock USD Coin",
+      "decimals": 6,
+      "basePrice": 1,
+      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48/logo.png"
+    },
+    {
+      "chainId": 5318007,
+      "address": "0x68b5cec135ac643e6d10ebd1530be66d74a22160",
+      "symbol": "USDT",
+      "name": "Mock Tether USD",
+      "decimals": 6,
+      "basePrice": 1,
+      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xdAC17F958D2ee523a2206206994597C13D831ec7/logo.png"
+    },
+    {
+      "chainId": 11155111,
+      "address": "0x0000000000000000000000000000000000000000",
+      "symbol": "ETH",
+      "name": "Ether",
+      "decimals": 18,
+      "basePrice": 3500,
+      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/info/logo.png"
+    },
+    {
+      "chainId": 84532,
+      "address": "0x0000000000000000000000000000000000000000",
+      "symbol": "ETH",
+      "name": "Ether",
+      "decimals": 18,
+      "basePrice": 3500,
+      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/info/logo.png"
+    },
+    {
+      "chainId": 114,
+      "address": "0x0000000000000000000000000000000000000000",
+      "symbol": "FLR",
+      "name": "Coston Flare",
+      "decimals": 18,
+      "basePrice": 0.03,
+      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/flare/info/logo.png"
+    },
+    {
+      "chainId": 1597,
+      "address": "0x0000000000000000000000000000000000000000",
+      "symbol": "FLR",
+      "name": "Coston2 Flare",
+      "decimals": 18,
+      "basePrice": 0.03,
+      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/flare/info/logo.png"
+    },
+    {
+      "chainId": 11155111,
+      "address": "0x5d0cd69e2aa4daf3ac8231a3cc39a50700afd07e",
+      "symbol": "mUSDC",
+      "name": "Mock USD Coin",
+      "decimals": 6,
+      "basePrice": 1.0,
+      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48/logo.png"
+    },
+    {
+      "chainId": 11155111,
+      "address": "0xe1fa029977a53241eea3c7ee287ba79e12bff722",
+      "symbol": "mUSDT",
+      "name": "Mock Tether USD",
+      "decimals": 6,
+      "basePrice": 1.0,
+      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xdAC17F958D2ee523a2206206994597C13D831ec7/logo.png"
+    },
+    {
+      "chainId": 11155111,
+      "address": "0x70f71b8e3a6cbf390fd7e359408343ad6a2cfeef",
+      "symbol": "MRED",
+      "name": "MockNFT Red",
+      "decimals": 0,
+      "basePrice": 100,
+      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/info/logo.png"
+    },
+    {
+      "chainId": 11155111,
+      "address": "0xccc4b588331b5541d788554d9088128177cc25f7",
+      "symbol": "MBLU",
+      "name": "MockNFT Blue",
+      "decimals": 0,
+      "basePrice": 100,
+      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/info/logo.png"
+    },
+    {
+      "chainId": 84532,
+      "address": "0xaa49d7491eb945be8d7d84ad231075b4bb6b598a",
+      "symbol": "MRED",
+      "name": "MockNFT Red",
+      "decimals": 0,
+      "basePrice": 100,
+      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/info/logo.png"
+    },
+    {
+      "chainId": 84532,
+      "address": "0x9ab05af30d7f195156d2957c613a17676934c4bc",
+      "symbol": "MBLU",
+      "name": "MockNFT Blue",
+      "decimals": 0,
+      "basePrice": 100,
+      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/info/logo.png"
+    }
+  ]
+}

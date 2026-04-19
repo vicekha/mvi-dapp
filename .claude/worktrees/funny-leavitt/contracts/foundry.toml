@@ -1,0 +1,44 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+remappings = [
+    "@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/",
+    "forge-std/=lib/forge-std/src/",
+    "reactive-lib/=lib/reactive-lib/src/"
+]
+test = "test"
+script = "script"
+evm_version = "paris"
+via_ir = true
+optimizer = true
+# fs_permissions = [{ access = "read-write", path = "./" }]
+# exclude = ["src/v2-advanced/**"]
+    # tx_fee_cap = "10 ether"
+
+[rpc_endpoints]
+sepolia = "https://sepolia.infura.io/v3/${INFURA_KEY}"
+polygon_amoy = "https://rpc-amoy.polygon.technology"
+reactive = "https://lasna-rpc.rnk.dev/"
+reactive_mainnet = "https://mainnet-rpc.rnk.dev/"
+mainnet = "https://mainnet.infura.io/v3/${INFURA_KEY}"
+polygon = "https://polygon-rpc.com"
+base = "https://mainnet.base.org"
+arbitrum = "https://arb1.arbitrum.io/rpc"
+optimism = "https://mainnet.optimism.io"
+bsc = "https://bsc-dataseed.binance.org"
+sonicTestnet = "https://rpc.testnet.soniclabs.com"
+sonicMainnet = "https://rpc.soniclabs.com"
+base_sepolia = "https://sepolia.base.org"
+
+[etherscan]
+sepolia = { key = "${ETHERSCAN_KEY}" }
+polygon_amoy = { key = "${POLYGONSCAN_KEY}" }
+reactive = { key = "${REACTIVE_SCAN_KEY}" }
+mainnet = { key = "${ETHERSCAN_KEY}" }
+polygon = { key = "${POLYGONSCAN_KEY}" }
+sonicMainnet = { key = "${SONICSCAN_KEY}", url = "https://api.sonicscan.org/api" }
+
+[fmt]
+line_length = 120
+wrap_comments = true

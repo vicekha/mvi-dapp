@@ -6,7 +6,7 @@ import "../src/VirtualLiquidityPool.sol";
 import "../src/AssetVerifier.sol";
 import "../src/TrustWalletFeeDistributor.sol";
 import "../src/EulerLagrangeOrderProcessor.sol";
-import "../src/WalletSwapMain.sol";
+import "../src/WalletSwapCallback.sol";
 
 contract DeployFullStack is Script {
     function run() external {
@@ -34,19 +34,19 @@ contract DeployFullStack is Script {
         );
         console.log("EulerLagrangeOrderProcessor deployed at:", address(orderProcessor));
 
-        // 3. Deploy WalletSwapMain
-        WalletSwapMain walletSwap = new WalletSwapMain(
+        // 3. Deploy WalletSwapCallback
+        WalletSwapCallback walletSwap = new WalletSwapCallback(
             address(liquidityPool),
             address(orderProcessor),
             address(feeDistributor),
             address(assetVerifier),
             callbackProxy
         );
-        console.log("WalletSwapMain deployed at:", address(walletSwap));
+        console.log("WalletSwapCallback deployed at:", address(walletSwap));
 
         // 4. Configuration
         orderProcessor.setWalletSwapMain(address(walletSwap));
-        console.log("Linked OrderProcessor to WalletSwapMain");
+        console.log("Linked OrderProcessor to WalletSwapCallback");
         
         // Security Configuration (New)
         liquidityPool.setAuthorizedCaller(address(orderProcessor), true);
@@ -60,9 +60,9 @@ contract DeployFullStack is Script {
         feeDistributor.setMinNftFeeWei(0.005 ether);
         console.log("Configured FeeDistributor minimums");
 
-        // Register WalletSwapMain for automated debt coverage
+        // Register WalletSwapCallback for automated debt coverage
         feeDistributor.registerReactiveContract(address(walletSwap));
-        console.log("Registered WalletSwapMain with FeeDistributor");
+        console.log("Registered WalletSwapCallback with FeeDistributor");
 
         vm.stopBroadcast();
 
@@ -73,7 +73,7 @@ contract DeployFullStack is Script {
             "SEPOLIA_ASSET_VERIFIER=", vm.toString(address(assetVerifier)), "\n",
             "SEPOLIA_FEE_DISTRIBUTOR=", vm.toString(address(feeDistributor)), "\n",
             "SEPOLIA_ORDER_PROCESSOR=", vm.toString(address(orderProcessor)), "\n",
-            "SEPOLIA_WALLET_SWAP_MAIN=", vm.toString(address(walletSwap))
+            "SEPOLIA_WALLET_SWAP_CALLBACK=", vm.toString(address(walletSwap))
         ));
         console.log(finalLog);
     }

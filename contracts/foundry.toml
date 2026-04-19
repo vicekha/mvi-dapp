@@ -27,6 +27,8 @@ base = "https://mainnet.base.org"
 arbitrum = "https://arb1.arbitrum.io/rpc"
 optimism = "https://mainnet.optimism.io"
 bsc = "https://bsc-dataseed.binance.org"
+bsc_testnet = "https://data-seed-prebsc-1-s1.binance.org:8545"
+base_sepolia = "https://sepolia.base.org"
 sonicTestnet = "https://rpc.testnet.soniclabs.com"
 sonicMainnet = "https://rpc.soniclabs.com"
 
@@ -37,6 +39,8 @@ reactive = { key = "${REACTIVE_SCAN_KEY}" }
 mainnet = { key = "${ETHERSCAN_KEY}" }
 polygon = { key = "${POLYGONSCAN_KEY}" }
 sonicMainnet = { key = "${SONICSCAN_KEY}", url = "https://api.sonicscan.org/api" }
+bsc_testnet = { key = "${BSCSCAN_KEY}", url = "https://api-testnet.bscscan.com/api" }
+base_sepolia = { key = "${BASESCAN_KEY}", url = "https://api-sepolia.basescan.org/api" }
 
 [fmt]
 line_length = 120

@@ -1,0 +1,22 @@
+{
+  "name": "autoswap-reactive-contracts",
+  "version": "1.0.0",
+  "description": "Reactive Network-compliant smart contracts for AutoSwap DApp non-custodial wallet-to-wallet swaps",
+  "scripts": {
+    "build": "forge build",
+    "test": "forge test",
+    "test:gas": "forge test --gas-report",
+    "test:coverage": "forge coverage",
+    "deploy:sepolia": "forge script script/Deploy.s.sol --rpc-url sepolia --broadcast --verify",
+    "deploy:polygon": "forge script script/Deploy.s.sol --rpc-url polygon_amoy --broadcast --verify",
+    "deploy:reactive": "forge script script/Deploy.s.sol --rpc-url reactive --broadcast --verify",
+    "format": "forge fmt",
+    "lint": "solhint 'src/**/*.sol'",
+    "clean": "forge clean"
+  },
+  "devDependencies": {
+    "forge-std": "^1.7.0",
+    "openzeppelin-contracts": "^4.9.0",
+    "solhint": "^4.0.0"
+  }
+}

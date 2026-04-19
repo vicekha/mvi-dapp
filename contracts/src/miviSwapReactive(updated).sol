@@ -11,7 +11,7 @@ import "reactive-lib/abstract-base/AbstractPausableReactive.sol";
  *         - REACTIVE_CHAIN_ID: 5318007 (Lasna Testnet) instead of 1597 (Mainnet)
  *         - ORDER_INITIATED_TOPIC_0: corrected keccak256 hash
  */
-contract MviSwapReactiveTestnet is AbstractPausableReactive {
+contract MviSwapReactiveHardened is AbstractPausableReactive {
 
     // ═══════════════════════════════════════════════════════════════════════
     //  Constants
@@ -28,6 +28,12 @@ contract MviSwapReactiveTestnet is AbstractPausableReactive {
     uint256 private constant MATCH_FOUND_TOPIC_0 =
         uint256(keccak256("MatchFound(bytes32,bytes32,address,address,uint256,uint256,uint256,uint256,address,address)"));
 
+    /// @dev Lifecycle topics for pruning
+    uint256 private constant ORDER_CANCELLED_TOPIC_0 = uint256(keccak256("OrderCancelled(bytes32,string,uint256)"));
+    uint256 private constant ORDER_FILLED_TOPIC_0    = uint256(keccak256("OrderFilled(bytes32,uint256,uint256,uint256)"));
+    uint256 private constant ORDER_EXPIRED_TOPIC_0   = uint256(keccak256("OrderExpired(bytes32,uint256)"));
+    uint256 private constant ORDER_REBOOKED_TOPIC_0  = uint256(keccak256("OrderRebooked(bytes32,uint8,uint256)"));
+
     uint64  private constant CALLBACK_GAS_LIMIT = 2_000_000;
     address private constant RN_CALLBACK_PROXY  = 0x0000000000000000000000000000000000fffFfF;
 
@@ -36,7 +42,7 @@ contract MviSwapReactiveTestnet is AbstractPausableReactive {
     // ═══════════════════════════════════════════════════════════════════════
 
     enum AssetType   { ERC20, ERC721 }
-    enum OrderStatus { Active, Matched, Cancelled, Expired }
+    enum OrderStatus { Active, Filled, PartiallyFilled, Cancelled, Expired, Matched }
 
     struct ChainConfig {
         uint256 chainId;
@@ -143,6 +149,11 @@ contract MviSwapReactiveTestnet is AbstractPausableReactive {
                     REACTIVE_IGNORE,
                     REACTIVE_IGNORE
                 );
+                // Subscribe to lifecycle events for pruning
+                service.subscribe(_initialChainIds[i], _initialContracts[i], ORDER_CANCELLED_TOPIC_0, REACTIVE_IGNORE, REACTIVE_IGNORE, REACTIVE_IGNORE);
+                service.subscribe(_initialChainIds[i], _initialContracts[i], ORDER_FILLED_TOPIC_0,    REACTIVE_IGNORE, REACTIVE_IGNORE, REACTIVE_IGNORE);
+                service.subscribe(_initialChainIds[i], _initialContracts[i], ORDER_EXPIRED_TOPIC_0,   REACTIVE_IGNORE, REACTIVE_IGNORE, REACTIVE_IGNORE);
+                service.subscribe(_initialChainIds[i], _initialContracts[i], ORDER_REBOOKED_TOPIC_0,  REACTIVE_IGNORE, REACTIVE_IGNORE, REACTIVE_IGNORE);
             }
 
             service.subscribe(
@@ -165,6 +176,14 @@ contract MviSwapReactiveTestnet is AbstractPausableReactive {
             _onOrderInitiated(log);
         } else if (log.topic_0 == MATCH_FOUND_TOPIC_0 && log._contract == address(this)) {
             _onMatchFound(log);
+        } else if (log.topic_0 == ORDER_CANCELLED_TOPIC_0) {
+            _onOrderCancelled(log);
+        } else if (log.topic_0 == ORDER_FILLED_TOPIC_0) {
+            _onOrderFilled(log);
+        } else if (log.topic_0 == ORDER_EXPIRED_TOPIC_0) {
+            _onOrderExpired(log);
+        } else if (log.topic_0 == ORDER_REBOOKED_TOPIC_0) {
+            _onOrderRebooked(log);
         }
     }
 
@@ -207,6 +226,57 @@ contract MviSwapReactiveTestnet is AbstractPausableReactive {
             timestamp
         );
 
+        emit Callback(REACTIVE_CHAIN_ID, address(this), CALLBACK_GAS_LIMIT, payload);
+    }
+
+    function _onOrderCancelled(LogRecord calldata log) internal {
+        bytes32 orderId = bytes32(log.topic_1);
+        bytes memory payload = abi.encodeWithSignature(
+            "pruneOrder(address,bytes32,uint8)",
+            address(0),
+            orderId,
+            uint8(OrderStatus.Cancelled)
+        );
+        emit Callback(REACTIVE_CHAIN_ID, address(this), CALLBACK_GAS_LIMIT, payload);
+    }
+
+    function _onOrderFilled(LogRecord calldata log) internal {
+        bytes32 orderId = bytes32(log.topic_1);
+        // log.data contains filledAmount, remainingAmount, timestamp
+        (,uint256 remainingAmount,) = abi.decode(log.data, (uint256, uint256, uint256));
+        
+        if (remainingAmount == 0) {
+            bytes memory payload = abi.encodeWithSignature(
+                "pruneOrder(address,bytes32,uint8)",
+                address(0),
+                orderId,
+                uint8(OrderStatus.Filled)
+            );
+            emit Callback(REACTIVE_CHAIN_ID, address(this), CALLBACK_GAS_LIMIT, payload);
+        }
+    }
+
+    function _onOrderExpired(LogRecord calldata log) internal {
+        bytes32 orderId = bytes32(log.topic_1);
+        bytes memory payload = abi.encodeWithSignature(
+            "pruneOrder(address,bytes32,uint8)",
+            address(0),
+            orderId,
+            uint8(OrderStatus.Expired)
+        );
+        emit Callback(REACTIVE_CHAIN_ID, address(this), CALLBACK_GAS_LIMIT, payload);
+    }
+
+    function _onOrderRebooked(LogRecord calldata log) internal {
+        bytes32 orderId = bytes32(log.topic_1);
+        // log.data contains attempt (uint8) and newExpiry (uint256)
+        (,uint256 newExpiry) = abi.decode(log.data, (uint8, uint256));
+        bytes memory payload = abi.encodeWithSignature(
+            "updateExpiry(address,bytes32,uint256)",
+            address(0),
+            orderId,
+            newExpiry
+        );
         emit Callback(REACTIVE_CHAIN_ID, address(this), CALLBACK_GAS_LIMIT, payload);
     }
 
@@ -331,6 +401,29 @@ contract MviSwapReactiveTestnet is AbstractPausableReactive {
         }
     }
 
+    function pruneOrder(address, bytes32 orderId, uint8 newStatus) external callbackOnly {
+        CrossChainOrder storage order = orders[orderId];
+        if (order.maker == address(0)) return;
+        if (order.status != OrderStatus.Active) return;
+        
+        // Remove from ordersByPair index
+        bytes32[] storage list = ordersByPair[order.targetChainId][order.tokenOut][order.tokenIn];
+        for (uint256 i = 0; i < list.length; i++) {
+            if (list[i] == orderId) {
+                list[i] = list[list.length - 1];
+                list.pop();
+                break;
+            }
+        }
+
+        order.status = OrderStatus(newStatus);
+    }
+
+    function updateExpiry(address, bytes32 orderId, uint256 newExpiry) external callbackOnly {
+        if (orders[orderId].maker == address(0)) return;
+        orders[orderId].expiration = newExpiry;
+    }
+
     function _checkAmountCompatibility(
         AssetType typeA, uint256 amountA, uint256 requiredA,
         AssetType typeB, uint256 amountB, uint256 requiredB
@@ -353,6 +446,10 @@ contract MviSwapReactiveTestnet is AbstractPausableReactive {
         chainIds.push(chainId);
 
         service.subscribe(chainId, walletSwap, ORDER_INITIATED_TOPIC_0, REACTIVE_IGNORE, REACTIVE_IGNORE, REACTIVE_IGNORE);
+        service.subscribe(chainId, walletSwap, ORDER_CANCELLED_TOPIC_0, REACTIVE_IGNORE, REACTIVE_IGNORE, REACTIVE_IGNORE);
+        service.subscribe(chainId, walletSwap, ORDER_FILLED_TOPIC_0,    REACTIVE_IGNORE, REACTIVE_IGNORE, REACTIVE_IGNORE);
+        service.subscribe(chainId, walletSwap, ORDER_EXPIRED_TOPIC_0,   REACTIVE_IGNORE, REACTIVE_IGNORE, REACTIVE_IGNORE);
+        service.subscribe(chainId, walletSwap, ORDER_REBOOKED_TOPIC_0,  REACTIVE_IGNORE, REACTIVE_IGNORE, REACTIVE_IGNORE);
         emit ChainAdded(chainId, walletSwap);
     }
 
@@ -361,6 +458,10 @@ contract MviSwapReactiveTestnet is AbstractPausableReactive {
         require(cfg.active, "Not registered");
 
         service.unsubscribe(chainId, cfg.walletSwap, ORDER_INITIATED_TOPIC_0, REACTIVE_IGNORE, REACTIVE_IGNORE, REACTIVE_IGNORE);
+        service.unsubscribe(chainId, cfg.walletSwap, ORDER_CANCELLED_TOPIC_0, REACTIVE_IGNORE, REACTIVE_IGNORE, REACTIVE_IGNORE);
+        service.unsubscribe(chainId, cfg.walletSwap, ORDER_FILLED_TOPIC_0,    REACTIVE_IGNORE, REACTIVE_IGNORE, REACTIVE_IGNORE);
+        service.unsubscribe(chainId, cfg.walletSwap, ORDER_EXPIRED_TOPIC_0,   REACTIVE_IGNORE, REACTIVE_IGNORE, REACTIVE_IGNORE);
+        service.unsubscribe(chainId, cfg.walletSwap, ORDER_REBOOKED_TOPIC_0,  REACTIVE_IGNORE, REACTIVE_IGNORE, REACTIVE_IGNORE);
         cfg.active = false;
 
         for (uint256 i = 0; i < chainIds.length; i++) {
@@ -399,12 +500,13 @@ contract MviSwapReactiveTestnet is AbstractPausableReactive {
         override
         returns (Subscription[] memory)
     {
-        uint256 count = chainIds.length + 1;
+        uint256 count = (chainIds.length * 5) + 1;
         Subscription[] memory subs = new Subscription[](count);
 
         for (uint256 i = 0; i < chainIds.length; i++) {
             ChainConfig storage cfg = chains[chainIds[i]];
-            subs[i] = Subscription({
+            // Subscriptions for each chain
+            subs[i*5] = Subscription({
                 chain_id:  cfg.chainId,
                 _contract: cfg.walletSwap,
                 topic_0:   ORDER_INITIATED_TOPIC_0,
@@ -412,9 +514,41 @@ contract MviSwapReactiveTestnet is AbstractPausableReactive {
                 topic_2:   REACTIVE_IGNORE,
                 topic_3:   REACTIVE_IGNORE
             });
+            subs[i*5 + 1] = Subscription({
+                chain_id:  cfg.chainId,
+                _contract: cfg.walletSwap,
+                topic_0:   ORDER_CANCELLED_TOPIC_0,
+                topic_1:   REACTIVE_IGNORE,
+                topic_2:   REACTIVE_IGNORE,
+                topic_3:   REACTIVE_IGNORE
+            });
+            subs[i*5 + 2] = Subscription({
+                chain_id:  cfg.chainId,
+                _contract: cfg.walletSwap,
+                topic_0:   ORDER_FILLED_TOPIC_0,
+                topic_1:   REACTIVE_IGNORE,
+                topic_2:   REACTIVE_IGNORE,
+                topic_3:   REACTIVE_IGNORE
+            });
+            subs[i*5 + 3] = Subscription({
+                chain_id:  cfg.chainId,
+                _contract: cfg.walletSwap,
+                topic_0:   ORDER_EXPIRED_TOPIC_0,
+                topic_1:   REACTIVE_IGNORE,
+                topic_2:   REACTIVE_IGNORE,
+                topic_3:   REACTIVE_IGNORE
+            });
+            subs[i*5 + 4] = Subscription({
+                chain_id:  cfg.chainId,
+                _contract: cfg.walletSwap,
+                topic_0:   ORDER_REBOOKED_TOPIC_0,
+                topic_1:   REACTIVE_IGNORE,
+                topic_2:   REACTIVE_IGNORE,
+                topic_3:   REACTIVE_IGNORE
+            });
         }
 
-        subs[chainIds.length] = Subscription({
+        subs[count - 1] = Subscription({
             chain_id:  REACTIVE_CHAIN_ID,
             _contract: address(this),
             topic_0:   MATCH_FOUND_TOPIC_0,

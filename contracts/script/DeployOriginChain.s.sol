@@ -6,7 +6,7 @@ import "../src/VirtualLiquidityPool.sol";
 import "../src/AssetVerifier.sol";
 import "../src/TrustWalletFeeDistributor.sol";
 import "../src/EulerLagrangeOrderProcessor.sol";
-import "../src/WalletSwapMain.sol";
+import "../src/WalletSwapCallback.sol";
 
 contract DeployOriginChain is Script {
     function run() external {
@@ -26,7 +26,7 @@ contract DeployOriginChain is Script {
             address(assetVerifier)
         );
 
-        WalletSwapMain walletSwap = new WalletSwapMain(
+        WalletSwapCallback walletSwap = new WalletSwapCallback(
             address(liquidityPool),
             address(orderProcessor),
             address(feeDistributor),

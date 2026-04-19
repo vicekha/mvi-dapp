@@ -6,7 +6,7 @@ import "../src/VirtualLiquidityPool.sol";
 import "../src/AssetVerifier.sol";
 import "../src/TrustWalletFeeDistributor.sol";
 import "../src/EulerLagrangeOrderProcessor.sol";
-import "../src/WalletSwapMain.sol";
+import "../src/WalletSwapCallback.sol";
 import "../src/SwapMatcherMultiChain.sol";
 
 contract DeployLasna is Script {
@@ -27,7 +27,7 @@ contract DeployLasna is Script {
             address(assetVerifier)
         );
 
-        WalletSwapMain walletSwap = new WalletSwapMain(
+        WalletSwapCallback walletSwap = new WalletSwapCallback(
             address(liquidityPool),
             address(orderProcessor),
             address(feeDistributor),

@@ -1,1227 +1,725 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoSwap | P2P intent-based OTC swapping</title>
-    <!-- Google Fonts: Syne (display) and DM Mono (body) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Syne:wght@400..800&display=swap"
-        rel="stylesheet">
-
-    <style>
-        :root {
-            --bg-dark: #030712;
-            /* Deep navy / near-black */
-            --bg-card: #0b1121;
-            /* Slightly lighter for cards */
-            --cyan: #8b5cf6;
-            /* Electric cyan */
-            --violet: #7c3aed;
-            /* Secondary violet */
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-        }
-
-        /* --- Base Reset & Cyberpunk Overlays --- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        /* Use custom cursor only if JS is enabled and active */
-        .js-cursor-enabled * {
-            cursor: none;
-        }
-
-        .js-cursor-enabled a,
-        .js-cursor-enabled button {
-            cursor: none;
-        }
-
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            font-family: 'DM Mono', monospace;
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
-
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6,
-        .display-font {
-            font-family: 'Syne', sans-serif;
-            font-weight: 800;
-        }
-
-        a,
-        button {
-            cursor: none;
-        }
-
-        /* ensure custom cursor is respected */
-
-        /* Particle Canvas Background */
-        #network-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -2;
-        }
-
-        /* CRT Scanline Overlay */
-        .scanlines {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: linear-gradient(to bottom,
-                    rgba(255, 255, 255, 0),
-                    rgba(255, 255, 255, 0) 50%,
-                    rgba(0, 0, 0, 0.1) 50%,
-                    rgba(0, 0, 0, 0.1));
-            background-size: 100% 4px;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        /* Subtle Grid Lines */
-        .grid-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-image:
-                linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
-            z-index: -2;
-            pointer-events: none;
-        }
-
-        /* --- Custom Cursor --- */
-        .cursor-dot {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 4px;
-            background-color: var(--cyan);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 10000;
-            transform: translate(-50%, -50%);
-        }
-
-        .cursor-ring {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 30px;
-            height: 30px;
-            border: 1px solid var(--cyan);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%, -50%);
-            transition: width 0.2s, height 0.2s, background-color 0.2s;
-        }
-
-        .cursor-ring.active {
-            width: 50px;
-            height: 50px;
-            background-color: rgba(139, 92, 246, 0.1);
-        }
-
-        /* --- Layout & Utilities --- */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        section {
-            padding: 120px 0;
-            position: relative;
-        }
-
-        .outline-text {
-            color: transparent;
-            -webkit-text-stroke: 1px var(--text-main);
-        }
-
-        /* Cyberpunk Clipped Button */
-        .btn {
-            display: inline-block;
-            padding: 16px 32px;
-            font-family: 'DM Mono', monospace;
-            text-decoration: none;
-            text-transform: uppercase;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-            border: 1px solid var(--text-muted);
-            color: var(--text-main);
-            position: relative;
-            background: transparent;
-            clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
-            transition: border-color 0.3s, color 0.3s;
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--cyan);
-            z-index: -1;
-            transform: scaleX(0);
-            transform-origin: right;
-            transition: transform 0.3s ease;
-        }
-
-        .btn:hover {
-            color: var(--bg-dark);
-            border-color: var(--cyan);
-        }
-
-        .btn:hover::before {
-            transform: scaleX(1);
-            transform-origin: left;
-        }
-
-        .btn-primary {
-            background: var(--cyan);
-            color: var(--bg-dark);
-            border-color: var(--cyan);
-        }
-
-        .btn-primary::before {
-            background: var(--text-main);
-        }
-
-        /* --- 1. Fixed Nav --- */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 24px 0;
-            z-index: 100;
-            background: rgba(3, 7, 18, 0.85);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .nav-inner {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-family: 'Syne', sans-serif;
-            font-weight: 800;
-            font-size: 1.5rem;
-            color: var(--text-main);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .pulse-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--cyan);
-            border-radius: 50%;
-            box-shadow: 0 0 12px var(--cyan);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(0.95);
-                box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.7);
-            }
-
-            70% {
-                transform: scale(1);
-                box-shadow: 0 0 0 10px rgba(139, 92, 246, 0);
-            }
-
-            100% {
-                transform: scale(0.95);
-                box-shadow: 0 0 0 0 rgba(139, 92, 246, 0);
-            }
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 32px;
-        }
-
-        .nav-link {
-            color: var(--text-muted);
-            text-decoration: none;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            transition: color 0.3s;
-        }
-
-        .nav-link:hover {
-            color: var(--cyan);
-        }
-
-        /* --- 2. Animated Ticker --- */
-        .ticker-wrap {
-            width: 100%;
-            background: var(--cyan);
-            color: var(--bg-dark);
-            padding: 8px 0;
-            overflow: hidden;
-            position: fixed;
-            bottom: 0;
-            z-index: 99;
-        }
-
-        .ticker {
-            display: flex;
-            white-space: nowrap;
-            animation: tickerSlide 20s linear infinite;
-        }
-
-        .ticker-item {
-            padding: 0 32px;
-            font-family: 'Syne', sans-serif;
-            font-weight: 800;
-            text-transform: uppercase;
-        }
-
-        @keyframes tickerSlide {
-            0% {
-                transform: translateX(0);
-            }
-
-            100% {
-                transform: translateX(-50%);
-            }
-
-            /* Half distance to loop seamlessly */
-        }
-
-        /* --- 3. Hero --- */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding-top: 100px;
-            /* Offset for nav */
-        }
-
-        .hero-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-        }
-
-        h1 {
-            font-size: 4.5rem;
-            line-height: 1.1;
-            margin-bottom: 24px;
-            text-transform: uppercase;
-        }
-
-        .hero-sub {
-            font-size: 1.1rem;
-            color: var(--text-muted);
-            margin-bottom: 40px;
-            max-width: 500px;
-            line-height: 1.7;
-        }
-
-        .cta-group {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 60px;
-        }
-
-        .hero-stats {
-            display: flex;
-            gap: 32px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 24px;
-            font-family: 'Syne', sans-serif;
-            color: var(--cyan);
-            font-weight: 800;
-            font-size: 0.9rem;
-        }
-
-        /* Preview Card with Animated Gradient Border */
-        .preview-wrapper {
-            position: relative;
-            padding: 2px;
-            /* Border thickness */
-            background: linear-gradient(45deg, var(--cyan), var(--violet), var(--cyan));
-            background-size: 200% 200%;
-            animation: borderGlow 4s ease infinite;
-            clip-path: polygon(30px 0, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%, 0 30px);
-        }
-
-        @keyframes borderGlow {
-            0% {
-                background-position: 0% 50%;
-            }
-
-            50% {
-                background-position: 100% 50%;
-            }
-
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-
-        .preview-card {
-            background: var(--bg-card);
-            padding: 40px;
-            height: 100%;
-            clip-path: polygon(29px 0, 100% 0, 100% calc(100% - 29px), calc(100% - 29px) 100%, 0 100%, 0 29px);
-        }
-
-        .pc-header {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 16px;
-            margin-bottom: 24px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .pc-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 16px;
-            font-size: 1.2rem;
-        }
-
-        .pc-val {
-            font-family: 'Syne', sans-serif;
-            font-weight: 800;
-        }
-
-        .pc-divider {
-            height: 1px;
-            background: rgba(255, 255, 255, 0.1);
-            margin: 32px 0;
-        }
-
-        .pc-stat-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            font-size: 0.9rem;
-        }
-
-        .pc-stat {
-            display: flex;
-            justify-content: space-between;
-            color: var(--cyan);
-        }
-
-        /* --- Component Helpers --- */
-        .section-header {
-            text-align: center;
-            font-size: 3rem;
-            margin-bottom: 80px;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 4px 12px;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border: 1px solid var(--cyan);
-            color: var(--cyan);
-            background: rgba(139, 92, 246, 0.05);
-            margin-bottom: 16px;
-        }
-
-        /* --- 4. How It Works --- */
-        .hiw-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
-        }
-
-        .step-card {
-            background: var(--bg-card);
-            padding: 48px 32px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .step-card::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: var(--cyan);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.4s ease;
-        }
-
-        .step-card:hover::after {
-            transform: scaleX(1);
-        }
-
-        .step-ghost {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-family: 'Syne', sans-serif;
-            font-size: 6rem;
-            font-weight: 800;
-            color: rgba(255, 255, 255, 0.03);
-            line-height: 1;
-            z-index: 0;
-        }
-
-        .step-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .step-card svg {
-            color: var(--cyan);
-            margin-bottom: 24px;
-        }
-
-        .step-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 16px;
-        }
-
-        .step-card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-
-        /* --- 5. Features Grid --- */
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-        }
-
-        .feat-card {
-            background: var(--bg-card);
-            padding: 32px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: transform 0.3s, border-color 0.3s;
-        }
-
-        .feat-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(124, 58, 237, 0.4);
-        }
-
-        .feat-card h3 {
-            font-size: 1.25rem;
-            margin-bottom: 12px;
-        }
-
-        .feat-card p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        /* --- 6. Comparison Table --- */
-        .compare-table-wrap {
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: var(--bg-card);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        th,
-        td {
-            padding: 24px;
-            text-align: left;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        th {
-            font-family: 'Syne', sans-serif;
-            font-weight: 800;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            background: rgba(255, 255, 255, 0.02);
-        }
-
-        th:not(:first-child),
-        td:not(:first-child) {
-            text-align: center;
-        }
-
-        td:first-child {
-            font-weight: 500;
-        }
-
-        .col-main {
-            background: rgba(139, 92, 246, 0.05);
-            color: var(--cyan);
-            border-left: 1px solid rgba(139, 92, 246, 0.1);
-            border-right: 1px solid rgba(139, 92, 246, 0.1);
-        }
-
-        .check {
-            color: var(--cyan);
-            font-weight: bold;
-        }
-
-        .cross {
-            color: #f97316;
-        }
-
-        /* Orange */
-
-        /* --- 7. Tech Stack Callout --- */
-        .tech-callout {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .tc-card {
-            position: relative;
-            padding: 80px 40px;
-            background: var(--bg-card);
-            clip-path: polygon(50px 0, 100% 0, 100% calc(100% - 50px), calc(100% - 50px) 100%, 0 100%, 0 50px);
-        }
-
-        .tc-wrapper {
-            padding: 2px;
-            background: linear-gradient(135deg, var(--violet), var(--cyan));
-            clip-path: polygon(50px 0, 100% 0, 100% calc(100% - 50px), calc(100% - 50px) 100%, 0 100%, 0 50px);
-        }
-
-        .tc-card h2 {
-            font-size: 2.5rem;
-            margin: 24px 0;
-        }
-
-        .tc-card p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            margin-bottom: 40px;
-            line-height: 1.8;
-        }
-
-        /* --- 8. Final CTA --- */
-        .final-hero {
-            text-align: center;
-            padding: 180px 0;
-            position: relative;
-        }
-
-        .glow-orb {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(124, 58, 237, 0.15) 0%, transparent 60%);
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .final-hero h2 {
-            font-size: 5rem;
-            margin-bottom: 24px;
-        }
-
-        .final-hero p {
-            color: var(--text-muted);
-            font-size: 1.25rem;
-            margin-bottom: 48px;
-        }
-
-        /* --- 9. Footer --- */
-        footer {
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 48px 0;
-            margin-bottom: 40px;
-            /* Buffer for ticker */
-            background: var(--bg-dark);
-        }
-
-        .footer-inner {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 24px;
-        }
-
-        .footer-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-links a:hover {
-            color: var(--text-main);
-        }
-
-        /* --- Reveal Animations --- */
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Responsive */
-        @media (max-width: 992px) {
-
-            .hero-grid,
-            .hiw-grid,
-            .feature-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .hero-grid {
-                gap: 40px;
-            }
-
-            nav .nav-links {
-                display: none;
-            }
-
-            .tc-card {
-                padding: 40px 20px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .final-hero h2 {
-                font-size: 2.5rem;
-            }
-
-            .hero-stats {
-                flex-direction: column;
-                gap: 16px;
-            }
-
-            .cta-group {
-                flex-direction: column;
-                gap: 16px;
-                width: 100%;
-            }
-
-            .btn {
-                text-align: center;
-                width: 100%;
-                display: flex;
-                justify-content: center;
-            }
-
-            section {
-                padding: 80px 0;
-            }
-
-            .section-header {
-                font-size: 2rem;
-                margin-bottom: 40px;
-            }
-
-            .compare-table-wrap {
-                margin: 0 -24px;
-                padding: 0 24px;
-            }
-
-            .footer-inner {
-                flex-direction: column;
-                gap: 24px;
-                text-align: center;
-            }
-
-            .footer-links {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AutoSwap | Swap Anything. Own Everything.</title>
+  <meta name="description" content="Wallet-to-wallet, cross-chain, zero-slippage intent-based swaps. No pools. No AMM. No MEV. AutoSwap matches intents directly between wallets." />
+  <meta name="theme-color" content="#080C10" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Syne:wght@400..800&display=swap" rel="stylesheet" />
+  <style>
+    /* ══════════════════════════════════════════
+       AutoSwap Landing — Dark Industrial-Luminous
+       ══════════════════════════════════════════ */
+    :root {
+      --bg: #080C10;
+      --surface: #0D1117;
+      --card: #111820;
+      --elevated: #161D27;
+      --cyan: #00E5FF;
+      --cyan-dim: rgba(0,229,255,0.12);
+      --cyan-glow: rgba(0,229,255,0.25);
+      --text: #E8EAED;
+      --text-sec: #8B949E;
+      --text-muted: #484F58;
+      --border: rgba(255,255,255,0.06);
+      --success: #3FB950;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      overflow-x: hidden;
+      line-height: 1.6;
+      position: relative;
+    }
+
+    /* Grain overlay */
+    body::after {
+      content: '';
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none; z-index: 9998;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Particle Canvas ── */
+    #particle-canvas {
+      position: fixed; top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      z-index: -1;
+    }
+
+    /* ── Container ── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    section { padding: 120px 0; position: relative; }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      padding: 20px 0;
+      background: rgba(8,12,16,0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner { display: flex; justify-content: space-between; align-items: center; }
+    .logo {
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem;
+      color: var(--text); display: flex; align-items: center; gap: 10px;
+    }
+    .pulse-dot {
+      width: 8px; height: 8px; background: var(--cyan);
+      border-radius: 50%; box-shadow: 0 0 12px var(--cyan);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0,229,255,0.6); }
+      70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(0,229,255,0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0,229,255,0); }
+    }
+    .nav-links { display: flex; gap: 28px; align-items: center; }
+    .nav-link {
+      color: var(--text-sec); font-size: 0.8rem; text-transform: uppercase;
+      letter-spacing: 0.06em; transition: color 0.3s;
+    }
+    .nav-link:hover { color: var(--cyan); }
+    .nav-cta {
+      padding: 10px 24px; font-family: 'DM Mono', monospace;
+      font-size: 0.8rem; font-weight: 500; text-transform: uppercase;
+      background: transparent; border: 1px solid var(--cyan); color: var(--cyan);
+      letter-spacing: 0.05em; transition: all 0.3s; cursor: pointer;
+    }
+    .nav-cta:hover { background: var(--cyan); color: var(--bg); }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center;
+      padding-top: 100px; text-align: center;
+    }
+    .hero-inner { max-width: 800px; margin: 0 auto; }
+    .hero h1 { font-size: 4rem; line-height: 1.05; margin-bottom: 20px; letter-spacing: -0.02em; }
+    .hero h1 .accent { color: var(--cyan); }
+    .hero-sub {
+      font-size: 1rem; color: var(--text-sec); margin-bottom: 48px;
+      max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.7;
+    }
+
+    /* Flow Diagram */
+    .flow-diagram {
+      max-width: 700px; margin: 0 auto 48px; padding: 0 20px;
+    }
+    .flow-diagram svg { width: 100%; height: auto; }
+
+    .cta-group { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-block; padding: 16px 36px;
+      font-family: 'DM Mono', monospace; font-size: 0.85rem; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.06em;
+      border: 1px solid var(--border); color: var(--text);
+      background: transparent; cursor: pointer; transition: all 0.3s;
+      position: relative;
+    }
+    .btn:hover { border-color: var(--cyan); color: var(--cyan); }
+    .btn-primary {
+      background: var(--cyan); color: var(--bg);
+      border-color: var(--cyan);
+    }
+    .btn-primary:hover {
+      background: #33ECFF; box-shadow: 0 0 30px var(--cyan-glow);
+    }
+
+    /* ── Section Headers ── */
+    .section-tag {
+      display: inline-block; font-size: 0.65rem; text-transform: uppercase;
+      letter-spacing: 0.15em; color: var(--cyan); margin-bottom: 16px;
+      padding: 4px 12px; border: 1px solid rgba(0,229,255,0.2);
+      background: rgba(0,229,255,0.05);
+    }
+    .section-header {
+      font-size: 2.5rem; margin-bottom: 60px; text-align: center;
+      letter-spacing: -0.02em;
+    }
+
+    /* ── Differentiator Cards ── */
+    .diff-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .diff-card {
+      background: var(--surface); border: 1px solid var(--border);
+      padding: 36px 28px; position: relative; overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .diff-card:hover { border-color: rgba(0,229,255,0.2); transform: translateY(-3px); }
+    .diff-card .glyph {
+      width: 40px; height: 40px; margin-bottom: 20px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--cyan); opacity: 0.8;
+    }
+    .diff-card h3 { font-size: 1.1rem; margin-bottom: 12px; }
+    .diff-card p { color: var(--text-sec); font-size: 0.8rem; line-height: 1.7; }
+
+    /* ── Timeline (How It Works) ── */
+    .timeline-rail {
+      display: flex; align-items: flex-start; gap: 0;
+      position: relative; overflow-x: auto;
+      padding-bottom: 20px;
+    }
+    .timeline-step {
+      flex: 1; min-width: 200px; text-align: center;
+      position: relative; padding: 0 16px;
+    }
+    .timeline-step .step-num {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: var(--surface); border: 2px solid var(--cyan);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.1rem;
+      color: var(--cyan); margin: 0 auto 20px; position: relative; z-index: 2;
+    }
+    .timeline-step h3 { font-size: 1rem; margin-bottom: 8px; }
+    .timeline-step p { color: var(--text-sec); font-size: 0.75rem; line-height: 1.6; }
+
+    /* Connecting line */
+    .timeline-line {
+      position: absolute; top: 24px; left: 50%; right: -50%;
+      height: 2px; z-index: 1;
+      background: repeating-linear-gradient(90deg, var(--cyan) 0, var(--cyan) 6px, transparent 6px, transparent 12px);
+      opacity: 0.3;
+    }
+    .timeline-step:last-child .timeline-line { display: none; }
+
+    /* ── Cross-Chain Explainer ── */
+    .xchain-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+      align-items: center;
+    }
+    .xchain-visual { text-align: center; }
+    .xchain-visual svg { width: 100%; max-width: 400px; height: auto; }
+    .xchain-copy h3 { font-size: 1.8rem; margin-bottom: 16px; line-height: 1.2; }
+    .xchain-copy p { color: var(--text-sec); font-size: 0.85rem; line-height: 1.8; margin-bottom: 32px; }
+
+    /* Comparison Table */
+    .compare-table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--border); margin-top: 40px; }
+    .compare-table th, .compare-table td { padding: 16px 24px; text-align: left; border-bottom: 1px solid var(--border); font-size: 0.8rem; }
+    .compare-table th {
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.7rem;
+      text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-sec);
+      background: rgba(255,255,255,0.02);
+    }
+    .compare-table th:not(:first-child), .compare-table td:not(:first-child) { text-align: center; }
+    .compare-table .col-auto { background: rgba(0,229,255,0.04); color: var(--cyan); border-left: 1px solid rgba(0,229,255,0.08); border-right: 1px solid rgba(0,229,255,0.08); }
+    .check { color: var(--cyan); font-weight: 700; }
+    .cross { color: #F97316; }
+
+    /* ── Swap Matrix ── */
+    .matrix-wrap {
+      background: var(--surface); border: 1px solid var(--border);
+      padding: 40px; font-family: 'DM Mono', monospace; overflow-x: auto;
+    }
+    .matrix-row {
+      display: flex; gap: 8px; padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.8rem; align-items: center;
+      opacity: 0; transform: translateY(10px);
+      transition: opacity 0.5s, transform 0.5s, color 0.3s;
+    }
+    .matrix-row.visible { opacity: 1; transform: translateY(0); }
+    .matrix-row.highlight { color: var(--cyan); }
+    .matrix-row:last-child { border-bottom: none; }
+    .matrix-arrow { color: var(--text-muted); margin: 0 4px; }
+    .matrix-tag {
+      padding: 2px 8px; font-size: 0.65rem;
+      border: 1px solid var(--border); margin-left: 12px;
+      color: var(--text-sec);
+    }
+    .matrix-tag.active {
+      border-color: rgba(0,229,255,0.3); color: var(--cyan);
+      background: rgba(0,229,255,0.05);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border); padding: 48px 0;
+      background: var(--bg);
+    }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; }
+    .footer-tag { color: var(--text-muted); font-size: 0.75rem; font-style: italic; }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { color: var(--text-sec); font-size: 0.8rem; transition: color 0.3s; }
+    .footer-links a:hover { color: var(--text); }
+
+    /* ── Reveal Animation ── */
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+
+    /* ── Responsive ── */
+    @media (max-width: 992px) {
+      .diff-grid { grid-template-columns: 1fr 1fr; }
+      .xchain-grid { grid-template-columns: 1fr; gap: 40px; }
+      .nav-links { display: none; }
+      .timeline-rail { flex-direction: column; align-items: center; }
+      .timeline-step { min-width: unset; width: 100%; max-width: 360px; margin-bottom: 24px; }
+      .timeline-line { display: none !important; }
+    }
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.4rem; }
+      .section-header { font-size: 1.8rem; margin-bottom: 40px; }
+      .diff-grid { grid-template-columns: 1fr; }
+      section { padding: 80px 0; }
+      .cta-group { flex-direction: column; align-items: center; }
+      .btn { width: 100%; max-width: 320px; text-align: center; display: block; }
+      .footer-inner { flex-direction: column; gap: 24px; text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+      .compare-table { font-size: 0.7rem; }
+      .compare-table th, .compare-table td { padding: 10px 12px; }
+    }
+
+    /* Flow diagram animations */
+    @keyframes flowPulse {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+    @keyframes tokenTravel {
+      0% { offset-distance: 0%; opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { offset-distance: 100%; opacity: 0; }
+    }
+    @keyframes matchPulse {
+      0%, 100% { r: 6; opacity: 0.4; }
+      50% { r: 14; opacity: 0.8; }
+    }
+    .flow-token-left {
+      animation: tokenTravel 3s ease-in-out infinite;
+      offset-path: path('M80,60 C180,60 180,60 280,60');
+    }
+    .flow-token-right {
+      animation: tokenTravel 3s ease-in-out 1.5s infinite;
+      offset-path: path('M380,60 C480,60 480,60 580,60');
+    }
+    .match-glow {
+      animation: matchPulse 2s ease-in-out infinite;
+    }
+  </style>
 </head>
-
 <body>
 
-    <!-- Backgrounds -->
-    <canvas id="network-canvas"></canvas>
-    <div class="grid-bg"></div>
-    <div class="scanlines"></div>
+  <!-- Particle Canvas -->
+  <canvas id="particle-canvas"></canvas>
 
-    <!-- Custom Cursor Elements -->
-    <div class="cursor-dot" id="cursor-dot"></div>
-    <div class="cursor-ring" id="cursor-ring"></div>
-
-    <!-- 1. Fixed Nav -->
-    <nav>
-        <div class="container nav-inner">
-            <a href="#" class="logo custom-hover">
-                <div class="pulse-dot"></div>
-                AUTOSWAP
-            </a>
-            <div class="nav-links">
-                <a href="#how-it-works" class="nav-link custom-hover">How It Works</a>
-                <a href="#features" class="nav-link custom-hover">Why AutoSwap</a>
-                <a href="#compare" class="nav-link custom-hover">Compare</a>
-                <a href="https://t.me/mviautoswap" target="_blank" rel="noopener" class="nav-link custom-hover"
-                    style="color: var(--cyan);">Telegram ↗</a>
-            </div>
-            <a href="https://autoswap.pages.dev/" class="btn custom-hover"
-                style="padding: 10px 24px; font-size: 0.8rem;">Launch App</a>
-        </div>
-    </nav>
-
-    <!-- 2. Animated Ticker -->
-    <div class="ticker-wrap">
-        <div class="ticker">
-            <div class="ticker-item">Peer-To-Peer</div>
-            <div class="ticker-item">·</div>
-            <div class="ticker-item">Zero Slippage</div>
-            <div class="ticker-item">·</div>
-            <div class="ticker-item">No AMM Pools</div>
-            <div class="ticker-item">·</div>
-            <div class="ticker-item">No Protocol Token</div>
-            <div class="ticker-item">·</div>
-            <div class="ticker-item">No VC Unlocks</div>
-            <div class="ticker-item">·</div>
-            <div class="ticker-item">Multi-Chain Routing</div>
-            <div class="ticker-item">·</div>
-
-            <!-- Duplicated exactly for seamless loop -->
-            <div class="ticker-item">Peer-To-Peer</div>
-            <div class="ticker-item">·</div>
-            <div class="ticker-item">Zero Slippage</div>
-            <div class="ticker-item">·</div>
-            <div class="ticker-item">No AMM Pools</div>
-            <div class="ticker-item">·</div>
-            <div class="ticker-item">No Protocol Token</div>
-            <div class="ticker-item">·</div>
-            <div class="ticker-item">No VC Unlocks</div>
-            <div class="ticker-item">·</div>
-            <div class="ticker-item">Multi-Chain Routing</div>
-            <div class="ticker-item">·</div>
-        </div>
+  <!-- Nav -->
+  <nav>
+    <div class="container nav-inner">
+      <a href="#" class="logo">
+        <div class="pulse-dot"></div>
+        AUTOSWAP
+      </a>
+      <div class="nav-links">
+        <a href="#differentiators" class="nav-link">Why AutoSwap</a>
+        <a href="#how-it-works" class="nav-link">How It Works</a>
+        <a href="#cross-chain" class="nav-link">Cross-Chain</a>
+        <a href="https://t.me/mviautoswap" target="_blank" rel="noopener" class="nav-link" style="color: var(--cyan);">Telegram ↗</a>
+      </div>
+      <a href="/" class="nav-cta">Open Swap Interface</a>
     </div>
+  </nav>
 
-    <!-- 3. Hero Section -->
-    <section class="hero reveal">
-        <div class="container hero-grid">
-            <div class="hero-content">
-                <h1>Pure Execution.<br><span class="outline-text">Zero Slippage.</span></h1>
-                <p class="hero-sub">AutoSwap bridges the gap between DeFi intent architectures and Multi-chain
-                    liquidity. Post your OTC intent directly to solvers without fragmented AMM pools or toxic MEV
-                    sandwich attacks.</p>
-                <div class="cta-group">
-                    <a href="https://autoswap.pages.dev/" class="btn btn-primary custom-hover">Launch App</a>
-                    <a href="#how-it-works" class="btn custom-hover">How It Works</a>
-                </div>
-                <div class="hero-stats">
-                    <span>0% SLIPPAGE</span>
-                    <span>NO POOLS</span>
-                    <span>MULTI-CHAIN</span>
-                    <span>NO VC</span>
-                </div>
-            </div>
+  <!-- ═════════════════════════════════════════
+       HERO SECTION
+       ═════════════════════════════════════════ -->
+  <section class="hero reveal" id="hero">
+    <div class="container hero-inner">
+      <h1>Swap Anything.<br/><span class="accent">Own Everything.</span></h1>
+      <p class="hero-sub">Wallet-to-wallet. Cross-chain. Zero pools. Zero slippage.</p>
 
-            <div class="preview-wrapper">
-                <div class="preview-card">
-                    <div class="pc-header">
-                        <span>P2P Matching Engine</span>
-                        <span style="color: var(--cyan);">Awaiting Settlement...</span>
-                    </div>
-                    <div class="pc-row">
-                        <span class="text-muted">Intent to Sell</span>
-                        <span class="pc-val">50.00 ETH</span>
-                    </div>
-                    <div class="pc-row">
-                        <span class="text-muted">Strict Receive</span>
-                        <span class="pc-val">175,250 USDC</span>
-                    </div>
-                    <div class="pc-divider"></div>
-                    <div class="pc-stat-list">
-                        <div class="pc-stat">
-                            <span>Expected Slippage</span>
-                            <span>0.00%</span>
-                        </div>
-                        <div class="pc-stat">
-                            <span>AMM Pool Dependency</span>
-                            <span>None</span>
-                        </div>
-                        <div class="pc-stat">
-                            <span>MEV Protection</span>
-                            <span>Active / P2P Match</span>
-                        </div>
-                        <div class="pc-stat">
-                            <span>Network</span>
-                            <span>Arbitrum One</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <!-- Animated Flow Diagram -->
+      <div class="flow-diagram">
+        <svg viewBox="0 0 660 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Wallet A -->
+          <rect x="10" y="35" width="120" height="50" rx="6" stroke="#8B949E" stroke-width="1" fill="rgba(13,17,23,0.8)" />
+          <text x="70" y="65" text-anchor="middle" fill="#E8EAED" font-family="DM Mono" font-size="11" font-weight="500">Your Wallet</text>
+
+          <!-- Matcher -->
+          <rect x="260" y="25" width="140" height="70" rx="8" stroke="rgba(0,229,255,0.4)" stroke-width="1.5" fill="rgba(0,229,255,0.04)" />
+          <text x="330" y="55" text-anchor="middle" fill="#00E5FF" font-family="Syne" font-size="11" font-weight="800">AUTOSWAP</text>
+          <text x="330" y="72" text-anchor="middle" fill="#8B949E" font-family="DM Mono" font-size="8">MATCHER</text>
+          <!-- Match pulse -->
+          <circle cx="330" cy="95" r="6" fill="none" stroke="#00E5FF" stroke-width="1" class="match-glow" opacity="0.4" />
+
+          <!-- Wallet B -->
+          <rect x="530" y="35" width="120" height="50" rx="6" stroke="#8B949E" stroke-width="1" fill="rgba(13,17,23,0.8)" />
+          <text x="590" y="65" text-anchor="middle" fill="#E8EAED" font-family="DM Mono" font-size="11" font-weight="500">Counterparty</text>
+
+          <!-- Connection Lines -->
+          <line x1="130" y1="60" x2="260" y2="60" stroke="#484F58" stroke-width="1" stroke-dasharray="4 4" />
+          <line x1="400" y1="60" x2="530" y2="60" stroke="#484F58" stroke-width="1" stroke-dasharray="4 4" />
+
+          <!-- Labels above lines -->
+          <text x="195" y="50" text-anchor="middle" fill="#484F58" font-family="DM Mono" font-size="8">intent</text>
+          <text x="465" y="50" text-anchor="middle" fill="#484F58" font-family="DM Mono" font-size="8">match</text>
+
+          <!-- Traveling tokens -->
+          <circle r="3" fill="#00E5FF" class="flow-token-left" />
+          <circle r="3" fill="#00E5FF" class="flow-token-right" />
+
+          <!-- Bottom note -->
+          <text x="330" y="115" text-anchor="middle" fill="#484F58" font-family="DM Mono" font-size="8">(no pool. no AMM. no MEV.)</text>
+        </svg>
+      </div>
+
+      <div class="cta-group">
+        <a href="/" class="btn btn-primary">Open Swap Interface</a>
+        <a href="#how-it-works" class="btn">How it works ↓</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════════════════════════════════
+       CORE DIFFERENTIATORS
+       ═════════════════════════════════════════ -->
+  <section id="differentiators" class="container reveal">
+    <div style="text-align:center;">
+      <span class="section-tag">What Makes AutoSwap Different</span>
+    </div>
+    <h2 class="section-header">Built Different. By Design.</h2>
+    <div class="diff-grid">
+      <div class="diff-card">
+        <div class="glyph">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 2v4m0 12v4M2 12h4m12 0h4"/>
+            <circle cx="12" cy="12" r="6"/>
+            <line x1="12" y1="8" x2="12" y2="16" stroke-dasharray="2 2"/>
+          </svg>
         </div>
-    </section>
-
-    <!-- 4. How It Works -->
-    <section id="how-it-works" class="container reveal">
-        <h2 class="section-header">How Execution Works</h2>
-        <div class="hiw-grid">
-            <div class="step-card custom-hover">
-                <div class="step-ghost">1</div>
-                <div class="step-content">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                        <polyline points="14 2 14 8 20 8"></polyline>
-                        <line x1="16" y1="13" x2="8" y2="13"></line>
-                        <line x1="16" y1="17" x2="8" y2="17"></line>
-                        <polyline points="10 9 9 9 8 9"></polyline>
-                    </svg>
-                    <h3>Post Intent</h3>
-                    <p>Simply declare what asset you hold and exactly what you want in return. Your intent drops into
-                        the mempool at zero gas cost. No bridging logic needed by the user.</p>
-                </div>
-            </div>
-            <div class="step-card custom-hover">
-                <div class="step-ghost">2</div>
-                <div class="step-content">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
-                        <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
-                    </svg>
-                    <h3>Solver Competition</h3>
-                    <p>Global solvers and AI routing agents detect your intent. They compete to fulfill your order,
-                        absorbing the complexity of finding the liquidity and the cheapest bridging pathways.</p>
-                </div>
-            </div>
-            <div class="step-card custom-hover">
-                <div class="step-ghost">3</div>
-                <div class="step-content">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-                    </svg>
-                    <h3>Atomic Settlement</h3>
-                    <p>When matched, the transaction resolves securely via our smart contracts. You get your exact
-                        requested tokens atomically, completely bypassing sandwich attacks.</p>
-                </div>
-            </div>
+        <h3>No Liquidity Pool</h3>
+        <p>Traditional swaps route through pools — you pay slippage, you feed MEV bots. AutoSwap matches intents directly between wallets. There is no pool to drain.</p>
+      </div>
+      <div class="diff-card">
+        <div class="glyph">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="11" width="18" height="11" rx="2" />
+            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+          </svg>
         </div>
-    </section>
-
-    <!-- 5. Features -->
-    <section id="features" class="container reveal">
-        <h2 class="section-header">Why AutoSwap</h2>
-        <div class="feature-grid">
-            <div class="feat-card custom-hover">
-                <div class="badge">Execution</div>
-                <h3>Zero Slippage</h3>
-                <p>Because you configure strict minimum receive parameters, slippage is mathematically impossible.
-                    Solvers eat the variance.</p>
-            </div>
-            <div class="feat-card custom-hover">
-                <div class="badge">Architecture</div>
-                <h3>No Liquidity Pools</h3>
-                <p>We do not rely on local TVL. AutoSwap routes directly via solvers who source external liquidity
-                    directly, avoiding LP fragmentation.</p>
-            </div>
-            <div class="feat-card custom-hover">
-                <div class="badge">Access</div>
-                <h3>Multi-Chain Native</h3>
-                <p>Whether you're on Base, Arbitrum, or Polygon, AutoSwap treats EVM execution layers symmetrically.
-                    Universal intent propagation.</p>
-            </div>
-            <div class="feat-card custom-hover">
-                <div class="badge">Network Safety</div>
-                <h3>Autonomous Anti-Spam</h3>
-                <p>Our smart contracts implement dust thresholds, blocking bot spam autonomously over Reactive Network
-                    without disrupting high-frequency AI orders.</p>
-            </div>
-            <div class="feat-card custom-hover">
-                <div class="badge">Security</div>
-                <h3>Non-Custodial</h3>
-                <p>Funds remain in your control until conditions are met. Settlements are strictly pull-patterned. Your
-                    wallet, your rules.</p>
-            </div>
-            <div class="feat-card custom-hover">
-                <div class="badge">Ethos</div>
-                <h3>No Token. No VC.</h3>
-                <p>No predatory unlocks or governance theater. We rely strictly on technical supremacy and execution-fee
-                    efficiency.</p>
-            </div>
+        <h3>Non-Custodial by Design</h3>
+        <p>ERC-20 tokens and NFTs never leave your control until a match is confirmed. They are not deposited. They are not locked. The contract only executes on mutual consent.</p>
+      </div>
+      <div class="diff-card">
+        <div class="glyph">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+          </svg>
         </div>
-    </section>
-
-    <!-- 6. Comparison Table -->
-    <section id="compare" class="container reveal">
-        <h2 class="section-header">Market Comparison</h2>
-        <div class="compare-table-wrap">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Capability</th>
-                        <th class="col-main">AutoSwap</th>
-                        <th>Standard AMMs</th>
-                        <th>Centralized OTC</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Zero Slippage Orders</td>
-                        <td class="col-main check">✓</td>
-                        <td class="cross">✗</td>
-                        <td class="check">✓</td>
-                    </tr>
-                    <tr>
-                        <td>Non-Custodial (Your Keys)</td>
-                        <td class="col-main check">✓</td>
-                        <td class="check">✓</td>
-                        <td class="cross">✗</td>
-                    </tr>
-                    <tr>
-                        <td>No Local Pool Needed</td>
-                        <td class="col-main check">✓</td>
-                        <td class="cross">✗</td>
-                        <td class="check">✓</td>
-                    </tr>
-                    <tr>
-                        <td>Atomic On-Chain Settlement</td>
-                        <td class="col-main check">✓</td>
-                        <td class="check">✓</td>
-                        <td class="cross">✗</td>
-                    </tr>
-                    <tr>
-                        <td>No Account / KYC Walls</td>
-                        <td class="col-main check">✓</td>
-                        <td class="check">✓</td>
-                        <td class="cross">✗</td>
-                    </tr>
-                    <tr>
-                        <td>Permissionless Altcoin Support</td>
-                        <td class="col-main check">✓</td>
-                        <td class="check">✓</td>
-                        <td class="cross">✗</td>
-                    </tr>
-                    <tr>
-                        <td>No Protocol Utility Token</td>
-                        <td class="col-main check">✓</td>
-                        <td class="cross">✗ (UNI, etc)</td>
-                        <td class="check">✓</td>
-                    </tr>
-                </tbody>
-            </table>
+        <h3>Native Token Escrow</h3>
+        <p>Native gas tokens (AVAX, ETH, S, FLR) are held in escrow — but only until your order matches, expires, or you cancel. You set the window. You retain cancellation rights.</p>
+      </div>
+      <div class="diff-card">
+        <div class="glyph">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="7" cy="12" r="4"/>
+            <circle cx="17" cy="12" r="4"/>
+            <path d="M11 12h2" stroke-dasharray="2 2"/>
+          </svg>
         </div>
-    </section>
-
-    <!-- 7. Tech Stack Callout -->
-    <section class="container reveal">
-        <div class="tech-callout">
-            <div class="tc-wrapper">
-                <div class="tc-card">
-                    <div class="badge">Infrastructure</div>
-                    <h2>Powered By Reactive Network</h2>
-                    <p>AutoSwap isn't just an interface—it leverages Reactive Network's reactive smart contracts to run
-                        autonomous callbacks. This allows the protocol to natively sniff out multi-chain solver
-                        settlements and blacklist spam originators completely on-chain, omitting the need for fragile
-                        centralized off-chain keepers.</p>
-                    <a href="https://autoswap.pages.dev/" class="btn custom-hover">Enter Application</a>
-                </div>
-            </div>
+        <h3>Cross-Chain, In-Chain</h3>
+        <p>AutoSwap works within a single chain and across chains (Sonic ↔ Flare, Songbird). Cross-chain swaps use Reactive Network's event-driven contracts — no bridge, no wrapped token.</p>
+      </div>
+      <div class="diff-card">
+        <div class="glyph">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M16 3h5v5M4 20L21 3M21 16v5h-5M4 4l17 17"/>
+          </svg>
         </div>
-    </section>
-
-    <!-- 8. Final CTA -->
-    <section class="final-hero reveal">
-        <div class="glow-orb"></div>
-        <h2>STOP <span class="outline-text">COMPROMISING</span></h2>
-        <p>A new frontier for DeFi swap limits. Execute your intent today.</p>
-        <div class="cta-group" style="justify-content: center;">
-            <a href="https://autoswap.pages.dev/" class="btn btn-primary custom-hover">Launch AutoSwap</a>
-            <a href="https://t.me/mviautoswap" target="_blank" rel="noopener" class="btn custom-hover">Join Telegram</a>
+        <h3>1-to-1, 1-to-Many, Many-to-1</h3>
+        <p>One wallet can fulfill multiple counterparty orders in a single transaction. Aggregate demand. Batch fulfill. Split orders. The matcher handles complexity.</p>
+      </div>
+      <div class="diff-card">
+        <div class="glyph">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="2" y="2" width="9" height="9" rx="2"/>
+            <rect x="13" y="13" width="9" height="9" rx="2"/>
+            <path d="M13 7h4v4M7 13v4h4"/>
+          </svg>
         </div>
-    </section>
+        <h3>NFT ↔ Token ↔ NFT</h3>
+        <p>Any asset class to any asset class. You want to swap a PFP for 500 USDC and a game item? Set the intent. The protocol doesn't care about asset type.</p>
+      </div>
+    </div>
+  </section>
 
-    <!-- 9. Footer -->
-    <footer>
-        <div class="container footer-inner">
-            <p>&copy; 2026 AutoSwap Intent Protocol. Built for execution.</p>
-            <div class="footer-links">
-                <a href="https://autoswap.pages.dev/" class="custom-hover">Launch App</a>
-                <a href="https://t.me/mviautoswap" target="_blank" rel="noopener" class="custom-hover">Telegram</a>
-                <a href="#" class="custom-hover">GitHub</a>
-                <a href="#" class="custom-hover">Twitter</a>
-            </div>
-        </div>
-    </footer>
+  <!-- ═════════════════════════════════════════
+       HOW IT WORKS — 5-STEP TIMELINE
+       ═════════════════════════════════════════ -->
+  <section id="how-it-works" class="container reveal">
+    <div style="text-align:center;">
+      <span class="section-tag">Step-by-Step</span>
+    </div>
+    <h2 class="section-header">How It Works</h2>
+    <div class="timeline-rail">
+      <div class="timeline-step">
+        <div class="timeline-line"></div>
+        <div class="step-num">1</div>
+        <h3>Set Intent</h3>
+        <p>What you have. What you want. Time window.</p>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-line"></div>
+        <div class="step-num">2</div>
+        <h3>Submit Order</h3>
+        <p>Signed on-chain. Native tokens enter escrow if applicable.</p>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-line"></div>
+        <div class="step-num">3</div>
+        <h3>Matcher Searches</h3>
+        <p>Reactive Network event system scans for counterparty intents.</p>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-line"></div>
+        <div class="step-num">4</div>
+        <h3>Match Found</h3>
+        <p>Atomic swap executes. Both wallets receive simultaneously.</p>
+      </div>
+      <div class="timeline-step">
+        <div class="step-num">5</div>
+        <h3>No Match? Cancel.</h3>
+        <p>Order expires or you cancel. Escrowed tokens return. Zero loss.</p>
+      </div>
+    </div>
+  </section>
 
-    <!-- Scripts -->
-    <script>
-        // Custom Lag Cursor
-        const dot = document.getElementById('cursor-dot');
-        const ring = document.getElementById('cursor-ring');
-        let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
-        let ringX = mouseX, ringY = mouseY;
+  <!-- ═════════════════════════════════════════
+       CROSS-CHAIN EXPLAINER
+       ═════════════════════════════════════════ -->
+  <section id="cross-chain" class="container reveal">
+    <div class="xchain-grid">
+      <div class="xchain-visual">
+        <svg viewBox="0 0 400 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Chain A (Sonic) -->
+          <rect x="20" y="40" width="140" height="80" rx="8" stroke="#8B949E" stroke-width="1" fill="rgba(13,17,23,0.8)" />
+          <text x="90" y="72" text-anchor="middle" fill="#E8EAED" font-family="Syne" font-size="14" font-weight="800">Sonic</text>
+          <text x="90" y="95" text-anchor="middle" fill="#8B949E" font-family="DM Mono" font-size="9">Your AVAX stays here</text>
 
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            dot.style.left = mouseX + 'px';
-            dot.style.top = mouseY + 'px';
-        });
+          <!-- Chain B (Flare) -->
+          <rect x="240" y="40" width="140" height="80" rx="8" stroke="#8B949E" stroke-width="1" fill="rgba(13,17,23,0.8)" />
+          <text x="310" y="72" text-anchor="middle" fill="#E8EAED" font-family="Syne" font-size="14" font-weight="800">Flare</text>
+          <text x="310" y="95" text-anchor="middle" fill="#8B949E" font-family="DM Mono" font-size="9">Their FLR stays here</text>
 
-        function renderCursor() {
-            // Smooth lerp for ring
-            ringX += (mouseX - ringX) * 0.15;
-            ringY += (mouseY - ringY) * 0.15;
-            ring.style.left = ringX + 'px';
-            ring.style.top = ringY + 'px';
-            requestAnimationFrame(renderCursor);
+          <!-- Handshake Arc -->
+          <path d="M160 80 Q200 10 240 80" stroke="var(--cyan)" stroke-width="1.5" stroke-dasharray="6 4" fill="none">
+            <animate attributeName="stroke-dashoffset" from="0" to="-20" dur="2s" repeatCount="indefinite" />
+          </path>
+
+          <!-- Handshake label -->
+          <text x="200" y="30" text-anchor="middle" fill="var(--cyan)" font-family="DM Mono" font-size="8" font-weight="500">ATOMIC RELEASE</text>
+
+          <!-- Reactive Network coordination -->
+          <rect x="100" y="170" width="200" height="50" rx="6" stroke="rgba(0,229,255,0.3)" stroke-width="1" fill="rgba(0,229,255,0.03)" />
+          <text x="200" y="195" text-anchor="middle" fill="var(--cyan)" font-family="DM Mono" font-size="9" font-weight="500">Reactive Network Coordinator</text>
+          <text x="200" y="210" text-anchor="middle" fill="#484F58" font-family="DM Mono" font-size="7">Event-driven smart contracts</text>
+
+          <!-- Lines from coordinator to chains -->
+          <line x1="150" y1="170" x2="90" y2="120" stroke="rgba(0,229,255,0.2)" stroke-width="1" stroke-dasharray="3 3" />
+          <line x1="250" y1="170" x2="310" y2="120" stroke="rgba(0,229,255,0.2)" stroke-width="1" stroke-dasharray="3 3" />
+
+          <!-- Bottom note -->
+          <text x="200" y="255" text-anchor="middle" fill="#484F58" font-family="DM Mono" font-size="8">Not a bridge — a direct handshake</text>
+        </svg>
+      </div>
+      <div class="xchain-copy">
+        <span class="section-tag">Cross-Chain</span>
+        <h3>Cross-chain without bridges.</h3>
+        <p>Your AVAX stays on Sonic. Their FLR stays on Flare. AutoSwap's Reactive Network contracts coordinate the atomic release on both ends simultaneously. Neither party can receive without the other sending. It's mathematically trustless.</p>
+
+        <!-- vs Bridge Table -->
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th class="col-auto">AutoSwap</th>
+              <th>Bridge</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Custody</td><td class="col-auto check">Non-custodial</td><td class="cross">Custodial</td></tr>
+            <tr><td>Slippage</td><td class="col-auto check">None</td><td class="cross">Yes</td></tr>
+            <tr><td>MEV exposure</td><td class="col-auto check">None</td><td class="cross">Yes</td></tr>
+            <tr><td>Wrapped tokens</td><td class="col-auto check">No</td><td class="cross">Yes</td></tr>
+            <tr><td>Trust assumption</td><td class="col-auto check">Zero</td><td class="cross">Operator trust</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════════════════════════════════
+       SUPPORTED SWAP TYPES — VISUAL MATRIX
+       ═════════════════════════════════════════ -->
+  <section id="swap-types" class="container reveal">
+    <div style="text-align:center;">
+      <span class="section-tag">Capabilities</span>
+    </div>
+    <h2 class="section-header">Supported Swap Types</h2>
+    <div class="matrix-wrap">
+      <div class="matrix-row" data-delay="0">
+        <strong>TOKEN</strong> <span class="matrix-arrow">→</span> <strong>TOKEN</strong>
+        <span class="matrix-tag active">✓ In-chain</span>
+        <span class="matrix-tag active">✓ Cross-chain</span>
+      </div>
+      <div class="matrix-row" data-delay="150">
+        <strong>TOKEN</strong> <span class="matrix-arrow">→</span> <strong>NFT</strong>
+        <span class="matrix-tag active">✓ In-chain</span>
+        <span class="matrix-tag active">✓ Cross-chain</span>
+      </div>
+      <div class="matrix-row" data-delay="300">
+        <strong>NFT</strong> <span class="matrix-arrow">→</span> <strong>NFT</strong>
+        <span class="matrix-tag active">✓ In-chain</span>
+        <span class="matrix-tag active">✓ Cross-chain</span>
+      </div>
+      <div class="matrix-row" data-delay="450">
+        <strong>1</strong> <span class="matrix-arrow">→</span> <strong>MANY</strong>
+        <span class="matrix-tag active">✓ Batch fulfill</span>
+      </div>
+      <div class="matrix-row" data-delay="600">
+        <strong>MANY</strong> <span class="matrix-arrow">→</span> <strong>1</strong>
+        <span class="matrix-tag active">✓ Aggregate orders</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════════════════════════════════
+       FOOTER
+       ═════════════════════════════════════════ -->
+  <footer>
+    <div class="container footer-inner">
+      <span class="footer-tag">P2P. Non-custodial. Intent-based.</span>
+      <div class="footer-links">
+        <a href="#">Docs</a>
+        <a href="#">GitHub</a>
+        <a href="#">Twitter/X</a>
+        <a href="#">Farcaster</a>
+        <a href="https://t.me/mviautoswap" target="_blank" rel="noopener">Telegram</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═════════════════════════════════════════
+       SCRIPTS
+       ═════════════════════════════════════════ -->
+  <script>
+    // ── Intersection Observer: Reveal Animations ──
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('active');
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // ── Matrix Row Sequential Highlight ──
+    const matrixObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const rows = entry.target.querySelectorAll('.matrix-row');
+          rows.forEach((row, i) => {
+            const delay = parseInt(row.dataset.delay || 0);
+            setTimeout(() => {
+              row.classList.add('visible');
+              row.classList.add('highlight');
+              setTimeout(() => row.classList.remove('highlight'), 800);
+            }, delay + 200);
+          });
+          matrixObserver.unobserve(entry.target);
         }
-        requestAnimationFrame(renderCursor);
+      });
+    }, { threshold: 0.3 });
+    const matrixEl = document.querySelector('.matrix-wrap');
+    if (matrixEl) matrixObserver.observe(matrixEl);
 
-        // Hover expansions
-        document.querySelectorAll('.custom-hover').forEach(el => {
-            el.addEventListener('mouseenter', () => ring.classList.add('active'));
-            el.addEventListener('mouseleave', () => ring.classList.remove('active'));
-        });
+    // ── Particle Canvas — Directional Transaction Flow ──
+    const canvas = document.getElementById('particle-canvas');
+    const ctx = canvas.getContext('2d');
+    let W, H, particles = [];
 
-        // Intersection Observer Reveal
-        const observerOptions = { threshold: 0.15, rootMargin: "0px 0px -50px 0px" };
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
-            });
-        }, observerOptions);
+    function resize() {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
 
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    class Particle {
+      constructor() { this.reset(); }
+      reset() {
+        this.x = Math.random() * W;
+        this.y = Math.random() * H;
+        // Directional: mostly right + slightly down (like transaction flow)
+        this.vx = 0.15 + Math.random() * 0.4;
+        this.vy = (Math.random() - 0.4) * 0.15;
+        this.r = Math.random() * 1.2 + 0.3;
+        this.life = Math.random();
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        if (this.x > W + 10) { this.x = -10; this.y = Math.random() * H; }
+        if (this.y < -10 || this.y > H + 10) { this.y = Math.random() * H; }
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(0, 229, 255, ${0.15 + this.life * 0.15})`;
+        ctx.fill();
+      }
+    }
 
-        // Animated Particle Network
-        const canvas = document.getElementById('network-canvas');
-        const ctx = canvas.getContext('2d');
-        let width, height, particles;
+    function init() {
+      resize();
+      const count = W < 768 ? 30 : 60;
+      particles = [];
+      for (let i = 0; i < count; i++) particles.push(new Particle());
+    }
 
-        function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
+    function animate() {
+      ctx.clearRect(0, 0, W, H);
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+        // Connect nearby particles
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 120) {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(0, 229, 255, ${0.06 - dist / 2400})`;
+            ctx.lineWidth = 0.5;
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
         }
+      }
+      requestAnimationFrame(animate);
+    }
 
-        class Node {
-            constructor() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.vx = (Math.random() - 0.5) * 0.6;
-                this.vy = (Math.random() - 0.5) * 0.6;
-                this.radius = Math.random() * 1.5 + 0.5;
-            }
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-                if (this.x < 0 || this.x > width) this.vx *= -1;
-                if (this.y < 0 || this.y > height) this.vy *= -1;
-            }
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(139, 92, 246, 0.4)';
-                ctx.fill();
-            }
-        }
-
-        function initNetwork() {
-            resize();
-            particles = [];
-            const count = window.innerWidth < 768 ? 40 : 80;
-            for (let i = 0; i < count; i++) {
-                particles.push(new Node());
-            }
-        }
-
-        function animateNetwork() {
-            ctx.clearRect(0, 0, width, height);
-
-            for (let i = 0; i < particles.length; i++) {
-                particles[i].update();
-                particles[i].draw();
-
-                for (let j = i + 1; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-
-                    if (dist < 150) {
-                        ctx.beginPath();
-                        ctx.strokeStyle = `rgba(139, 92, 246, ${0.15 - dist / 1100})`;
-                        ctx.lineWidth = 0.8;
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.stroke();
-                    }
-                }
-            }
-            requestAnimationFrame(animateNetwork);
-        }
-
-        window.addEventListener('resize', () => {
-            resize();
-        });
-
-        // Add class to enable custom cursor styles
-        document.documentElement.classList.add('js-cursor-enabled');
-
-        initNetwork();
-        animateNetwork();
-    </script>
+    window.addEventListener('resize', resize);
+    init();
+    animate();
+  </script>
 </body>
-
 </html>

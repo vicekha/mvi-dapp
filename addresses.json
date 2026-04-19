@@ -20,7 +20,7 @@
     "AssetVerifier": "0x2170c42e65f2286adcf2231a84626be74cb275ee",
     "TrustWalletFeeDistributor": "0xe305fabd8f5f97b0cff0c4bd5af4a6dea0e4bbca",
     "EulerLagrangeOrderProcessor": "0xaa7d02d01a52d567a205032982ff28850d19c7ac",
-    "WalletSwapMain": "0xc2e34b7600ea683dc6d53eb3b10f4548449f9b4c"
+    "WalletSwapMain": "0xD605C56E969CC51aEe9e350Fc975D8eBcd7FcBF3"
   },
   "84532": {
     "VirtualLiquidityPool": "0xe197da19b23baebb91d15476152a7607e2361234",

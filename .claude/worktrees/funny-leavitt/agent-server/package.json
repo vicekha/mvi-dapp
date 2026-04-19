@@ -1,0 +1,17 @@
+{
+  "name": "autoswap-agent-server",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "AI agent-to-agent negotiation server using Claude API + Planbok MPC wallets",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.52.0",
+    "dotenv": "^17.0.0",
+    "ethers": "^6.16.0",
+    "express": "^5.1.0",
+    "ws": "^8.18.0"
+  }
+}
