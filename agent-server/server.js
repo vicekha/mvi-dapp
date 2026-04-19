@@ -616,11 +616,24 @@ function sleep(ms) {
 
 // ---- Start ----
 
-httpServer.listen(PORT, () => {
+// Bind to 0.0.0.0 explicitly so Railway/Fly/Render edge proxies can reach us.
+// Node's default picks IPv6 `::` which usually works, but being explicit avoids
+// edge-case 502s.
+const HOST = process.env.HOST || '0.0.0.0';
+httpServer.listen(PORT, HOST, () => {
   console.log(`\n🤖 AutoSwap Agent Server`);
-  console.log(`   HTTP API: http://localhost:${PORT}`);
-  console.log(`   WebSocket: ws://localhost:${WS_PORT}`);
+  console.log(`   Listening: ${HOST}:${PORT}`);
+  console.log(`   WebSocket: ${process.env.WS_PORT && process.env.WS_PORT !== String(PORT) ? `separate port ${WS_PORT}` : `same port (${PORT})`}`);
   console.log(`   Anthropic: ${process.env.ANTHROPIC_API_KEY ? '✓ configured' : '✗ missing ANTHROPIC_API_KEY'}`);
   console.log(`   Planbok:   ${process.env.PLANBOK_API_KEY ? '✓ configured' : '✗ missing PLANBOK_API_KEY'}`);
   console.log('');
+});
+
+// Surface startup crashes loudly so Railway logs show the cause
+process.on('uncaughtException', (err) => {
+  console.error('[FATAL] uncaughtException:', err);
+  process.exit(1);
+});
+process.on('unhandledRejection', (err) => {
+  console.error('[FATAL] unhandledRejection:', err);
 });
